@@ -51,5 +51,10 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>oauth2-oidc-sdk</artifactId>
+			<version>5.41.1</version>
+		</dependency>
 	</dependencies>
 </project>
