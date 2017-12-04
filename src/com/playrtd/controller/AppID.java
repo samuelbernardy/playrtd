@@ -25,11 +25,11 @@ public static void main(String[] args) {
 		// this grabs the div containing all of the game names
 		Elements temp = doc.select("div.col.search_name.ellipsis");
 		int i=0;
-		for(Element movieList: temp) {
+		for(Element gameList: temp) {
 			i++;
 			//span is where the titles are held
-			System.out.println(i +  " " + movieList.getElementsByTag("span").first().text());
-			gameNames[i-1] = movieList.getElementsByTag("span").first().text();
+			System.out.println(i +  " " + gameList.getElementsByTag("span").first().text());
+			gameNames[i-1] = gameList.getElementsByTag("span").first().text();
 		}
 		
 		
@@ -79,21 +79,16 @@ public static void main(String[] args) {
 		Action.setAppID(ID[i]);
 		Action.setImage(images[i]);
 		
+		Configuration cfg = new Configuration();
+		cfg.configure("hibernate.cfg.xml");
+		SessionFactory factory = cfg.buildSessionFactory();
+		Session session = factory.openSession();
+		Transaction t = (Transaction) session.beginTransaction();
 		
-
-		Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-
-		SessionFactory sessionFact = cfg.buildSessionFactory();
-
-		Session codes = sessionFact.openSession();
-
-		codes.beginTransaction();
-
-		codes.update(temp); // update the object from the list
-
-		codes.getTransaction().commit(); // update the row from the database table
-
-		ArrayList<ProductDto> prodList = getAllProducts();
+		session.persist(Action);
+		t.commit();
+		session.close();
+		System.out.println("data inserted");
 		}
 		
 	} catch (IOException e) {
