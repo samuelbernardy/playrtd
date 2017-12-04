@@ -19,3 +19,6 @@ target/
 
 #hibernate
 hibernate.cfg.xml
+
+#Credentials
+Credentials.java
