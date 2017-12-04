@@ -26,10 +26,11 @@ public static void main(String[] args) {
 	
 int[]tags = {19,21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662, 4085};
 String[] gameNames = new String[25];
+String[] gameDesc = new String[25];
 	
 	for (int j = 0; j < tags.length-1; j++) {
 	String gameCollector = "http://store.steampowered.com/search/?tags=" + tags[j] + "&page=1";
-	System.out.println(gameCollector);
+	
 	///////////////////////////////////NAMES COLLECTED HERE///////////////////////////////////////////////////////////
 	try {
 		Document doc = Jsoup.connect(gameCollector).get();
@@ -39,7 +40,7 @@ String[] gameNames = new String[25];
 		for(Element gameList: temp) {
 			i++;
 			//span is where the titles are held
-			System.out.println(i +  " " + gameList.getElementsByTag("span").first().text());
+			
 			gameNames[i-1] = gameList.getElementsByTag("span").first().text();
 		}
 		
@@ -77,12 +78,20 @@ String[] gameNames = new String[25];
 		for (i=0; i < 25; i++) {
 			ID[i] = (games[i].substring(games[i].indexOf("appid=\"")+7,games[i].indexOf("\" onmouseover=\""))); // ID takes the info from temp array 
 			images[i] = "http://cdn.edgecast.steamstatic.com/steam/apps/" +ID[i] +"/header.jpg";
-			System.out.println(i + " " + ID[i]);
+			
 		}
-		System.out.println(tag);
-		System.out.println(ID[1]);
-		System.out.println(images[1]);
-		System.out.println(gameNames[1]);
+		for (i = 0; i < 25; i++) {
+			String gameURL = "http://store.steampowered.com/app/" + ID[i];
+			doc = Jsoup.connect(gameURL).get();
+			// this grabs the div containing all of the game names
+			Elements gamed = doc.select("div#game_area_description.game_area_description");
+			
+			
+				gameDesc[i] = gamed.text();
+			}
+			
+		
+		
 		for (i=0; i < 25; i++) {
 		ProductDto Action = new ProductDto();
 		
@@ -90,21 +99,25 @@ String[] gameNames = new String[25];
 		Action.setGameName(gameNames[i]);
 		Action.setAppID(ID[i]);
 		Action.setImage(images[i]);
-		
+		Action.setDescription(gameDesc[i]);
+		System.out.println(ID[i]);
 		Session session = factory.openSession();
 		Transaction t = (Transaction) session.beginTransaction();
-		System.out.println(i);
+		
 		session.persist(Action);//problem child
 		t.commit();
 		session.close();
 
 		System.out.println("data inserted");
 		}
+		System.out.println("ALL DONE!!!!!!!");
+		
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
-	}
+	
+}
 }
 }
