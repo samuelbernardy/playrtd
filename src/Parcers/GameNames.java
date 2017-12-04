@@ -13,10 +13,10 @@ public static void main(String[] args) {
 		// this grabs the div containing all of the game names
 		Elements temp = doc.select("div.col.search_name.ellipsis");
 		int i=0;
-		for(Element movieList: temp) {
+		for(Element gameList: temp) {
 			i++;
 			//span is where the titles are held
-			System.out.println(i +  " " + movieList.getElementsByTag("span").first().text());
+			System.out.println(i +  " " + gameList.getElementsByTag("span").first().text());
 		}
 		
 		

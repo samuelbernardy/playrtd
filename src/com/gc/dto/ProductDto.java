@@ -13,7 +13,7 @@ public class ProductDto implements Serializable {
 	private int id;
 	private int tag;
 	private String gameName;
-	private int appID;
+	private String appID;
 	private String image;
 	
 
@@ -28,7 +28,7 @@ public class ProductDto implements Serializable {
 	
 	
 	
-	public ProductDto(int id, int tag, String gameName, int appID, String image) {
+	public ProductDto(int id, int tag, String gameName, String appID, String image) {
 		super();
 		this.id = id;
 		this.tag = tag;
@@ -64,11 +64,11 @@ public class ProductDto implements Serializable {
 		this.gameName = gameName;
 	}
 
-	public int getAppID() {
+	public String getAppID() {
 		return appID;
 	}
 
-	public void setAppID(int appID) {
+	public void setAppID(String appID) {
 		this.appID = appID;
 	}
 
