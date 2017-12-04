@@ -19,8 +19,8 @@ public static void main(String[] args) {
 		int i=0;
 		
 		//This code grabs all of the information within the div of the 25 games showing.
-		for(Element movieList: temp) {
-			div = movieList.getElementsByTag("div").first().toString();
+		for(Element gameList: temp) {
+			div = gameList.getElementsByTag("div").first().toString();
 			i++;
 		}
 		
