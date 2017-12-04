@@ -78,6 +78,17 @@
    		    <groupId>org.expressme</groupId>
             <artifactId>JOpenId</artifactId>
             <version>1.08</version>
-        </dependency>		
+        </dependency>	
+        <!-- JSON array creation. -->
+        		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>	
 	</dependencies>
 </project>

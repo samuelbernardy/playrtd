@@ -12,7 +12,7 @@
 	<div id="headlogo">
 		<img src=""></img>
 	</div>
-	<nav> <a href="https://www.steamcommunity.com/openid/login/"><img
+	<nav> <a href="https://www.steamcommunity.com/openid/login/?key=16F06098DE26F71F93EB595C82101042?redirect_uri=http://localhost:8080/PlayRTD/return"><img
 		src="resources/images/loginbutton.png"></img></a> </nav> </header>
 	<main>
 	<div>
