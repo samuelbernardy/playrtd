@@ -73,5 +73,11 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.2.4.Final</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.expressme/JOpenId -->
+		<dependency>
+   		    <groupId>org.expressme</groupId>
+            <artifactId>JOpenId</artifactId>
+            <version>1.08</version>
+        </dependency>		
 	</dependencies>
 </project>
