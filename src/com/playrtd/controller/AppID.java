@@ -1,20 +1,20 @@
 package com.playrtd.controller;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.gc.dto.ProductDto;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
+
 
 public class AppID {
 public static void main(String[] args) {
@@ -87,10 +87,10 @@ String[] gameDesc = new String[25];
 			Elements gamed = doc.select("div#game_area_description.game_area_description");
 			
 			
-				gameDesc[i] = gamed.text();
+				gameDesc[i] = new String (gamed.text().getBytes(), "ISO-8859-1");
+				
 			}
 			
-		
 		
 		for (i=0; i < 25; i++) {
 		ProductDto Action = new ProductDto();
@@ -99,6 +99,7 @@ String[] gameDesc = new String[25];
 		Action.setGameName(gameNames[i]);
 		Action.setAppID(ID[i]);
 		Action.setImage(images[i]);
+
 		Action.setDescription(gameDesc[i]);
 		System.out.println(ID[i]);
 		Session session = factory.openSession();
@@ -110,7 +111,7 @@ String[] gameDesc = new String[25];
 
 		System.out.println("data inserted");
 		}
-		System.out.println("ALL DONE!!!!!!!");
+		
 		
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -119,5 +120,6 @@ String[] gameDesc = new String[25];
 	
 	
 }
+	System.out.println("ALL DONE!!!!!!!");
 }
 }
