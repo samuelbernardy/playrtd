@@ -9,10 +9,13 @@
 </head>
 <body>
 	<header>
-	<div id="headlogo">
-		<img src=""></img>
-	</div>
-	<nav></nav> </header>
+	  <div id="headlogo">
+		    <img src=""></img>
+	  </div>
+	   <nav>
+       <a href=""><img src="resources/images/loginbutton.png"></img></a>
+     </nav>
+  </header>
 	<main>
 	<div>
 		<h1>Welcome to PlayRTD</h1>
