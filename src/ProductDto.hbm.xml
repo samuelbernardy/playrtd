@@ -10,7 +10,7 @@
 
 		<id name="id">
 			
-			<column name="id" sql-type="int(11)"></column>
+			<column name="id" sql-type="int(255)"></column>
 		</id>
 
 		<property name="tag">
