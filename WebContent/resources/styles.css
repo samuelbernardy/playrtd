@@ -1,0 +1,33 @@
+* {
+	padding: 0px;
+	margin: 0px;
+}
+header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #40495b;
+	height: 120px;
+	width: 100%;
+	position: fixed;
+	-webkit-box-shadow: 0px 7px 68px -2px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 7px 68px -2px rgba(0,0,0,0.75);
+	box-shadow: 0px 7px 68px -2px rgba(0,0,0,0.75);
+	border-radius: 0px 0px 5px 5px;
+}
+header img {
+	height:100px;
+	width: auto;
+}
+main {
+	padding-top: 120px;
+	background-image: url(". /images/playrtdbg.jpg");
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	height: 100vh;
+}
+footer {
+	backgroundcolor
+}

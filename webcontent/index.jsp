@@ -10,10 +10,10 @@
 <body>
 	<header>
 	<div id="headlogo">
-		<img src=""></img>
+		<img src="resources/images/playrtdlogo.png"></img>
 	</div>
-	<nav> <a href="https://www.steamcommunity.com/openid/login/"><img
-		src="resources/images/loginbutton.png"></img></a> </nav> </header>
+	<nav> <a href="http://www.steamcommunity.com/openid/login?key=065A9EB0620845303DD97F5D5F404659&redirect_uri=http://localhost:8080/playRTD/return"><img src="resources/images/loginbutton.png"></img></a>
+	</nav> </header>
 	<main>
 	<div>
 		<h1>Welcome to PlayRTD</h1>

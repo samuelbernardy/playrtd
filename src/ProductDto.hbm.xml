@@ -10,7 +10,7 @@
 
 		<id name="id">
 			
-			<column name="id" sql-type="int(11)"></column>
+			<column name="id" sql-type="int(255)"></column>
 		</id>
 
 		<property name="tag">
@@ -24,6 +24,9 @@
 		</property>
 		<property name="image">
 			<column name="image" sql-type="varchar(255)"></column>
+		</property>
+		<property name="description">
+			<column name="description" sql-type="text"></column>
 		</property>
 
 

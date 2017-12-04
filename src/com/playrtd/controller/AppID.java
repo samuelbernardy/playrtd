@@ -1,34 +1,46 @@
 package com.playrtd.controller;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.gc.dto.ProductDto;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
+
 
 public class AppID {
 public static void main(String[] args) {
-	String[] gameNames = new String[25];
-	/////////////////////////////////////NAMES COLLECTED HERE///////////////////////////////////////////////////////////
+	
+	Configuration cfg = new Configuration();
+	cfg.configure("hibernate.cfg.xml");
+	SessionFactory factory = cfg.buildSessionFactory();
+	
+	
+int[]tags = {19,21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662, 4085};
+String[] gameNames = new String[25];
+String[] gameDesc = new String[25];
+	
+	for (int j = 0; j < tags.length-1; j++) {
+	String gameCollector = "http://store.steampowered.com/search/?tags=" + tags[j] + "&page=1";
+	
+	///////////////////////////////////NAMES COLLECTED HERE///////////////////////////////////////////////////////////
 	try {
-		Document doc = Jsoup.connect("http://store.steampowered.com/search/?tags=19&page=1").get();
+		Document doc = Jsoup.connect(gameCollector).get();
 		// this grabs the div containing all of the game names
 		Elements temp = doc.select("div.col.search_name.ellipsis");
 		int i=0;
 		for(Element gameList: temp) {
 			i++;
 			//span is where the titles are held
-			System.out.println(i +  " " + gameList.getElementsByTag("span").first().text());
+			
 			gameNames[i-1] = gameList.getElementsByTag("span").first().text();
 		}
 		
@@ -45,7 +57,7 @@ public static void main(String[] args) {
 	try {
 		//TODO to grab as many games as we want, make a string based on the URL. 
 		//create an int for tag and page to continue to dig through site for data base
-		Document doc = Jsoup.connect("http://store.steampowered.com/search/?tags=19&page=1").get();
+		Document doc = Jsoup.connect(gameCollector).get();
 		int tag = 19;
 		
 		Elements temp = doc.select("div#search_result_container");
@@ -66,30 +78,40 @@ public static void main(String[] args) {
 		for (i=0; i < 25; i++) {
 			ID[i] = (games[i].substring(games[i].indexOf("appid=\"")+7,games[i].indexOf("\" onmouseover=\""))); // ID takes the info from temp array 
 			images[i] = "http://cdn.edgecast.steamstatic.com/steam/apps/" +ID[i] +"/header.jpg";
-			System.out.println(i + " " + ID[i]);
+			
 		}
-		System.out.println(tag);
-		System.out.println(ID[1]);
-		System.out.println(images[1]);
-		System.out.println(gameNames[1]);
+		for (i = 0; i < 25; i++) {
+			String gameURL = "http://store.steampowered.com/app/" + ID[i];
+			doc = Jsoup.connect(gameURL).get();
+			// this grabs the div containing all of the game names
+			Elements gamed = doc.select("div#game_area_description.game_area_description");
+			
+			
+				gameDesc[i] = new String (gamed.text().getBytes(), "ISO-8859-1");
+				
+			}
+			
+		
 		for (i=0; i < 25; i++) {
 		ProductDto Action = new ProductDto();
-		Action.setTag(tag);
+		
+		Action.setTag(tags[j]);
 		Action.setGameName(gameNames[i]);
 		Action.setAppID(ID[i]);
 		Action.setImage(images[i]);
-		
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		SessionFactory factory = cfg.buildSessionFactory();
+
+		Action.setDescription(gameDesc[i]);
+		System.out.println(ID[i]);
 		Session session = factory.openSession();
 		Transaction t = (Transaction) session.beginTransaction();
 		
-		session.persist(Action);
+		session.persist(Action);//problem child
 		t.commit();
 		session.close();
+
 		System.out.println("data inserted");
 		}
+		
 		
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -97,5 +119,7 @@ public static void main(String[] args) {
 	}
 	
 	
+}
+	System.out.println("ALL DONE!!!!!!!");
 }
 }
