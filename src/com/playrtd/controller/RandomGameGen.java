@@ -23,27 +23,37 @@ public class RandomGameGen {
 		Query q = s.createQuery("from ProductDto");
 		List<ProductDto> g1 = q.list();
 		System.out.println("data loaded here");
-		for(ProductDto g2:g1)
-		{
+		
+		
+//		for(ProductDto g2:g1)
+//		{
+//			if(g2.getTag()==19) { // grabs all in tag 
 //		System.out.println(g2.getId());
 //		System.out.println(g2.getGameName());
 //		System.out.println(g2.getAppID());
 //		System.out.println(g2.getImage());
-		}
+//		System.out.println(g2.getTag());
+//		}
 		 
 		System.out.println("this is the second query");
-		Query q2 = s.createQuery("select g.appID,g.gameName from ProductDto g");
+		Query q2 = s.createQuery("select g.appID,g.gameName,g.tag from ProductDto g");
 		List l1 = q2.list();
 		Iterator i = l1.iterator();
-		while(i.hasNext())
+		while(i.hasNext()) 
 		{
-		Object[] obj = (Object[])i.next();
+		
+		Object[] obj = (Object[])i.next(); // may be able to remove from iterate and use random class to choose randomly
 		String id = (String)obj[0];
 		String name = (String)obj[1];
+		int tag = (int)obj[2];
+		if (tag == 19) { // can set here to choose what prints out
 		System.out.println(id);
 		System.out.println(name);
+		System.out.println(tag);
+		}
 		 
 		}
+		
 		
 		
 		 
