@@ -29,7 +29,7 @@ public class TwitchController {
 			HttpClient http = HttpClientBuilder.create().build();
 			HttpHost host = new HttpHost("api.twitch.tv", 443, "https");
 			HttpGet getPage = new HttpGet("/helix/streams?game_id=" + gameId);
-			getPage.setHeader("Client-ID", Credentials.CLIENT_ID);
+			getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
 			HttpResponse resp = http.execute(host, getPage);
 			String jsonString = EntityUtils.toString(resp.getEntity());
 
