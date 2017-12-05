@@ -19,7 +19,7 @@ public class ProductDto implements Serializable {
 	private String discord;
 
 	public ProductDto() {
-
+		
 	
 	}
 
@@ -35,6 +35,16 @@ public class ProductDto implements Serializable {
 		this.image = image;
 		this.description = description;
 		this.discord = discord;
+	}
+
+	public ProductDto(String gameName, String appID, String image, String description) {
+		super();
+	
+		this.gameName = gameName;
+		this.appID = appID;
+		this.image = image;
+		this.description = description;
+		
 	}
 
 
@@ -119,9 +129,12 @@ public class ProductDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ProductDto [id=" + id + ", tag=" + tag + ", gameName=" + gameName + ", appID=" + appID + ", image="
-				+ image + "]";
+		return gameName + appID +image +description;
 	}
+
+
+
+
 
 
 

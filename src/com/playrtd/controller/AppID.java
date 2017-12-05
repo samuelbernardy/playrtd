@@ -1,9 +1,6 @@
 package com.playrtd.controller;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -13,7 +10,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.gc.dto.*;
+import com.gc.dto.ProductDto;
+
+
 
 
 public class AppID {
@@ -100,7 +99,7 @@ public class AppID {
 					 * System.out.println(discord.get(0).text()); discordURLS[i] =
 					 * discord.get(0).text();
 					 */
-
+											
 					ProductDto Action = new ProductDto();
 					
 					Action.setTag(tags[j]);
