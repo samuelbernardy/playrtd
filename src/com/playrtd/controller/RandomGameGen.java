@@ -19,55 +19,34 @@ public class RandomGameGen {
 		SessionFactory sf = cfg.buildSessionFactory();
 		Session s = sf.openSession();
 		Transaction tx = s.beginTransaction();
-//		Query q = s.createQuery("select g from ProductDto g");
-		Query q = s.createQuery("from ProductDto");
-		List<ProductDto> g1 = q.list();
-		System.out.println("data loaded here");
+
+
 		
+
 		
-//		for(ProductDto g2:g1)
-//		{
-//			if(g2.getTag()==19) { // grabs all in tag 
-//		System.out.println(g2.getId());
-//		System.out.println(g2.getGameName());
-//		System.out.println(g2.getAppID());
-//		System.out.println(g2.getImage());
-//		System.out.println(g2.getTag());
-//		}
-		 
-		System.out.println("this is the second query");
-		Query q2 = s.createQuery("select g.appID,g.gameName,g.tag from ProductDto g");
-		List l1 = q2.list();
-		Iterator i = l1.iterator();
+		Query q2 = s.createQuery("select g.appID,g.gameName,g.tag,g.image,g.description from ProductDto g WHERE g.tag = 3859 ORDER BY RAND()");
+		
+		q2.setFirstResult(1);
+		q2.setMaxResults(1);
+		List results = q2.list();
+		Iterator i = results.iterator();
 		while(i.hasNext()) 
 		{
-		
-		Object[] obj = (Object[])i.next(); // may be able to remove from iterate and use random class to choose randomly
+			
+			//Objects position is being correlated by the createQuery above. IE. g.appID is the first, so that would be obj[0]
+		Object[] obj = (Object[])i.next(); 
 		String id = (String)obj[0];
 		String name = (String)obj[1];
 		int tag = (int)obj[2];
-		if (tag == 19) { // can set here to choose what prints out
+		String img = (String)obj[3];
+		String desc = (String)obj[4];
 		System.out.println(id);
 		System.out.println(name);
 		System.out.println(tag);
+		System.out.println(img);
+		System.out.println(desc);
+
 		}
-		 
-		}
-		
-		
-		
-		 
-//		System.out.println("this is the third query");
-//		Query q3 = s.createQuery("select g.name from Games g");
-//		List l2 = q3.list();
-//		Iterator i2 = l2.iterator();
-//		while(i2.hasNext())
-//		{
-//		Object obj = (Object)i2.next();
-//		String name = (String)obj;
-//		System.out.println(name);
-//		 
-//		}
 		s.flush();
 		s.close();
 		}
