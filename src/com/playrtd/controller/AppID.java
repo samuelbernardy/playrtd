@@ -13,7 +13,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.gc.dto.ProductDto;
+import com.gc.dto.*;
+
 
 public class AppID {
 	public static void main(String[] args) {
