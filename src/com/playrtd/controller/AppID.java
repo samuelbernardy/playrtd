@@ -80,7 +80,7 @@ public class AppID {
 							games[i].indexOf("\" onmouseover=\""))); // ID takes the info from temp array
 
 					///////////////// Images are gathered here ///////////////////
-					images[i] = "http://cdn.edgecast.steamstatic.com/steam/apps/" + ID[i] + "/header.jpg";
+					images[i] = "<img src=\"http://cdn.edgecast.steamstatic.com/steam/apps/" + ID[i] + "/header.jpg\">";
 
 					String gameURL = "http://store.steampowered.com/app/" + ID[i];
 					doc = Jsoup.connect(gameURL).get();
@@ -110,7 +110,7 @@ public class AppID {
 					
 					//created if statement to find games with no description due to age confirmations
 					if (gameDesc[i].length() < 5) {
-						Action.setDescription(gameDesc[i] + "This game is for mature audiences only. Please see: " + gameURL + " for a detailed description.");
+						Action.setDescription(gameDesc[i] + "This game is for mature audiences only. Please: " +"<a href=\""+gameURL+"\">click here</a>" + " for a detailed description.");
 					}
 					else{
 						Action.setDescription(gameDesc[i]);
