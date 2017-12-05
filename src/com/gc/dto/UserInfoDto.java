@@ -1,20 +1,40 @@
 package com.gc.dto;
 
+import java.util.ArrayList;
+
 public class UserInfoDto {
 	
-	private int steam_ID;
+	private long steam_ID;
 	private String personaName;
 	private String avatar;
+	private ArrayList<Integer> ownedGames = new ArrayList<Integer>();
+	private ArrayList<Integer> recentGames = new ArrayList<Integer>();
+
+	public ArrayList<Integer> getOwnedGames() {
+		return ownedGames;
+	}
+
+	public void setOwnedGames(ArrayList<Integer> ownedGames) {
+		this.ownedGames = ownedGames;
+	}
+
+	public ArrayList<Integer> getRecentGames() {
+		return recentGames;
+	}
+
+	public void setRecentGames(ArrayList<Integer> recentGames) {
+		this.recentGames = recentGames;
+	}
 
 	public UserInfoDto () {
 		
 	}
 
-	public int getSteam_ID() {
+	public long getSteam_ID() {
 		return steam_ID;
 	}
 
-	public void setSteam_ID(int steam_ID) {
+	public void setSteam_ID(long steam_ID) {
 		this.steam_ID = steam_ID;
 	}
 

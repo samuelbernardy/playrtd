@@ -12,7 +12,7 @@
 	<div id="headlogo">
 		<img src="resources/images/playrtdlogo.png"></img>
 	</div>
-	<nav> <a href="http://www.steamcommunity.com/openid/login?key=065A9EB0620845303DD97F5D5F404659&redirect_uri=http://localhost:8080/playRTD/return"><img src="resources/images/loginbutton.png"></img></a>
+	<nav> <button action="login"><img src="resources/images/loginbutton.png"></img></button>
 	</nav> </header>
 	<main>
 	<div>
@@ -38,6 +38,13 @@
 		<div>Container4</div>
 	</div>
 	</main>
-	<footer> </footer>
+	<footer> 
+	<div class="recents_container">
+		<div class="recent"><h1></h1></div>
+		<div class="recent"></div>
+		<div class="recent"></div>
+		<div class="recent"></div>
+	</div>
+	</footer>
 </body>
 </html>
