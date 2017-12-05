@@ -24,10 +24,17 @@ public static void main(String[] args) {
 	SessionFactory factory = cfg.buildSessionFactory();
 	
 	
-int[]tags = {19,21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662, 4085};
-String[] gameNames = new String[25];
-String[] gameDesc = new String[25];
-	
+int[]tags = {19,21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 
+		3843, 4840, 128, 4182, 1662, 4085}; // category tags of games
+
+String[] gameNames = new String[25]; // names of games
+String[] gameDesc = new String[25];// games descriptions
+String[] images = new String[25];// games image urls
+String[] ID = new String[25]; // holds game ID
+String[] discordURLS = new String[25]; // holds URLS for discord server
+
+
+
 	for (int j = 0; j < tags.length-1; j++) {
 	String gameCollector = "http://store.steampowered.com/search/?tags=" + tags[j] + "&page=1";
 	
@@ -61,10 +68,10 @@ String[] gameDesc = new String[25];
 		int tag = 19;
 		
 		Elements temp = doc.select("div#search_result_container");
-		String[] images = new String[25];
+		
 		String div ="";
 		int i=0;
-		String[] ID = new String[25]; // holds game ID
+		
 		String[] games = new String[25]; // temp array to hold game info from jSoup
 		//This code grabs all of the information within the div of the 25 games showing.
 		for(Element gameList: temp) {
@@ -83,13 +90,21 @@ String[] gameDesc = new String[25];
 		for (i = 0; i < 25; i++) {
 			String gameURL = "http://store.steampowered.com/app/" + ID[i];
 			doc = Jsoup.connect(gameURL).get();
-			// this grabs the div containing all of the game names
+			// this grabs the div containing game description
 			Elements gamed = doc.select("div#game_area_description.game_area_description");
 			
-			
+			//Some games had special characters which mysql couldn't accept. Took the byte data in to resolve this
 				gameDesc[i] = new String (gamed.text().getBytes(), "ISO-8859-1");
 				
 			}
+		for (i= 0; i < 25; i++) {
+		String gameURL = "https://www.google.com/search?q=discord server for " + gameNames[i];
+		doc = Jsoup.connect(gameURL).get();
+		// this grabs the div containing all of the game names
+		Elements discord = doc.select("cite._Rm");
+		discordURLS[i] = "<a href=\"" +discord.text() + "\">Discord Server Here</a>";
+		
+		}
 			
 		
 		for (i=0; i < 25; i++) {

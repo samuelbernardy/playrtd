@@ -16,19 +16,17 @@ public class ProductDto implements Serializable {
 	private String appID;
 	private String image;
 	private String description;
+	private String discord;
 
 	public ProductDto() {
 
-		// productID = 0;
-		// code = "";
-		// description = "";
-		// listPrice = 0;
+	
 	}
 
 	
 	
 	
-	public ProductDto(int id, int tag, String gameName, String appID, String image, String description) {
+	public ProductDto(int id, int tag, String gameName, String appID, String image, String description, String discord) {
 		super();
 		this.id = id;
 		this.tag = tag;
@@ -36,6 +34,7 @@ public class ProductDto implements Serializable {
 		this.appID = appID;
 		this.image = image;
 		this.description = description;
+		this.discord = discord;
 	}
 
 
@@ -99,6 +98,20 @@ public class ProductDto implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+
+
+
+	public String getDiscord() {
+		return discord;
+	}
+
+
+
+
+	public void setDiscord(String discord) {
+		this.discord = discord;
 	}
 
 

@@ -9,10 +9,8 @@
 
 
 		<id name="id">
-			
 			<column name="id" sql-type="int(255)"></column>
 		</id>
-
 		<property name="tag">
 			<column name="tag" sql-type="int(45)" length="10"></column>
 		</property>
@@ -27,6 +25,9 @@
 		</property>
 		<property name="description">
 			<column name="description" sql-type="text"></column>
+		</property>
+		<property name="discord">
+			<column name="discord" sql-type="varchar(255)"></column>
 		</property>
 
 
