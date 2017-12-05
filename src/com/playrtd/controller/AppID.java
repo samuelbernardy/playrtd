@@ -101,12 +101,19 @@ public class AppID {
 					 */
 
 					ProductDto Action = new ProductDto();
-
+					System.out.println("text is:"+gameDesc[i]+"a");
 					Action.setTag(tags[j]);
 					Action.setGameName(gameNames[i]);
 					Action.setAppID(ID[i]);
 					Action.setImage(images[i]);
-					Action.setDescription(gameDesc[i]);
+					
+					//created if statement to find games with no description due to age confirmations
+					if (gameDesc[i].length() < 5) {
+						Action.setDescription(gameDesc[i] + "This game is for mature audiences only. Please see: " + gameURL + " for a detailed description.");
+					}
+					else{
+						Action.setDescription(gameDesc[i]);
+					}
 					// Action.setDiscord(discordURLS[i]);
 					// System.out.println(discordURLS[i]);
 					Session session = factory.openSession();
