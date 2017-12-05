@@ -20,7 +20,7 @@ public class RGGJDBC {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gametest","gcjdbc","gcjdbc");
 			Statement stmt = (Statement) con.createStatement();
-			String sql ="SELECT * FROM gametest.games\nwhere tag = 19\nORDER BY RAND()\nLIMIT 1";
+			String sql ="SELECT * FROM gametest.games\nwhere tag = 21\nORDER BY RAND()\nLIMIT 1";
 			
 			
 			resultSet = (ResultSetImpl) stmt.executeQuery(sql);

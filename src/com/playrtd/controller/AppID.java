@@ -24,7 +24,7 @@ public class AppID {
 		SessionFactory factory = cfg.buildSessionFactory();
 
 		////// various variables being used
-		int i = 0; // used for iterations
+		
 		int[] tags = { 19, 21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662,
 				4085 }; // category tags of games
 
@@ -32,7 +32,7 @@ public class AppID {
 		String[] gameDesc = new String[25];// games descriptions
 		String[] images = new String[25];// games image urls
 		String[] ID = new String[25]; // holds game ID
-		String[] discordURLS = new String[25]; // holds URLS for discord server
+//		String[] discordURLS = new String[25]; // holds URLS for discord server
 		//////
 
 		for (int j = 0; j < tags.length - 1; j++) {
@@ -45,7 +45,7 @@ public class AppID {
 				// this grabs the div containing all of the game names
 
 				Elements temp = doc.select("div.col.search_name.ellipsis");
-
+				int i=0;  // used for iterations
 				for (Element gameList : temp) {
 					i++;
 					// span is where the titles are held
@@ -101,7 +101,7 @@ public class AppID {
 					 */
 
 					ProductDto Action = new ProductDto();
-					System.out.println("text is:"+gameDesc[i]+"a");
+					
 					Action.setTag(tags[j]);
 					Action.setGameName(gameNames[i]);
 					Action.setAppID(ID[i]);
