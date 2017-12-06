@@ -17,9 +17,10 @@
   <input type = "submit" value="Submit">
   </form>
  <p> ${gameid}</p>
+  <p> ${gameid2}</p>
  
  <form action = "getsteamgames">
-  <input type = "submit" value="Get Steam Games">
+  <input type = "submit" value="Load Steam Games">
   </form>
  <p> ${steamgames}</p>
     
