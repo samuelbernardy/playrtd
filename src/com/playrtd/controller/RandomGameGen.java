@@ -1,5 +1,7 @@
 package com.playrtd.controller;
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import com.gc.dto.ProductDto;
@@ -22,7 +25,8 @@ public class RandomGameGen {
 	
 		
 		@RequestMapping("/randgame")
-		public String randgame(Model model) {
+	//	public String randgame(Model model, @RequestParam("tag") int tag) {
+			public String randgame(Model model,HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		 
 		Configuration cfg =new Configuration();
@@ -30,17 +34,22 @@ public class RandomGameGen {
 		SessionFactory sf = cfg.buildSessionFactory();
 		Session s = sf.openSession();
 		Transaction tx = s.beginTransaction();
-		Criteria crit = s.createCriteria(ProductDto.class);
-		
+//		Criteria crit = s.createCriteria(ProductDto.class);
+		String tag = request.getParameter("tag");
+		//System.out.println(tag);
 		String id="";
 		String name = "";
-		int tag = 0;
+		
 		String img = "";
 		String desc = "";
 		Object[] obj = new Object[5];
-//		ArrayList<obj> arr = new ArrayList<obj>();
-		String[] arrl = new String[4];
-		Query q2 = s.createQuery("select g.appID,g.gameName,g.tag,g.image,g.description from ProductDto g WHERE g.tag = 19 ORDER BY RAND()");
+		
+
+	
+		String quer = "select g.appID,g.gameName,g.tag,g.image,g.description from ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
+		
+		System.out.println(quer);
+		Query q2 = s.createQuery(quer);
 		
 		q2.setFirstResult(1);
 		q2.setMaxResults(1);
@@ -54,7 +63,7 @@ public class RandomGameGen {
 		obj = (Object[])i.next(); 
 		id = (String)obj[0];
 		name = (String)obj[1];
-		tag = (int)obj[2];
+		int tags = (int)obj[2];
 		img = (String)obj[3];
 		desc = (String)obj[4];
 		list.add(new ProductDto(id, name, img, desc));
@@ -62,13 +71,13 @@ public class RandomGameGen {
 //		arrl[1]= name;
 //		arrl[2] = img;
 //		arrl[3] = desc;
-		System.out.println(id);
-		System.out.println(name);
-		System.out.println(tag);
-		System.out.println(img);
-		System.out.println(desc);
+		//System.out.println(id);
+		//System.out.println(name);
+		//System.out.println(tag);
+		//System.out.println(img);
+		//System.out.println(desc);
 		
-		
+		//System.out.println(tag);
 		}
 		
 		s.flush();

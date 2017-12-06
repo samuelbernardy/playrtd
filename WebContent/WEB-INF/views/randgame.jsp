@@ -7,9 +7,29 @@
 <title>Rand Game</title>
 
 <form>
-  <input type="radio" name="Multiplayer" value="3859" checked> Male<br>
-  <input type="radio" name="Action" value="19"> Female<br>
-  <input type="radio" name="Adventure" value="21"> Other  
+<div id="checkboxes">
+  <input type="radio" name="tag" value="3859"> Multiplayer <br>
+  <input type="radio" name="tag" value="19"> Adventure <br>
+  <input type="radio" name="tag" value="21"> Action <br>
+  <input type="radio" name="tag" value="113"> Free to Play <br>
+  <input type="radio" name="tag" value="1743"> Fighting <br>
+  <input type="radio" name="tag" value="3871"> 2D <br>
+  <input type="radio" name="tag" value="4736"> 2D Fighter <br>
+  <input type="radio" name="tag" value="7368"> Local Multiplayer <br>
+  <input type="radio" name="tag" value="1625"> Platformer <br>
+  <input type="radio" name="tag" value="1685"> Co-op <br>
+  <input type="radio" name="tag" value="4158"> Beat 'em up <br>
+  <input type="radio" name="tag" value="3841"> Local Co-Op <br>
+  <input type="radio" name="tag" value="3843"> Online Co-Op <br>
+  <input type="radio" name="tag" value="492"> Indie <br>
+  <input type="radio" name="tag" value="4840"> 4 Player Local <br>
+  <input type="radio" name="tag" value="128"> Massively Multiplayer <br>
+  <input type="radio" name="tag" value="4182"> Singleplayer <br>
+  <input type="radio" name="tag" value="1662"> Survival <br>
+  <input type="radio" name="tag" value="4085"> Anime <br>
+
+  
+  
   <input type="submit" value="roll">
 </form> 
 </head>

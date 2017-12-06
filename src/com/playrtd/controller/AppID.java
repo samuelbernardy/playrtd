@@ -26,7 +26,7 @@ public class AppID {
 		////// various variables being used
 		
 		int[] tags = { 19, 21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662,
-				4085 }; // category tags of games
+				4085, 4736 }; // category tags of games
 
 		String[] gameNames = new String[25]; // names of games
 		String[] gameDesc = new String[25];// games descriptions
