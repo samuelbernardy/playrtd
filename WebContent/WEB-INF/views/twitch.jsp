@@ -17,6 +17,12 @@
   <input type = "submit" value="Submit">
   </form>
  <p> ${gameid}</p>
+  <p> ${gameid2}</p>
+ 
+ <form action = "getsteamgames">
+  <input type = "submit" value="Load Steam Games">
+  </form>
+ <p> ${steamgames}</p>
     
   <a href="getstream">Sample Stream</a><br>
     

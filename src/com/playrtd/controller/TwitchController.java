@@ -1,7 +1,9 @@
 package com.playrtd.controller;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -16,7 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.gc.dao.GameIdMappingDao;
+import com.gc.dao.GameIdMappingDaoTwitch;
+import com.gc.dto.GameIdMappingDto;
 import com.playrtd.util.Credentials;
 
 @Controller
@@ -41,15 +47,16 @@ public class TwitchController {
 			HttpHost host = new HttpHost("api.twitch.tv", 443, "https");
 			HttpGet getPage = new HttpGet("/helix/streams?game_id=" + gameId);
 			getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
-			HttpResponse resp = http.execute(host, getPage);
+			HttpResponse resp = http.execute(host, getPage);  //TODO Handle response exceptions
 			String jsonString = EntityUtils.toString(resp.getEntity());
 
 			JSONObject json = new JSONObject(jsonString);
 			JSONArray allStreams = json.getJSONArray("data");
 			JSONObject firstStream = allStreams.getJSONObject(0);
+			System.out.println(firstStream); //Remove
 
 			String thumbnailUrl = firstStream.getString("thumbnail_url");
-			System.out.println(thumbnailUrl);
+			System.out.println(thumbnailUrl); //Remove
 			
 			// TODO Parse channel name from thumbnail URL
 			String pattern = "_user_channelNameHere-";
@@ -113,12 +120,12 @@ public class TwitchController {
 
 			JSONObject json = new JSONObject(jsonString);
 			JSONArray dataArr = json.getJSONArray("data");
-			// System.out.println(dataArr);
+			System.out.println(dataArr);
 			JSONObject game = dataArr.getJSONObject(0);
 			gameId = game.getString("id");
-			// System.out.println("Game " + gameName);
 
 			model.addAttribute("gameid", gameId);
+
 
 		} catch (ClientProtocolException e) {
 
@@ -129,4 +136,58 @@ public class TwitchController {
 		}
 		return "twitch";
 	}
+	
+	@RequestMapping("/getsteamgames") 
+	public ModelAndView parseSteamGames(Model model) {
+		
+		//Parse steam games json
+			int appId = 0;
+			String appName = "";
+			ArrayList<GameIdMappingDto> games = new ArrayList<>();
+		
+			try {
+			HttpClient http = HttpClientBuilder.create().build();
+			HttpHost host = new HttpHost("api.steampowered.com", 80, "http");
+			HttpGet getPage = new HttpGet ("/ISteamApps/GetAppList/v2");
+			HttpResponse resp = http.execute(host, getPage);
+			String jsonString = EntityUtils.toString(resp.getEntity());
+			
+			JSONObject json = new JSONObject(jsonString).getJSONObject("applist");
+			JSONArray apps = json.getJSONArray("apps");
+			
+			GameIdMappingDao dao = new GameIdMappingDaoTwitch();
+			GameIdMappingDto dto;
+			for (int i = 0; i < apps.length(); i++) {
+				JSONObject app = apps.getJSONObject(i);
+				appId = app.getInt("appid");
+				appName = app.getString("name");
+				games.add(new GameIdMappingDto(appId, appName, null));
+			}
+			
+			//Store appid and name on a table
+			dao.insert(games);
+			
+			
+			
+			//Loop through table
+			
+			//For each game on the table, make a call to twitch games api using steam game name
+			//Add 100 game ids per request, use a sleep thread to space out the requests
+			
+			
+			//If a result is returned, update record on table to store twitch game id
+			
+		
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		
+		}
+		return new ModelAndView("twitch", "steamgames", "");
+	}
+	
+	
+	
 }
