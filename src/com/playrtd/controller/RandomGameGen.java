@@ -25,7 +25,7 @@ public class RandomGameGen {
 	
 		
 		@RequestMapping("/randgame")
-	//	public String randgame(Model model, @RequestParam("tag") int tag) {
+		//public String randgame(Model model, @RequestParam(value= "tag", required = false) int tag) {
 			public String randgame(Model model,HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		 
