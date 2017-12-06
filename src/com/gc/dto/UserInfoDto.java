@@ -1,8 +1,9 @@
 package com.gc.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserInfoDto {
+public class UserInfoDto implements Serializable{
 	
 	private long steam_ID;
 	private String personaName;
