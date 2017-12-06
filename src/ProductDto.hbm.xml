@@ -14,6 +14,9 @@
 		<property name="tag">
 			<column name="tag" sql-type="int(45)" length="10"></column>
 		</property>
+		<property name="tagName">
+			<column name="tagName" sql-type="varchar(255)" length="255"></column>
+		</property>
 		<property name="gameName">
 			<column name="gameName" sql-type="varchar(255)" length="255"></column>
 		</property>

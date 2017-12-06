@@ -11,7 +11,8 @@ public class ProductDto implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private int tag;
+	private String tag;
+	private String tagName;
 	private String gameName;
 	private String appID;
 	private String image;
@@ -26,7 +27,7 @@ public class ProductDto implements Serializable {
 	
 	
 	
-	public ProductDto(int id, int tag, String gameName, String appID, String image, String description, String discord) {
+	public ProductDto(int id, String tag, String gameName, String appID, String image, String description, String discord) {
 		super();
 		this.id = id;
 		this.tag = tag;
@@ -58,13 +59,34 @@ public class ProductDto implements Serializable {
 		this.id = id;
 	}
 
-	public int getTag() {
+	
+	public String getTag() {
 		return tag;
 	}
 
-	public void setTag(int tag) {
+
+
+
+	public void setTag(String tag) {
 		this.tag = tag;
 	}
+
+
+
+
+	public String getTagName() {
+		return tagName;
+	}
+
+
+
+
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
+
+
 
 	public String getGameName() {
 		return gameName;

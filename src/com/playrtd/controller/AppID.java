@@ -25,32 +25,64 @@ public class AppID {
 
 		////// various variables being used
 		
-		int[] tags = { 19, 21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662,
-				4085, 4736 }; // category tags of games
-
+//		int[] tags = {19, 21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662,
+//				4085, 4736 }; // category tags of games
+		String[] tempHolder = new String[338]; // temp holder for parcing
+		String[] gameTag = new String[338]; // tag numerical value
+		String[] gameTagName = new String[338]; //tag names
 		String[] gameNames = new String[25]; // names of games
 		String[] gameDesc = new String[25];// games descriptions
 		String[] images = new String[25];// games image urls
-		String[] ID = new String[25]; // holds game ID
+		String[] AppID = new String[25]; // holds game ID
 //		String[] discordURLS = new String[25]; // holds URLS for discord server
 		//////
 
-		for (int j = 0; j < tags.length - 1; j++) {
-			String gameCollector = "http://store.steampowered.com/search/?tags=" + tags[j] + "&page=1";
+	
 
 			/////////////////////////////////// NAMES COLLECTED
 			/////////////////////////////////// HERE///////////////////////////////////////////////////////////
 			try {
-				Document doc = Jsoup.connect(gameCollector).get();
+				
+				String div = "";
+				String divs = "";
+				Document doc = Jsoup.connect("http://store.steampowered.com/tag/browse/#global_6310").get();
+				
+				//Elements temp = doc.select("div#tag_browse_global.tag_browse_tags");
+				Elements temp = doc.select("div.tag_browse_tag");
+				int i=0;
+				for(Element movieList: temp) {
+					i++;
+				//	System.out.println(i +  " " + movieList.getAllElements().first().toString());
+					div = movieList.getAllElements().first().toString();
+					divs = movieList.getAllElements().first().text();
+					tempHolder[i-1] = div;
+					gameTagName[i-1] = divs;
+					System.out.println(gameTagName[i-1]);
+					//System.out.println(games[i-1]);
+				}
+				
+				//games[i-1] = div.split("</div>");
+				
+				// This code first splits the text to the number of values we need in the array.
+				// Then further splices it with substrings to grab the APPID
+				for (i = 0; i < 338; i++) {
+					gameTag[i] = (tempHolder[i].substring(tempHolder[i].indexOf("data-tagid=\"") + 12,
+							tempHolder[i].indexOf("\">"))); // ID takes the info from temp array
+				
+				System.out.println(gameTag[i]);
+				}
+				for (int j = 0; j < gameTag.length - 1; j++) {
+					String gameCollector = "http://store.steampowered.com/search/?tags=" + gameTag[j] + "&page=1";
+				doc = Jsoup.connect(gameCollector).get();
 				// this grabs the div containing all of the game names
 
-				Elements temp = doc.select("div.col.search_name.ellipsis");
-				int i=0;  // used for iterations
+				temp = doc.select("div.col.search_name.ellipsis");
+				i=0;  // used for iterations
 				for (Element gameList : temp) {
 					i++;
 					// span is where the titles are held
 
-					gameNames[i - 1] = gameList.getElementsByTag("span").first().text();
+					gameNames[i - 1] =new String (gameList.getElementsByTag("span").first().text().getBytes(), "ISO-8859-1");
 				}
 
 				////////////////////////////////// APP IDS COLLECTED HERE - IMAGE IS DONE FROM
@@ -61,7 +93,7 @@ public class AppID {
 
 				temp = doc.select("div#search_result_container");
 
-				String div = "";
+				
 
 				String[] games = new String[25]; // temp array to hold game info from jSoup
 				// This code grabs all of the information within the div of the 25 games
@@ -75,13 +107,13 @@ public class AppID {
 				// This code first splits the text to the number of values we need in the array.
 				// Then further splices it with substrings to grab the APPID
 				for (i = 0; i < 25; i++) {
-					ID[i] = (games[i].substring(games[i].indexOf("appid=\"") + 7,
+					AppID[i] = (games[i].substring(games[i].indexOf("appid=\"") + 7,
 							games[i].indexOf("\" onmouseover=\""))); // ID takes the info from temp array
 
 					///////////////// Images are gathered here ///////////////////
-					images[i] = "<img src=\"http://cdn.edgecast.steamstatic.com/steam/apps/" + ID[i] + "/header.jpg\">";
+					images[i] = "<img src=\"http://cdn.edgecast.steamstatic.com/steam/apps/" + AppID[i] + "/header.jpg\">";
 
-					String gameURL = "http://store.steampowered.com/app/" + ID[i];
+					String gameURL = "http://store.steampowered.com/app/" + AppID[i];
 					doc = Jsoup.connect(gameURL).get();
 					// this grabs the div containing game description
 					Elements gamed = doc.select("div#game_area_description.game_area_description");
@@ -102,9 +134,10 @@ public class AppID {
 											
 					ProductDto Action = new ProductDto();
 					
-					Action.setTag(tags[j]);
+					Action.setTag(gameTag[j]);
+					Action.setTagName(gameTagName[j]);
 					Action.setGameName(gameNames[i]);
-					Action.setAppID(ID[i]);
+					Action.setAppID(AppID[i]);
 					Action.setImage(images[i]);
 					
 					//created if statement to find games with no description due to age confirmations
@@ -126,12 +159,12 @@ public class AppID {
 					System.out.println("data inserted");
 				}
 
-			} catch (IOException e) {
+			} }catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-		}
+		
 		System.out.println("ALL DONE!!!!!!!");
 	}
 }
