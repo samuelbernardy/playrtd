@@ -22,7 +22,7 @@ public class RandomGameGen {
 	
 		
 		@RequestMapping("/randgame")
-		public ModelAndView randgame() {
+		public String randgame(Model model) {
 		// TODO Auto-generated method stub
 		 
 		Configuration cfg =new Configuration();
@@ -73,7 +73,10 @@ public class RandomGameGen {
 		
 		s.flush();
 		s.close();
-		
-		return new ModelAndView("randgame", "rand", list) ;
+		model.addAttribute("gameID", id);
+		model.addAttribute("gameImg", img);
+		model.addAttribute("description", desc);
+		model.addAttribute("gameName", name);
+		return "randgame";
 		}
 }

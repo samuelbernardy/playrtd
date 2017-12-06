@@ -50,6 +50,7 @@ public class HomeController {
 
 	@RequestMapping("/login")
 	public String steamAuth() throws URISyntaxException, ParseException, IOException {
+		
 		// The client identifier provisioned by the server
 		ClientID clientID = new ClientID(Credentials.STEAM_API_KEY);
 

@@ -6,10 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Rand Game</title>
 
-
+<form>
+  <input type="radio" name="Multiplayer" value="3859" checked> Male<br>
+  <input type="radio" name="Action" value="19"> Female<br>
+  <input type="radio" name="Adventure" value="21"> Other  
+  <input type="submit" value="roll">
+</form> 
 </head>
 <body>
-asdfasdf
-${rand}
+
+${gameID} 
+${gameImg}
+${gameName}
+${description}
 </body>
 </html>
