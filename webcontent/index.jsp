@@ -6,14 +6,15 @@
 <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
 <link href="resources/styles.css" type="text/css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>PlayRTD</title>
 </head>
 <body>
 	<header>
 	<div id="headlogo">
 		<img src="resources/images/playrtdlogo.png"></img>
 	</div>
-	<nav> <a href="http://localhost:8080/PlayRTD/return"><img src="resources/images/loginbutton.png"></img></a>
+	<nav> <a href="login_page"><img src="resources/images/loginbutton.png"></img></a>
+	<form id="sidform" action="return" method="POST">SteamID:  <input id="sidformin" type="text" name="steamID"><input type="submit" value="Login"></button></form>
 	</nav> </header>
 	<main>
 	<div id="home_info">
