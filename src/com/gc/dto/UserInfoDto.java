@@ -5,11 +5,22 @@ import java.util.ArrayList;
 
 public class UserInfoDto implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	private int userno;
 	private long steam_ID;
 	private String personaName;
 	private String avatar;
 	private ArrayList<Integer> ownedGames = new ArrayList<Integer>();
 	private ArrayList<Integer> recentGames = new ArrayList<Integer>();
+
+	
+	public int getUserno() {
+		return userno;
+	}
+
+	public void setUserno(int userno) {
+		this.userno = userno;
+	}
 
 	public ArrayList<Integer> getOwnedGames() {
 		return ownedGames;

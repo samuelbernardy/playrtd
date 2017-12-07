@@ -15,9 +15,6 @@ import org.jsoup.select.Elements;
 
 import com.gc.dto.ProductDto;
 
-
-
-
 public class AppID {
 	
 	// regex to eliminate emojis😱 ™® foreign characters  ポイントサービス用シリアルナンバー" and other special characters so mysql will be happy
@@ -42,6 +39,17 @@ public class AppID {
 		SessionFactory factory = cfg.buildSessionFactory();
 
 		////// various variables being used
+
+
+//		int[] tags = { 19, 21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662,
+//				4085, 4736 }; // category tags of games
+//
+//		String[] gameNames = new String[25]; // names of games
+//		String[] gameDesc = new String[25];// games descriptions
+//		String[] images = new String[25];// games image urls
+//		String[] ID = new String[25]; // holds game ID
+		// String[] discordURLS = new String[25]; // holds URLS for discord server
+
 		
 //		int[] tags = {19, 21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662,
 //				4085, 4736 }; // category tags of games
@@ -53,6 +61,7 @@ public class AppID {
 		String[] images = new String[25];// games image urls
 		String[] AppID = new String[25]; // holds game ID
 //		String[] discordURLS = new String[25]; // holds URLS for discord server
+
 		//////
 
 	
@@ -94,8 +103,10 @@ public class AppID {
 				doc = Jsoup.connect(gameCollector).get();
 				// this grabs the div containing all of the game names
 
+
 				temp = doc.select("div.col.search_name.ellipsis");
 				i=0;  // used for iterations
+
 				for (Element gameList : temp) {
 					i++;
 					// span is where the titles are held
@@ -150,20 +161,23 @@ public class AppID {
 					 * System.out.println(discord.get(0).text()); discordURLS[i] =
 					 * discord.get(0).text();
 					 */
-											
+
 					ProductDto Action = new ProductDto();
+
 					
 					Action.setTag(gameTag[j]);
 					Action.setTagName(gameTagName[j]);
+
 					Action.setGameName(gameNames[i]);
 					Action.setAppID(AppID[i]);
 					Action.setImage(images[i]);
-					
-					//created if statement to find games with no description due to age confirmations
+
+					// created if statement to find games with no description due to age
+					// confirmations
 					if (gameDesc[i].length() < 5) {
-						Action.setDescription(gameDesc[i] + "This game is for mature audiences only. Please: " +"<a href=\""+gameURL+"\">click here</a>" + " for a detailed description.");
-					}
-					else{
+						Action.setDescription(gameDesc[i] + "This game is for mature audiences only. Please: "
+								+ "<a href=\"" + gameURL + "\">click here</a>" + " for a detailed description.");
+					} else {
 						Action.setDescription(gameDesc[i]);
 					}
 					// Action.setDiscord(discordURLS[i]);

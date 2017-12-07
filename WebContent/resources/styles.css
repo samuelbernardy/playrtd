@@ -30,6 +30,10 @@ header p {
 	margin: 50px 0px 0px 0px;
 	font-size: .75rem;
 }
+#sidformin{
+	color: rgb(64, 73, 91);
+	transition: 1s;
+}
 
 #logged_head {
 	display: flex;
