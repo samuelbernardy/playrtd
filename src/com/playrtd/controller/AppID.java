@@ -88,8 +88,8 @@ public class AppID {
 				
 				System.out.println(gameTag[i]);
 				}
-				for (int j = 0; j < gameTag.length - 1; j++) {
-					String gameCollector = "http://store.steampowered.com/search/?tags=" + gameTag[j] + "&page=1";
+				for (int j = 284; j < gameTag.length - 1; j++) {
+					String gameCollector = "http://store.steampowered.com/search/?tags=" + gameTag[j] + "&category1=998";
 				doc = Jsoup.connect(gameCollector).get();
 				// this grabs the div containing all of the game names
 
@@ -103,6 +103,7 @@ public class AppID {
 					gameNames[i-1] = regexChecker(gameList.getElementsByTag("span").first().text());
 					//gameNames[i - 1] = new String (gameList.getElementsByTag("span").first().text().getBytes(), "ISO-8859-1");
 				}
+				
 
 				////////////////////////////////// APP IDS COLLECTED HERE - IMAGE IS DONE FROM
 				////////////////////////////////// THE APP
@@ -143,7 +144,7 @@ public class AppID {
 					////////////// Descriptions collected here/////////////////////
 					gameDesc[i]=regexChecker(gamed.text());
 					// this grabs the div containing all of the game names
-
+					System.out.println(gameNames[i]);
 					//gameDesc[i] = new String(gamed.text().getBytes(), "ISO-8859-1");
 
 					/*
@@ -156,16 +157,40 @@ public class AppID {
 					 * System.out.println(discord.get(0).text()); discordURLS[i] =
 					 * discord.get(0).text();
 					 */
-
+					
 					ProductDto Action = new ProductDto();
 
 					
 					Action.setTag(gameTag[j]);
 					Action.setTagName(gameTagName[j]);
-
-					Action.setGameName(gameNames[i]);
+					if (gameNames[i].contains("PAYDAY 2: Ultimate")) {
+						Action.setAppID("3756");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/bundles/3756/reabw92hwgdybyeh/header_586x192.jpg?t=1511791360\">");
+					}
+					else if (gameNames[i].contains("Resident Evil 6")) {
+						Action.setAppID("50980");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/50980/header_586x192.jpg?t=1471550108\">");
+					}							
+					else if (gameNames[i].contains("Broken Sword Trilogy")){
+						Action.setAppID("6447");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/6447/header_586x192.jpg?t=1447446814\">");
+					}
+					else if (gameNames[i].contains("Counter-Strike 1 Anthology")) {
+						Action.setAppID("235");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/bundles/235/ht2e5g49jgepbgou/header_586x192.jpg?t=1465510801\">");
+					}
+					else if (gameNames[i].contains("Valve Complete Pack")) {
+						Action.setAppID("232");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/bundles/232/552et9ppfs81wxtf/header_586x192.jpg?t=1456860295\">");
+					}
+					
+					else {
 					Action.setAppID(AppID[i]);
 					Action.setImage(images[i]);
+					}
+					Action.setGameName(gameNames[i]);
+					
+					
 
 					// created if statement to find games with no description due to age
 					// confirmations
