@@ -66,12 +66,12 @@ public class GameIdMappingDaoTwitch implements GameIdMappingDao {
 	}
 
 	@Override
-	public GameIdMappingDto searchByName(String gameName) {
+	public ArrayList<GameIdMappingDto> searchByName(String gameName) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Criteria crit = session.createCriteria(GameIdMappingDto.class);
 		crit.add(Restrictions.eq("gameName", gameName));
-		GameIdMappingDto game = (GameIdMappingDto) crit.uniqueResult();
+		ArrayList<GameIdMappingDto> game = (ArrayList<GameIdMappingDto>) crit.list();
 		tx.commit();
 		session.close();
 		return game;
