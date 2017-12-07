@@ -137,6 +137,72 @@ public class TwitchController {
 		return "twitch";
 	}
 	
+	@RequestMapping("/getmultiplegameids")
+	public String getMultipleTwitchGameIds(Model model, ArrayList<GameIdMappingDto> steamGames) {
+		StringBuilder sb = new StringBuilder();
+		
+		//TODO Read 100 games at a time from the database and place on ArrayList
+		steamGames.add(new GameIdMappingDto(730, "Counter-Strike: Global Offensive", null));
+		steamGames.add(new GameIdMappingDto(30, "Day of Defeat", null));
+		steamGames.add(new GameIdMappingDto(30, "Yasmin", null));
+
+		try {
+			HttpClient http = HttpClientBuilder.create().build();
+			HttpHost host = new HttpHost("api.twitch.tv", 443, "https");
+			
+			
+			//Build url with all the games on the ArrayList
+			for (int i = 0; i < steamGames.size(); i++) {
+				sb.append("name=" + URLEncoder.encode(steamGames.get(i).getGameName(), "UTF-8"));
+				if (i != steamGames.size() - 1) {
+					sb.append("&");
+				}
+			}
+			
+			HttpGet getPage = new HttpGet("/helix/games?" + sb.toString());
+			System.out.println(getPage); //remove
+			
+			getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
+			HttpResponse resp = http.execute(host, getPage);
+			String jsonString = EntityUtils.toString(resp.getEntity());
+
+			JSONObject json = new JSONObject(jsonString);
+			
+			System.out.println(json);
+			
+			//games are not returned in the same order requested, so we need to parse both name and id
+			JSONArray dataArr = json.getJSONArray("data");
+			System.out.println(dataArr);
+			
+			GameIdMappingDao dao = new GameIdMappingDaoTwitch();
+			for (int i = 0; i < dataArr.length(); i++) {	
+				JSONObject game = dataArr.getJSONObject(i);
+				String gameName = game.getString("name");
+				String gameId = game.getString("id");
+				
+				//Get object from database and set twitch ID
+				GameIdMappingDto dto = dao.searchByName(gameName);
+				dto.setTwitchGameId(gameId);
+				
+				//Update object on database
+				dao.update(dto);
+			}
+
+			//model.addAttribute("gameid", gameId);
+
+
+	/*	} catch (ClientProtocolException e) {
+
+			e.printStackTrace();
+			*/
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		return "twitch";
+	}
+	
+	
 	@RequestMapping("/getsteamgames") 
 	public ModelAndView parseSteamGames(Model model) {
 		
@@ -157,7 +223,7 @@ public class TwitchController {
 			
 			GameIdMappingDao dao = new GameIdMappingDaoTwitch();
 			GameIdMappingDto dto;
-			for (int i = 0; i < apps.length(); i++) {
+			for (int i = 20694; i < 20695 /*apps.length()*/; i++) {
 				JSONObject app = apps.getJSONObject(i);
 				appId = app.getInt("appid");
 				appName = app.getString("name");
