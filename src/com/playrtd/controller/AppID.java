@@ -88,8 +88,9 @@ public class AppID {
 				
 				System.out.println(gameTag[i]);
 				}
-				for (int j = 284; j < gameTag.length - 1; j++) {
-					String gameCollector = "http://store.steampowered.com/search/?tags=" + gameTag[j] + "&category1=998";
+				for (int j = 0; j < gameTag.length; j++) {
+					
+					String gameCollector = "http://store.steampowered.com/search/?tags=" + gameTag[j] + "&category1=998"; //category1=998 references games to filter out as much non-conforming information as possible
 				doc = Jsoup.connect(gameCollector).get();
 				// this grabs the div containing all of the game names
 
@@ -183,6 +184,127 @@ public class AppID {
 						Action.setAppID("232");
 						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/bundles/232/552et9ppfs81wxtf/header_586x192.jpg?t=1456860295\">");
 					}
+					else if (gameNames[i].contains("Port Royale 3 Gold")) {
+						Action.setAppID("29658");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/29658/header_586x192.jpg?t=1447451035\">");
+					}
+					else if (gameNames[i].contains("The Sims 3 Plus Pets")) {
+						Action.setAppID("19071");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/19071/header_586x192.jpg?t=1447449986\">");
+					}
+					else if (gameNames[i].contains("Mount & Blade Full Collection")) {
+						Action.setAppID("50292");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/50292/header_586x192.jpg?t=1447456183\">");
+					}
+					else if (gameNames[i].contains("Wildlife Park 2 - Ultimate Edition")) {
+						Action.setAppID("46418");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/46418/header_586x192.jpg?t=1500499275\">");
+					}
+					else if (gameNames[i].contains("METAL GEAR SOLID V: The Definitive Experience")) {
+						Action.setAppID("132479");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/132479/header_586x192.jpg?t=1480700517\">");
+					}
+					else if (gameNames[i].contains("The Typing of The Dead: Overkill Collection")) {
+						Action.setAppID("48535");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/48535/header_586x192.jpg?t=1447455696\">");
+					}
+					else if (gameNames[i].contains("DEFCON + Soundtrack DLC")) {
+						Action.setAppID("14325");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/14325/header_586x192.jpg?t=1447448492\">");
+					}
+					else if (gameNames[i].contains("Introversion Classics Pack")) {
+						Action.setAppID("14002");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/14002/header_586x192.jpg?t=1478805414\">");
+					}
+					else if (gameNames[i].contains("Sins of a Solar Empire: Rebellion Game and Soundtrack Bundle")) {
+						Action.setAppID("18821");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/18821/header_586x192.jpg?t=1484671018\">");
+					}
+					else if (gameNames[i].contains("Galactic Civilizations I and II Pack")) {
+						Action.setAppID("18252");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/18252/header_586x192.jpg?t=1452696084\">");
+					}
+					else if (gameNames[i].contains("Red Faction Complete Bundle")) {
+						Action.setAppID("15630");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/15630/header_586x192.jpg?t=1488921934\">");
+					}
+					else if (gameNames[i].contains("X-SuperBox")) {
+						Action.setAppID("6330");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/6330/header_586x192.jpg?t=1447446764\">");
+					}
+					else if (gameNames[i].contains("Carpe Fulgur Collection")) {
+						Action.setAppID("15400");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/15400/header_586x192.jpg?t=1447448831\">");
+					}
+					else if (gameNames[i].contains("Patrician IV Gold")) {
+						Action.setAppID("11830");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/11830/header_586x192.jpg?t=1447447830\">");
+					}
+					else if (gameNames[i].contains("Port Royale 3 Gold and Patrician IV Gold - Double Pack")) {
+						Action.setAppID("47967");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/47967/header_586x192.jpg?t=1447455496\">");
+					}
+					else if (gameNames[i].contains("X3 Terran War Pack")) {
+						Action.setAppID("12588");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/12588/header_586x192.jpg?t=1447448036\">");
+					}
+					else if (gameNames[i].contains("X3: GoldBox")) {
+						Action.setAppID("12985");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/12985/header_586x192.jpg?t=1447448044\">");
+					}
+					else if (gameNames[i].contains("Paths to Glory Sports Simulation Bundle")) {
+						Action.setAppID("95106");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/95106/header_586x192.jpg?t=1457737962\">");
+					}
+					else if (gameNames[i].contains("Binary Domain")) {
+						Action.setAppID("27824");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/27824/header_586x192.jpg?t=1447450583\">");
+					}
+					else if (gameNames[i].contains("Grand Theft Auto Collection")) {
+						Action.setAppID("28988");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/28988/header_586x192.jpg?t=1454693854\">");
+					}
+					else if (gameNames[i].contains("Grand Theft Auto IV + Grand Theft Auto: San Andreas")) {
+						Action.setAppID("36044");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/36044/header_586x192.jpg?t=1454693864\">");
+					}
+					else if (gameNames[i].contains("Street Fighter X Tekken: Complete Pack")) {
+						Action.setAppID("19277");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/19277/header_586x192.jpg?t=1483565130\">");
+					}
+					else if (gameNames[i].contains("Farming Simulator 15 Gold Edition")) {
+						Action.setAppID("83678");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/83678/header_586x192.jpg?t=1447462375\">");
+					}
+					else if (gameNames[i].contains("Men of War: Collector Pack")) {
+						Action.setAppID("14299");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/14299/header_586x192.jpg?t=1447448479\">");
+					}
+					else if (gameNames[i].contains("Sniper Ghost Warrior 3 Season Pass Edition")) {
+						Action.setAppID("166591");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/166591/header_586x192.jpg?t=1504764681\">");
+					}
+					else if (gameNames[i].contains("Disney Other-Worldly Adventure Pack")) {
+						Action.setAppID("52411");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/52411/header_586x192.jpg?t=1447456700\">");
+					}
+					else if (gameNames[i].contains("Disney Mega Pack")) {
+						Action.setAppID("52412");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/52412/header_586x192.jpg?t=1451949501\">");
+					}
+					else if (gameNames[i].contains("Pinball Thrills Triple Pack")) {
+						Action.setAppID("71910");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/71910/header_586x192.jpg?t=1447460762\">");
+					}
+					else if (gameNames[i].contains("Sniper Ghost Warrior 3 Season Pass Edition")) {
+						Action.setAppID("166591");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/166591/header_586x192.jpg?t=1504764681\">");
+					}
+					else if (gameNames[i].contains("Sniper Ghost Warrior Gold Edition")) {
+						Action.setAppID("11762");
+						Action.setImage("<img src=\"http://cdn.edgecast.steamstatic.com/steam/subs/11762/header_586x192.jpg?t=1447447817\">");
+					}
+					
 					
 					else {
 					Action.setAppID(AppID[i]);

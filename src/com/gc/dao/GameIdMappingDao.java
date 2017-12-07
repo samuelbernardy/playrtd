@@ -17,5 +17,5 @@ public interface GameIdMappingDao {
 		
 		public void deleteAll();
 
-		public GameIdMappingDto searchByName(String gameName);
+		public ArrayList<GameIdMappingDto> searchByName(String gameName);
 }
