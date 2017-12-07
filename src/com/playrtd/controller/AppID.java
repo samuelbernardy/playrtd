@@ -40,16 +40,6 @@ public class AppID {
 
 		////// various variables being used
 
-
-//		int[] tags = { 19, 21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662,
-//				4085, 4736 }; // category tags of games
-//
-//		String[] gameNames = new String[25]; // names of games
-//		String[] gameDesc = new String[25];// games descriptions
-//		String[] images = new String[25];// games image urls
-//		String[] ID = new String[25]; // holds game ID
-		// String[] discordURLS = new String[25]; // holds URLS for discord server
-
 		
 //		int[] tags = {19, 21, 492, 3859, 113, 1743, 3871, 7368, 1625, 1685, 4158, 3841, 3843, 4840, 128, 4182, 1662,
 //				4085, 4736 }; // category tags of games
@@ -61,9 +51,9 @@ public class AppID {
 		String[] images = new String[25];// games image urls
 		String[] AppID = new String[25]; // holds game ID
 //		String[] discordURLS = new String[25]; // holds URLS for discord server
-
+		String tempImg = "";
 		//////
-
+		
 	
 
 			/////////////////////////////////// NAMES COLLECTED
@@ -77,11 +67,11 @@ public class AppID {
 				//Elements temp = doc.select("div#tag_browse_global.tag_browse_tags");
 				Elements temp = doc.select("div.tag_browse_tag");
 				int i=0;
-				for(Element movieList: temp) {
+				for(Element gameList: temp) {
 					i++;
 				//	System.out.println(i +  " " + movieList.getAllElements().first().toString());
-					div = movieList.getAllElements().first().toString();
-					divs = movieList.getAllElements().first().text();
+					div = gameList.getAllElements().first().toString();
+					divs = gameList.getAllElements().first().text();
 					tempHolder[i-1] = div;
 					gameTagName[i-1] = divs;
 					System.out.println(gameTagName[i-1]);
@@ -137,18 +127,23 @@ public class AppID {
 				// Then further splices it with substrings to grab the APPID
 				for (i = 0; i < games.length-2; i++) {
 					AppID[i] = (games[i].substring(games[i].indexOf("appid=\"") + 7,
-							games[i].indexOf("\" onmouseover=\""))); // ID takes the info from temp array
-
+							games[i].indexOf("\" onmouseover=\"")));// ID takes the info from temp array
+					
+					String descURL = (games[i].substring(games[i].indexOf("href=\"") + 6,
+							games[i].indexOf("\" data-ds")));
+					System.out.println(descURL);
 					///////////////// Images are gathered here ///////////////////
 					images[i] = "<img src=\"http://cdn.edgecast.steamstatic.com/steam/apps/" + AppID[i] + "/header.jpg\">";
 
-					String gameURL = "http://store.steampowered.com/app/" + AppID[i];
-					doc = Jsoup.connect(gameURL).get();
+					//String gameURL = "http://store.steampowered.com/app/" + AppID[i];
+					doc = Jsoup.connect(descURL).get();
 					// this grabs the div containing game description
 					Elements gamed = doc.select("div#game_area_description.game_area_description");
 
 					////////////// Descriptions collected here/////////////////////
 					gameDesc[i]=regexChecker(gamed.text());
+					// this grabs the div containing all of the game names
+
 					//gameDesc[i] = new String(gamed.text().getBytes(), "ISO-8859-1");
 
 					/*
@@ -176,7 +171,7 @@ public class AppID {
 					// confirmations
 					if (gameDesc[i].length() < 5) {
 						Action.setDescription(gameDesc[i] + "This game is for mature audiences only. Please: "
-								+ "<a href=\"" + gameURL + "\">click here</a>" + " for a detailed description.");
+								+ "<a href=\"" + descURL + "\">click here</a>" + " for a detailed description.");
 					} else {
 						Action.setDescription(gameDesc[i]);
 					}
