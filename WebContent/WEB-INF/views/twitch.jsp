@@ -7,24 +7,31 @@
   <form action = "getgamename">
   Enter Twitch Game ID:
   <input type = "text" name="twitchgameid" value="32399">
-  <input type = "submit" value="Submit">
+  <input type = "submit" value="Get Game Name">
   </form>
    <p> ${gamename}</p>
  
  <form action = "getgameid">
   Enter Twitch Game Name:
   <input type = "text" name="twitchgamename" value="Counter-Strike: Global Offensive">
-  <input type = "submit" value="Submit">
+  <input type = "submit" value="Get Game ID">
   </form>
  <p> ${gameid}</p>
-  <p> ${gameid2}</p>
+
+<form action = "getmultiplegameids">
+  <input type = "submit" value="Get Multiple Game IDs"><br><br>
+  </form>
+${multiplegameids}
  
  <form action = "getsteamgames">
-  <input type = "submit" value="Load Steam Games">
+  <input type = "submit" value="Load Steam Games to Database">
   </form>
  <p> ${steamgames}</p>
-    
-  <a href="getstream">Sample Stream</a><br>
+ 
+  <form action = "getstream">
+  <input type = "submit" value="Get Sample Stream">
+  </form>
+ <p> ${steamgames}</p>
     
     <!-- Add a placeholder for the Twitch embed -->
     <div id="twitch-embed"></div>
