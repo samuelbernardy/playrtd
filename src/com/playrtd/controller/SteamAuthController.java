@@ -1,16 +1,17 @@
 
 package com.playrtd.controller;
 
+import com.gc.dto.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Map;
 import java.util.Random;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,8 +20,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +31,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gc.dto.*;
 import com.playrtd.resource.SteamOpenID;
 import com.playrtd.util.Credentials;
-
-import java.io.IOException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -123,18 +123,12 @@ public class SteamAuthController {
 
 			userProfile.setSteam_ID(steam_ID);
 			userProfile.setPersonaName(playerPersona);
-			// System.out.println(userProfile.getPersonaName());
 			userProfile.setAvatar(playerAvatar);
-			System.out.println("Antonella1");
-			// userProfile.setRecentGames(recentGamesArray);
-			// userProfile.setOwnedGames(ownedGamesArray);
 
 			Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-			System.out.println("Antonella 2");
 			SessionFactory factory = cfg.buildSessionFactory();
 			Session session = factory.openSession();
 			Transaction t = session.beginTransaction();
-			System.out.println("Antonella 3");
 			session.save(userProfile);
 			t.commit();
 			session.close();

@@ -147,11 +147,11 @@ public class ProductDto implements Serializable {
 		this.discord = discord;
 	}
 
-	public String getTwitchGameId() {
+	public String getTwitchGameID() {
 		return twitchGameID;
 	}
 
-	public void setTwitchGameId(String twitchGameId) {
+	public void setTwitchGameID(String twitchGameId) {
 		this.twitchGameID = twitchGameId;
 	}
 
