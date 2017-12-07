@@ -140,11 +140,17 @@ public class TwitchController {
 	@RequestMapping("/getmultiplegameids")
 	public String getMultipleTwitchGameIds(Model model, ArrayList<GameIdMappingDto> steamGames) {
 		StringBuilder sb = new StringBuilder();
+		GameIdMappingDao dao = new GameIdMappingDaoTwitch();
+		final int MAX_GAMES_PER_REQUEST = 100;
+		int recordCount = 0;
+		ArrayList<GameIdMappingDto> games = (ArrayList<GameIdMappingDto>)dao.list(recordCount + 1, MAX_GAMES_PER_REQUEST);
+		System.out.println(games); //remove
 		
-		//TODO Read 100 games at a time from the database and place on ArrayList
-		steamGames.add(new GameIdMappingDto(730, "Counter-Strike: Global Offensive", null));
-		steamGames.add(new GameIdMappingDto(30, "Day of Defeat", null));
-		steamGames.add(new GameIdMappingDto(30, "Yasmin", null));
+		//Need to repeat this code 
+		//Get 100 games from the database in an ArrayList
+		//games.add(new GameIdMappingDto(730, "Counter-Strike: Global Offensive", null));
+		//games.add(new GameIdMappingDto(30, "Day of Defeat", null));
+		//games.add(new GameIdMappingDto(30, "Yasmin", null));
 
 		try {
 			HttpClient http = HttpClientBuilder.create().build();
@@ -152,9 +158,9 @@ public class TwitchController {
 			
 			
 			//Build url with all the games on the ArrayList
-			for (int i = 0; i < steamGames.size(); i++) {
-				sb.append("name=" + URLEncoder.encode(steamGames.get(i).getGameName(), "UTF-8"));
-				if (i != steamGames.size() - 1) {
+			for (int i = 0; i < games.size(); i++) {
+				sb.append("name=" + URLEncoder.encode(games.get(i).getGameName(), "UTF-8"));
+				if (i != games.size() - 1) {
 					sb.append("&");
 				}
 			}
@@ -163,6 +169,8 @@ public class TwitchController {
 			System.out.println(getPage); //remove
 			
 			getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
+			
+			//Might need to add a Thread.sleep for this if it times out
 			HttpResponse resp = http.execute(host, getPage);
 			String jsonString = EntityUtils.toString(resp.getEntity());
 
@@ -170,11 +178,14 @@ public class TwitchController {
 			
 			System.out.println(json);
 			
-			//games are not returned in the same order requested, so we need to parse both name and id
 			JSONArray dataArr = json.getJSONArray("data");
 			System.out.println(dataArr);
 			
-			GameIdMappingDao dao = new GameIdMappingDaoTwitch();
+			
+
+			//parse each game in the json response and store the game id on the database
+			//games are not returned in the same order requested, so we need to parse both name and id
+
 			for (int i = 0; i < dataArr.length(); i++) {	
 				JSONObject game = dataArr.getJSONObject(i);
 				String gameName = game.getString("name");
