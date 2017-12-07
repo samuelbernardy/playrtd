@@ -14,7 +14,6 @@
 		<img src="resources/images/playrtdlogo.png"></img>
 	</div>
 	<nav> <a href="login_page"><img src="resources/images/loginbutton.png"></img></a>
-	<form id="sidform" action="return" method="POST">SteamID:  <input id="sidformin" type="text" name="steamID"><input type="submit" value="Login"></button></form>
 	</nav> </header>
 	<main>
 	<div id="home_info">

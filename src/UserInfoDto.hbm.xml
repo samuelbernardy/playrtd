@@ -5,8 +5,6 @@
 
 <hibernate-mapping>
 	<class name="com.gc.dto.UserInfoDto" table="userinfo" schema="gametest">
-
-
 		<id name="userno">
 			<column name="userno" sql-type="int(50)"></column>
 		</id>
@@ -19,6 +17,5 @@
 		<property name="personaName">
 			<column name="personaName" sql-type="VARCHAR(45)" length="45"></column>
 		</property>
-		
 	</class>
 </hibernate-mapping>	
