@@ -63,7 +63,7 @@ public class RandomGameGen {
 		obj = (Object[])i.next(); 
 		id = (String)obj[0];
 		name = (String)obj[1];
-		int tags = (int)obj[2];
+		String tags = (String)obj[2];
 		img = (String)obj[3];
 		desc = (String)obj[4];
 		list.add(new ProductDto(id, name, img, desc));

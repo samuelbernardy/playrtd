@@ -1,6 +1,9 @@
 package com.playrtd.controller;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -16,8 +19,23 @@ import com.gc.dto.ProductDto;
 
 
 public class AppID {
+	
+	// regex to eliminate emojis😱 ™® foreign characters  ポイントサービス用シリアルナンバー" and other special characters so mysql will be happy
+	public static String regexChecker(String str2Check) {
+		Pattern checkRegex = Pattern.compile("[a-zA-Z0-9\\t\\n ./<>?;:\"'`!@#$%^&*()\\[\\]{}_+=|\\\\-]");
+		Matcher regexMatcher = checkRegex.matcher(str2Check);
+		str2Check = "";
+		while (regexMatcher.find()) {
+			if(regexMatcher.group().length() !=0){
+				//System.out.print(regexMatcher.group());
+				str2Check+=regexMatcher.group();
+		
+		}
+		}
+		return str2Check;
+	}
 	public static void main(String[] args) {
-
+		String test = "KILL THE EMOJI 😱";
 		// hibernate and SQL connections
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
@@ -81,8 +99,8 @@ public class AppID {
 				for (Element gameList : temp) {
 					i++;
 					// span is where the titles are held
-
-					gameNames[i - 1] =new String (gameList.getElementsByTag("span").first().text().getBytes(), "ISO-8859-1");
+					gameNames[i-1] = regexChecker(gameList.getElementsByTag("span").first().text());
+					//gameNames[i - 1] = new String (gameList.getElementsByTag("span").first().text().getBytes(), "ISO-8859-1");
 				}
 
 				////////////////////////////////// APP IDS COLLECTED HERE - IMAGE IS DONE FROM
@@ -95,7 +113,7 @@ public class AppID {
 
 				
 
-				String[] games = new String[25]; // temp array to hold game info from jSoup
+				String[] games; // temp array to hold game info from jSoup
 				// This code grabs all of the information within the div of the 25 games
 				// showing.
 				for (Element gameList : temp) {
@@ -106,7 +124,7 @@ public class AppID {
 
 				// This code first splits the text to the number of values we need in the array.
 				// Then further splices it with substrings to grab the APPID
-				for (i = 0; i < 25; i++) {
+				for (i = 0; i < games.length-2; i++) {
 					AppID[i] = (games[i].substring(games[i].indexOf("appid=\"") + 7,
 							games[i].indexOf("\" onmouseover=\""))); // ID takes the info from temp array
 
@@ -119,7 +137,8 @@ public class AppID {
 					Elements gamed = doc.select("div#game_area_description.game_area_description");
 
 					////////////// Descriptions collected here/////////////////////
-					gameDesc[i] = new String(gamed.text().getBytes(), "ISO-8859-1");
+					gameDesc[i]=regexChecker(gamed.text());
+					//gameDesc[i] = new String(gamed.text().getBytes(), "ISO-8859-1");
 
 					/*
 					 * discord server code. Doesn't work entirely due to not all games offering
