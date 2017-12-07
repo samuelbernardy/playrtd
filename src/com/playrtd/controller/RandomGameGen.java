@@ -44,9 +44,10 @@ public class RandomGameGen {
 		String desc = "";
 		Object[] obj = new Object[5];
 		
-
-	
-		String quer = "select g.appID,g.gameName,g.tag,g.image,g.description from ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
+		System.out.println(Q1("5"));
+		
+		//String quer = "select g.appID,g.gameName,g.tag,g.image,g.description from ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
+		String quer =Q1("1","2","3");
 		
 		System.out.println(quer);
 		Query q2 = s.createQuery(quer);
@@ -87,5 +88,20 @@ public class RandomGameGen {
 		model.addAttribute("description", desc);
 		model.addAttribute("gameName", name);
 		return "randgame";
+		}
+		public static String Q1(String query) {
+			String temp = "select g.appID,g.gameName,g.tag,g.image,g.description from ProductDto g WHERE g.tag = "+query+" ORDER BY RAND()";
+			query = temp;
+			return query;
+		}
+		public static String Q1(String query, String query2) {
+			String temp = "select g.appID,g.gameName,g.tag,g.image,g.description from ProductDto g WHERE g.tag = "+query+ " or g.tag = " +query2 +" ORDER BY RAND()";
+			query = temp;
+			return query;
+		}
+		public static String Q1(String query, String query2, String query3) {
+			String temp = "select g.appID,g.gameName,g.tag,g.image,g.description from ProductDto g WHERE g.tag = "+query+ " or g.tag = " +query2 +" or g.tag = " +query3 +" ORDER BY RAND()";
+			query = temp;
+			return query;
 		}
 }

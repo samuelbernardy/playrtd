@@ -53,7 +53,14 @@
 
 <form>
 <div id="checkboxes">
-    <input type="radio" name="tag" value="3859" id="r1" />
+<input type="checkbox" name="tag" value="1">testval1
+<input type="checkbox" name="tag" value="2">testval2
+ <input type="checkbox" name="tag" value="3">testval3<br>
+ <input type="checkbox" name="tag" value="113">Free to Play<br>
+ <input type="checkbox" name="tag" value="21">Action<br>
+ 
+ 
+   <!--   <input type="radio" name="tag" value="3859" id="r1" />
     <label class="whatever" for="r1">Multiplayer</label><br><br>
     <input type="radio" class="whatever" name="tag" value="19" id="r2" />
     <label class="whatever" for="r2">Adventure</label><br><br>
@@ -91,7 +98,7 @@
     <label class="whatever" for="r18">Survival</label><br><br>
   <input type="radio" name="tag" value="4085" id="r19" />
     <label class="whatever" for="r19">Anime</label><br><br>
-  
+  -->
   
   
 
