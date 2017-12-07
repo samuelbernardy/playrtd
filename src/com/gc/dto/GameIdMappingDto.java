@@ -35,11 +35,11 @@ public class GameIdMappingDto implements Serializable {
 		this.gameName = gameName;
 	}
 
-	public String getTwitchGameId() {
+	public String getTwitchGameID() {
 		return twitchGameId;
 	}
 
-	public void setTwitchGameId(String twitchGameId) {
+	public void setTwitchGameID(String twitchGameId) {
 		this.twitchGameId = twitchGameId;
 	}
 
