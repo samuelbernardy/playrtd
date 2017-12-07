@@ -18,7 +18,8 @@ public class ProductDto implements Serializable {
 	private String image;
 	private String description;
 	private String discord;
-
+	private String twitchGameID;
+	
 	public ProductDto() {
 		
 	
@@ -146,8 +147,13 @@ public class ProductDto implements Serializable {
 		this.discord = discord;
 	}
 
+	public String getTwitchGameId() {
+		return twitchGameID;
+	}
 
-
+	public void setTwitchGameId(String twitchGameId) {
+		this.twitchGameID = twitchGameId;
+	}
 
 	@Override
 	public String toString() {
