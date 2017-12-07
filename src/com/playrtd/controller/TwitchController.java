@@ -34,10 +34,10 @@ public class TwitchController {
 	}
 
 	@RequestMapping("/getstream")
-	public String getTwitchStream(Model model) {
+	public String getTwitchStream(Model model, @RequestParam("twitchgamename") String gameId) {
 
 		// Twitch game ID for the game recommended
-		String gameId = "32399"; // Counter-Strike
+		gameId = "496902"; // Counter-Strike
 		String channelName = "";
 
 		// Gets all live streams for the game ID, then selects the first stream in the
@@ -132,8 +132,8 @@ public class TwitchController {
 		return "twitch";
 	}
 
-	@RequestMapping("/getmultiplegameids")
-	public String getMultipleTwitchGameIds(Model model, ArrayList<GameIdMappingDto> steamGames) {
+	@RequestMapping("/uploadtwitchgameids")
+	public String uploadTwitchGameIDs(ArrayList<GameIdMappingDto> steamGames) {
 		StringBuilder sb = new StringBuilder();
 		GameIdMappingDao dao = new GameIdMappingDaoTwitch();
 		final int MAX_GAMES_PER_REQUEST = 100;
@@ -206,6 +206,7 @@ public class TwitchController {
 		return "twitch";
 	}
 
+	/*
 	@RequestMapping("/getsteamgames")
 	public ModelAndView parseSteamGames(Model model) {
 
@@ -246,4 +247,5 @@ public class TwitchController {
 		}
 		return new ModelAndView("twitch", "steamgames", "");
 	}
+	*/
 }
