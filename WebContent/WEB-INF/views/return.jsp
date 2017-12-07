@@ -28,8 +28,8 @@
 	<div>
 		<form id="getrolling_form" action="gameon" method="GET">
 			<label><input type="checkbox" name="${opt1}" value="${opt1}"/>${opt1}</label> 
-			<label><input type="checkbox" name="${opt2}" value="${opt1}"/>${opt2}</label> 
-			<label><input type="checkbox" name="${opt3}" value="${opt1}"/>${opt3}</label> <br>
+			<label><input type="checkbox" name="${opt2}" value="${opt2}"/>${opt2}</label> 
+			<label><input type="checkbox" name="${opt3}" value="${opt3}"/>${opt3}</label> <br>
 			<label><input type="submit"></label>
 		</form>
 		</form>
