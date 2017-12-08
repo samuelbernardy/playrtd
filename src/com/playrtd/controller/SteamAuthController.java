@@ -263,7 +263,7 @@ public class SteamAuthController {
 			twitchID = (String) obj[6];
 			list.add(new ProductDto(id, name, img, desc, dscURL, twitchID));
 		}
-		
+
 		String twitchChannel = getTwitchFeed(twitchID);
 
 		s.flush();
@@ -278,19 +278,19 @@ public class SteamAuthController {
 	}
 
 	public static String Q1(String query) {
-		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchgameid from ProductDto g WHERE g.tagName = '"
+		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
 				+ query + "' ORDER BY RAND()";
 		return temp;
 	}
 
 	public static String Q1(String query, String query2) {
-		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchgameid from ProductDto g WHERE g.tagName = '"
+		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
 				+ query + "' or g.tagName = '" + query2 + "' ORDER BY RAND()";
 		return temp;
 	}
 
 	public static String Q1(String query, String query2, String query3) {
-		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchgameid from ProductDto g WHERE g.tagName = '"
+		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
 				+ query + "' or g.tagName = '" + query2 + "' or g.tagName = '" + query3 + "' ORDER BY RAND()";
 		return temp;
 
@@ -320,16 +320,13 @@ public class SteamAuthController {
 			JSONObject firstStream = allStreams.getJSONObject(0);
 
 			String thumbnailUrl = firstStream.getString("thumbnail_url");
-			
+
 			Pattern channelPattern = Pattern.compile("(?<=.+_user_).+(?=-.+)");
-			Matcher match = channelPattern.matcher(thumbnailUrl.trim());
-			
-			channelName = match.group(0);
-			
+			Matcher m = channelPattern.matcher(thumbnailUrl.trim());
+			m.find();
+			channelName = m.group(0);
 
 			// TODO Parse channel name from thumbnail URL
-			String pattern = "_user_channelNameHere-";
-			channelName = "monstercat";
 
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
