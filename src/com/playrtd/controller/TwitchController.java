@@ -89,6 +89,14 @@ public class TwitchController {
 	@RequestMapping("/getgamename")
 	public String getTwitchGameName(Model model, @RequestParam("twitchgameid") String gameId) {
 		String gameName = "";
+		String errorMessage = "";
+		
+		//Return an error message if an empty or null twitch game ID is provided
+		if (gameId == null || gameId.isEmpty()) {
+			errorMessage = "Sorry, twitch game ID can't be blank or null.";
+			model.addAttribute("errormessage", errorMessage);
+			return "twitch";
+		}
 
 		try {
 			HttpClient http = HttpClientBuilder.create().build();
@@ -100,8 +108,15 @@ public class TwitchController {
 
 			JSONObject json = new JSONObject(jsonString);
 			JSONArray dataArr = json.getJSONArray("data");
+			
+			//Return an error message if the response comes back blank: twitch game id provided
+			// is not valid 
+			if (dataArr.length() == 0) {
+				errorMessage = "Sorry, this twitch game id is incorrect.";
+				model.addAttribute("errormessage", errorMessage);
+				return "twitch";
+			}
 
-			//
 			JSONObject game = dataArr.getJSONObject(0);
 			gameName = game.getString("name");
 
@@ -118,6 +133,14 @@ public class TwitchController {
 	@RequestMapping("/getgameid")
 	public String getTwitchGameId(Model model, @RequestParam("twitchgamename") String gameName) {
 		String gameId = "";
+		String errorMessage = "";
+		
+		//Return an error message if an empty or null twitch game name is provided
+				if (gameName == null || gameName.isEmpty()) {
+					errorMessage = "Sorry, game name can't be blank or null.";
+					model.addAttribute("errormessage", errorMessage);
+					return "twitch";
+				}
 
 		try {
 			HttpClient http = HttpClientBuilder.create().build();
@@ -130,6 +153,15 @@ public class TwitchController {
 
 			JSONObject json = new JSONObject(jsonString);
 			JSONArray dataArr = json.getJSONArray("data");
+			
+			//Return an error message if the response comes back blank: twitch game name provided
+			// is not valid
+			if (dataArr.length() == 0) {
+				errorMessage = "Sorry, this game name does not have a Twitch Game ID.";
+				model.addAttribute("errormessage", errorMessage);
+				return "twitch";
+			}
+			
 			JSONObject game = dataArr.getJSONObject(0);
 			gameId = game.getString("id");
 
