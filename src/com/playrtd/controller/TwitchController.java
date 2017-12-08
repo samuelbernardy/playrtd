@@ -3,6 +3,9 @@ package com.playrtd.controller;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.gc.dao.ProductDao;
 import com.gc.dao.ProductDaoHibernate;
 import com.gc.dto.ProductDto;
@@ -33,7 +37,6 @@ public class TwitchController {
 	public String getTwitchStream(Model model, @RequestParam("twitchgameid") String gameId) {
 
 		// Twitch game ID for the game recommended
-		gameId = "496902"; // Counter-Strike
 		String channelName = "";
 
 		// Gets all live streams for the game ID, then selects the first stream in the
@@ -54,12 +57,14 @@ public class TwitchController {
 			// Gets the first stream in the array (most views)
 			JSONObject firstStream = allStreams.getJSONObject(0);
 
+			// Parse channel name from thumbnail URL
 			String thumbnailUrl = firstStream.getString("thumbnail_url");
-			System.out.println(thumbnailUrl); // Remove
 
-			// TODO Parse channel name from thumbnail URL
-			String pattern = "_user_channelNameHere-";
-			channelName = "monstercat";
+			Pattern channelPattern = Pattern.compile("(?<=.+_user_).+(?=-.+)");
+			Matcher m = channelPattern.matcher(thumbnailUrl.trim());
+			m.find();
+			channelName = m.group(0);
+
 			model.addAttribute("channel", channelName);
 
 		} catch (ClientProtocolException e) {
