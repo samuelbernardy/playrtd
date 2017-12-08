@@ -5,7 +5,8 @@
 <head>
 <link href="resources/styles.css" type="text/css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+<title>You rolled ${gameName}</title>
 </head>
 <body>
 	<header>
@@ -16,22 +17,31 @@
 		src="resources/images/loginbutton.png"></img></a> </nav> </header>
 	<main>
 	<div>
-		<h1>Welcome to PlayRTD</h1>
-		<p>We're taking the hassle out of the search for your next video
-			game. Yeah yeah, you got options, but you don't have is decisiveness.
-			That's right Mr.Twenty-Browser-Tabs-And-Counting, we did it all for
-			you. Log in with your Steam Account and get a tailored suggestion
-			with the media you need to get involved quick. Don't believe us?
-			Check out some of the suggestions below and tell us we're not the
-			best match making service since $1 Valentines.</p>
+		${gameImg}
+		<p>${gameDesc}</p>
 	</div>
-	<iframe src="https://player.twitch.tv/?channel=berkriptepetv"
-		frameborder="0" allowfullscreen="true" scrolling="no" height="378"
-		width="620"></iframe>
-	<a
-		href="https://www.twitch.tv/berkriptepetv?tt_content=text_link&tt_medium=live_embed"
-		style="padding: 2px 0px 4px; display: block; width: 345px; font-weight: normal; font-size: 10px; text-decoration: underline;">Watch
-		live video from berkriptepetv on www.twitch.tv</a>
+	<div id="twitch-embed"></div>
+
+    <!-- Load the Twitch embed script -->
+
+    <!--
+      Create a Twitch.Embed object that will render
+      within the "twitch-embed" root element.
+    -->
+    <script type="text/javascript">
+      var embed = new Twitch.Embed("twitch-embed", {
+        width: 854,
+        height: 480,
+        channel: "${twitchChan}",
+        layout: "video",
+        autoplay: false
+      });
+
+      embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+        var player = embed.getPlayer();
+        player.play();
+      });
+    </script>
 	<div>
 		<div>Container1</div>
 		<div>Container2</div>

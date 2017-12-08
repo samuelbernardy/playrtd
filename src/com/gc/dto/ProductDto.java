@@ -19,16 +19,15 @@ public class ProductDto implements Serializable {
 	private String description;
 	private String discord;
 	private String twitchGameID;
-	
+
 	public ProductDto() {
-		
-	
+
 	}
 
-	
-	
-	
-	public ProductDto(int id, String tag, String gameName, String appID, String image, String description, String discord) {
+
+
+	public ProductDto(int id, String tag, String gameName, String appID, String image, String description,
+			String discord) {
 		super();
 		this.id = id;
 		this.tag = tag;
@@ -39,18 +38,17 @@ public class ProductDto implements Serializable {
 		this.discord = discord;
 	}
 
-	public ProductDto(String gameName, String appID, String image, String description) {
+	public ProductDto(String gameName, String appID, String image, String description, String discord, String twitchGameID) {
 		super();
-	
+
 		this.gameName = gameName;
 		this.appID = appID;
 		this.image = image;
 		this.description = description;
-		
+		this.discord = discord;
+		this.twitchGameID = twitchGameID;
+
 	}
-
-
-
 
 	public int getId() {
 		return id;
@@ -60,34 +58,21 @@ public class ProductDto implements Serializable {
 		this.id = id;
 	}
 
-	
 	public String getTag() {
 		return tag;
 	}
-
-
-
 
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
-
-
-
 	public String getTagName() {
 		return tagName;
 	}
 
-
-
-
 	public void setTagName(String tagName) {
 		this.tagName = tagName;
 	}
-
-
-
 
 	public String getGameName() {
 		return gameName;
@@ -105,43 +90,25 @@ public class ProductDto implements Serializable {
 		this.appID = appID;
 	}
 
-
-
-
 	public String getImage() {
 		return image;
 	}
-
-
-
 
 	public void setImage(String image) {
 		this.image = image;
 	}
 
-
-
-
 	public String getDescription() {
 		return description;
 	}
-
-
-
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-
-
-
 	public String getDiscord() {
 		return discord;
 	}
-
-
-
 
 	public void setDiscord(String discord) {
 		this.discord = discord;
@@ -157,17 +124,7 @@ public class ProductDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return gameName + appID +image +description;
+		return gameName + appID + image + description;
 	}
 
-
-
-
-
-
-
-
-	
-	
-	
 }

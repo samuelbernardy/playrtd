@@ -7,15 +7,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -133,7 +144,7 @@ public class SteamAuthController {
 			t.commit();
 			session.close();
 			System.out.println(recentGamesArray.size());
-			
+
 			ArrayList<String> selectTags = new ArrayList<String>();
 			try {
 				ArrayList<String> recentTagsArray = new ArrayList<String>();
@@ -159,7 +170,7 @@ public class SteamAuthController {
 				}
 
 				// create user's random options
-				
+
 				Random rand = new Random();
 				String tempTag = "";
 				while (selectTags.size() < 3) {
@@ -206,8 +217,125 @@ public class SteamAuthController {
 	}
 
 	@RequestMapping(value = "/gameon", method = RequestMethod.GET)
-	public String getgame() {
+	public String getgame(Model model, @RequestParam(value = "opt1", required = false) String tag1,
+			@RequestParam(value = "opt2", required = false) String tag2,
+			@RequestParam(value = "opt3", required = false) String tag3) {
+		System.out.println("1" + tag1 + "2" + tag2 + "3" + tag3);
+		Configuration cfg = new Configuration();
+		cfg.configure("hibernate.cfg.xml");
+		SessionFactory sf = cfg.buildSessionFactory();
+		Session s = sf.openSession();
+		Transaction tx = s.beginTransaction();
 
+		// System.out.println(tag);
+		String id = "";
+		String name = "";
+
+		String img = "";
+		String desc = "";
+		String dscURL = "";
+		String twitchID = "";
+		Object[] obj = new Object[7];
+
+		// String quer = "select g.appID,g.gameName,g.tag,g.image,g.description from
+		// ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
+		String quer = Q1(tag1, tag2, tag3);
+
+		System.out.println(quer);
+		Query q2 = s.createQuery(quer);
+
+		q2.setFirstResult(1);
+		q2.setMaxResults(1);
+		List results = q2.list();
+		Iterator i = results.iterator();
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		while (i.hasNext()) {
+
+			// Objects position is being correlated by the createQuery above. IE. g.appID is
+			// the first, so that would be obj[0]
+			obj = (Object[]) i.next();
+			id = (String) obj[0];
+			name = (String) obj[1];
+			String tags = (String) obj[2];
+			img = (String) obj[3];
+			desc = (String) obj[4];
+			dscURL = (String) obj[5];
+			twitchID = (String) obj[6];
+			list.add(new ProductDto(id, name, img, desc, dscURL, twitchID));
+		}
+		
+		String twitchChannel = getTwitchFeed(twitchID);
+
+		s.flush();
+		s.close();
+		model.addAttribute("gameID", id);
+		model.addAttribute("gameImg", img);
+		model.addAttribute("gameDesc", desc);
+		model.addAttribute("gameName", name);
+		model.addAttribute("discord", dscURL);
+		model.addAttribute("twitchChan", twitchChannel);
 		return "gameon";
+	}
+
+	public static String Q1(String query) {
+		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchgameid from ProductDto g WHERE g.tagName = '"
+				+ query + "' ORDER BY RAND()";
+		return temp;
+	}
+
+	public static String Q1(String query, String query2) {
+		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchgameid from ProductDto g WHERE g.tagName = '"
+				+ query + "' or g.tagName = '" + query2 + "' ORDER BY RAND()";
+		return temp;
+	}
+
+	public static String Q1(String query, String query2, String query3) {
+		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchgameid from ProductDto g WHERE g.tagName = '"
+				+ query + "' or g.tagName = '" + query2 + "' or g.tagName = '" + query3 + "' ORDER BY RAND()";
+		return temp;
+
+	}
+
+	public static String getTwitchFeed(String twitchGameID) {
+		// Twitch game ID for the game recommended
+		// Counter-Strike
+		String channelName = "";
+
+		// Gets all live streams for the game ID, then selects the first stream in the
+		// array (most views)
+		try {
+			HttpClient http = HttpClientBuilder.create().build();
+			HttpHost host = new HttpHost("api.twitch.tv", 443, "https");
+			HttpGet getPage = new HttpGet("/helix/streams?game_id=" + twitchGameID);
+			getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
+
+			// TODO Handle response exceptions
+			HttpResponse resp = http.execute(host, getPage);
+
+			String jsonString = EntityUtils.toString(resp.getEntity());
+			JSONObject json = new JSONObject(jsonString);
+			JSONArray allStreams = json.getJSONArray("data");
+
+			// Gets the first stream in the array (most views)
+			JSONObject firstStream = allStreams.getJSONObject(0);
+
+			String thumbnailUrl = firstStream.getString("thumbnail_url");
+			
+			Pattern channelPattern = Pattern.compile("(?<=.+_user_).+(?=-.+)");
+			Matcher match = channelPattern.matcher(thumbnailUrl.trim());
+			
+			channelName = match.group(0);
+			
+
+			// TODO Parse channel name from thumbnail URL
+			String pattern = "_user_channelNameHere-";
+			channelName = "monstercat";
+
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return channelName;
 	}
 }
