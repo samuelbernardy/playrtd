@@ -7,6 +7,7 @@
 	rel="stylesheet">
 <link href="resources/styles.css" type="text/css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
 <title>PlayRTD</title>
 </head>
 <body>
@@ -17,8 +18,8 @@
 	<nav> <a href="login_page"><img
 		src="resources/images/loginbutton.png"></img></a> </nav> </header>
 	<main>
-	<div id="home_info">
-		<h1>Welcome to PlayRTD</h1>
+	<div class="info_column">
+		<h1>Welcome to PlayRTD!</h1>
 		<p>We're taking the hassle out of the search for your next video
 			game. Yeah yeah, you got options, but what you don't have is
 			decisiveness. That's right Mr.Twenty-Browser-Tabs-And-Counting, we
@@ -27,22 +28,7 @@
 			believe us? Check out some of the suggestions below and tell us we're
 			not the best match making service since $1 Valentines.</p>
 	</div>
-	<div>
-		<div>Container1</div>
-		<div>Container2</div>
-		<div>Container3</div>
-		<div>Container4</div>
-	</div>
 	</main>
-	<footer>
-	<div class="recents_container">
-		<div class="recent">
-			<h1></h1>
-		</div>
-		<div class="recent"></div>
-		<div class="recent"></div>
-		<div class="recent"></div>
-	</div>
-	</footer>
+	<footer> </footer>
 </body>
 </html>

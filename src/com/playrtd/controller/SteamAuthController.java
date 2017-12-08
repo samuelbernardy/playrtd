@@ -277,17 +277,17 @@ public class SteamAuthController {
 		return "gameon";
 	}
 
-	public static String Q1(String query) {
-		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
-				+ query + "' ORDER BY RAND()";
-		return temp;
-	}
-
-	public static String Q1(String query, String query2) {
-		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
-				+ query + "' or g.tagName = '" + query2 + "' ORDER BY RAND()";
-		return temp;
-	}
+//	public static String Q1(String query) {
+//		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
+//				+ query + "' ORDER BY RAND()";
+//		return temp;
+//	}
+//
+//	public static String Q1(String query, String query2) {
+//		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
+//				+ query + "' or g.tagName = '" + query2 + "' ORDER BY RAND()";
+//		return temp;
+//	}
 
 	public static String Q1(String query, String query2, String query3) {
 		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"

@@ -20,18 +20,19 @@
 	</div>
 	</header>
 	<main>
-	<div>
+	<div class="info_column">
 		<h1>${nogames}Itlooks like you like ${opt1}, ${opt2}, and ${opt3}
 			games.</h1>
 		<h4>Select the ones you want to roll for!</h4>
-	</div>
-	<div>
-		<form id="getrolling_form" action="gameon" method="GET">
-			<label><input type="checkbox" name="opt1" value="${opt1}" />${opt1}</label>
-			<label><input type="checkbox" name="opt2" value="${opt2}"/>${opt2}</label> <label><input
-				type="checkbox" name="opt3" value="${opt3}"/>${opt3}</label> <br> <label><input
-				type="submit"></label>
-		</form>
+
+		<div>
+			<form id="getrolling_form" action="gameon" method="GET">
+				<label><input type="checkbox" name="opt1" value="${opt1}" />${opt1}</label>
+				<label><input type="checkbox" name="opt2" value="${opt2}" />${opt2}</label>
+				<label><input type="checkbox" name="opt3" value="${opt3}" />${opt3}</label>
+				<br> <input id="dice" type="image" src="resources/images/dieroll.png" alt="submit">
+			</form>
+		</div>
 	</div>
 	<div>
 		<div>Container1</div>
