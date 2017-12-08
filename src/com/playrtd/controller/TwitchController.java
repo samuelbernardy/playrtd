@@ -35,10 +35,16 @@ public class TwitchController {
 
 	@RequestMapping("/getstream")
 	public String getTwitchStream(Model model, @RequestParam("twitchgameid") String gameId) {
-
-		// Twitch game ID for the game recommended
+		String errorMessage = "";
 		String channelName = "";
-
+		
+		//Return an error message if an empty or null twitch game ID is provided
+		if (gameId == null || gameId.isEmpty()) {
+			errorMessage = "Sorry, twitch game ID can't be blank or null.";
+			model.addAttribute("errormessage", errorMessage);
+			return "twitch";
+		}
+		
 		// Gets all live streams for the game ID, then selects the first stream in the
 		// array (most views)
 		try {
@@ -46,20 +52,25 @@ public class TwitchController {
 			HttpHost host = new HttpHost("api.twitch.tv", 443, "https");
 			HttpGet getPage = new HttpGet("/helix/streams?game_id=" + gameId);
 			getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
-
-			// TODO Handle response exceptions
 			HttpResponse resp = http.execute(host, getPage);
-
+			
 			String jsonString = EntityUtils.toString(resp.getEntity());
 			JSONObject json = new JSONObject(jsonString);
 			JSONArray allStreams = json.getJSONArray("data");
-
+			
+			//Return an error message if the response comes back blank: twitch game id provided
+			// is not valid or the game has no live streams at the moment
+			if (allStreams.length() == 0) {
+				errorMessage = "Sorry, this game does not have a live stream or the twitch game id is incorrect.";
+				model.addAttribute("errormessage", errorMessage);
+				return "twitch";
+			}
+			
 			// Gets the first stream in the array (most views)
 			JSONObject firstStream = allStreams.getJSONObject(0);
 
 			// Parse channel name from thumbnail URL
 			String thumbnailUrl = firstStream.getString("thumbnail_url");
-
 			Pattern channelPattern = Pattern.compile("(?<=.+_user_).+(?=-.+)");
 			Matcher m = channelPattern.matcher(thumbnailUrl.trim());
 			m.find();
@@ -139,14 +150,12 @@ public class TwitchController {
 		final int MAX_GAMES_PER_REQUEST = 100;
 		int recordCount = 0;
 		ArrayList<ProductDto> games = (ArrayList<ProductDto>) dao.list(recordCount + 1, MAX_GAMES_PER_REQUEST);
-		System.out.println("Array has " + games.size()); // remove
 
 		try {
 			while (games.size() != 0) {
 				// clears StringBuilder
 				sb = new StringBuilder();
 
-				System.out.println(games); // remove
 				HttpClient http = HttpClientBuilder.create().build();
 				HttpHost host = new HttpHost("api.twitch.tv", 443, "https");
 
@@ -159,16 +168,14 @@ public class TwitchController {
 				}
 
 				HttpGet getPage = new HttpGet("/helix/games?" + sb.toString());
-				System.out.println(getPage); // remove
 
 				getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
 				HttpResponse resp = http.execute(host, getPage);
 
 				String jsonString = EntityUtils.toString(resp.getEntity());
 				JSONObject json = new JSONObject(jsonString);
-				System.out.println(json); //
+				
 				JSONArray dataArr = json.getJSONArray("data");
-				System.out.println(dataArr); //
 
 				// parse each game in the json response and store the game id on the database
 				// games are not returned in the same order requested, so we need to parse both
@@ -192,7 +199,6 @@ public class TwitchController {
 				// Update count to grab next 100 records
 				recordCount += MAX_GAMES_PER_REQUEST;
 				games = (ArrayList<ProductDto>) dao.list(recordCount + 1, MAX_GAMES_PER_REQUEST);
-				System.out.println("Array has " + games.size()); // remove
 
 				// API has a limit of 2 requests per second; setting a timer for 3 seconds to
 				// avoid errors

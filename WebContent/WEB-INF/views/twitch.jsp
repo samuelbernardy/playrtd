@@ -21,13 +21,14 @@
 <form action = "uploadtwitchgameids">
   <input type = "submit" value="Load Twitch Game IDs to Database"><br><br>
   </form>
-${multiplegameids}
  
   <form action = "getstream">
   <input type ="text" name = "twitchgameid" value="32399">
   <input type = "submit" value="Get Stream">
   </form>
  <p> ${steamgames}</p>
+ 
+  <p> ${errormessage}</p>
     
     <!-- Add a placeholder for the Twitch embed -->
     <div id="twitch-embed"></div>
