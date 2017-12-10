@@ -33,6 +33,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,7 @@ import org.jsoup.select.Elements;
 public class SteamAuthController {
 
 	private SteamOpenID steamOpenID = new SteamOpenID();
+	String defaultTag = "";
 
 	@RequestMapping(value = "/return", method = { RequestMethod.GET })
 	public String postLoginPage(HttpSession jSession, Model model, HttpServletRequest request) throws IOException {
@@ -148,13 +150,20 @@ public class SteamAuthController {
 			ArrayList<String> selectTags = new ArrayList<String>();
 			try {
 				ArrayList<String> recentTagsArray = new ArrayList<String>();
-				for (int i = 0; i < recentGamesArray.size(); i++) {
-					Document doc = Jsoup.connect("http://store.steampowered.com/app/" + recentGamesArray.get(i)).get();
 
-					Elements tempTag = doc.select("div.glance_tags.popular_tags");
-					// System.out.println(temp.toString());
+				for (int i = 0; i < recentGamesArray.size(); i++) {
+					Document doc = Jsoup
+							.connect("http://store.steampowered.com/app/" + recentGamesArray.get(i) + "/agecheck")
+							.get();
+					Elements tempTag;
 					String holder = "";
 					String[] games;
+
+					if (doc.toString().contains("glance_tags popular_tags")) {
+						tempTag = doc.select("div.glance_tags.popular_tags");
+					} else {
+						tempTag = doc.select("div.glance_tags_ctn.popular_tags_ctn");
+					}
 					for (Element tagHolder : tempTag) {
 						// System.out.println(i + " " + tagHolder.toString());
 						holder = tagHolder.toString();
@@ -164,9 +173,20 @@ public class SteamAuthController {
 					// This code first splits the text to the number of values we need in the array.
 					// Then further splices it with substrings to grab the APPID
 					for (int j = 0; j < 3; j++) {
-						recentTagsArray
-								.add(games[j].substring(games[j].indexOf("none;\">") + 8, games[j].indexOf(" </")));
+						if (doc.toString().contains("glance_tags popular_tags")) {
+
+							recentTagsArray
+									.add(games[j].substring(games[j].indexOf("none;\">") + 8, games[j].indexOf(" </")));
+						} else {
+
+							recentTagsArray.add(
+									games[j].substring(games[j].indexOf("\"app_tag\">") + 11, games[j].indexOf(" </")));
+						}
 					}
+					// recentTagsArray
+					// .add(games[j].substring(games[j].indexOf("none;\">") + 8, games[j].indexOf("
+					// </")));
+					// }
 				}
 
 				// create user's random options
@@ -184,19 +204,19 @@ public class SteamAuthController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			defaultTag = selectTags.get(0).toString();
 			model.addAttribute("avatar", playerAvatar);
 			model.addAttribute("persona", playerPersona);
 			model.addAttribute("opt1", selectTags.get(0).toString());
 			model.addAttribute("opt2", selectTags.get(1).toString());
 			model.addAttribute("opt3", selectTags.get(2).toString());
+			model.addAttribute("hasGames", "It seems that you like " + selectTags.get(0).toString() + ", "
+					+ selectTags.get(1).toString() + ", and " + selectTags.get(2).toString() + " games.");
 
 			return "return";
-		} else
+		} else {
 
-		{
-
-			String nogamesnotif = "fgfdhgnfh";
+			String nogamesnotif = "It looks like you haven't played for a little bit...";
 			model.addAttribute("nogames", nogamesnotif);
 
 			return "return";
@@ -239,6 +259,9 @@ public class SteamAuthController {
 
 		// String quer = "select g.appID,g.gameName,g.tag,g.image,g.description from
 		// ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
+		if (tag1 == null && tag2 == null && tag3 == null) {
+			tag1 = defaultTag;
+		}
 		String quer = Q1(tag1, tag2, tag3);
 
 		System.out.println(quer);
@@ -264,7 +287,9 @@ public class SteamAuthController {
 			list.add(new ProductDto(id, name, img, desc, dscURL, twitchID));
 		}
 
-		String twitchChannel = getTwitchFeed(twitchID);
+		String discordResult = "https://www.google.com/search?q=discord server AND " + name;
+
+		String twitchResponse = getTwitchFeed(twitchID);
 
 		s.flush();
 		s.close();
@@ -272,22 +297,10 @@ public class SteamAuthController {
 		model.addAttribute("gameImg", img);
 		model.addAttribute("gameDesc", desc);
 		model.addAttribute("gameName", name);
-		model.addAttribute("discord", dscURL);
-		model.addAttribute("twitchChan", twitchChannel);
+		model.addAttribute("discord", discordResult);
+		model.addAttribute("twitchWidget", twitchResponse);
 		return "gameon";
 	}
-
-//	public static String Q1(String query) {
-//		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
-//				+ query + "' ORDER BY RAND()";
-//		return temp;
-//	}
-//
-//	public static String Q1(String query, String query2) {
-//		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
-//				+ query + "' or g.tagName = '" + query2 + "' ORDER BY RAND()";
-//		return temp;
-//	}
 
 	public static String Q1(String query, String query2, String query3) {
 		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
@@ -300,39 +313,64 @@ public class SteamAuthController {
 		// Twitch game ID for the game recommended
 		// Counter-Strike
 		String channelName = "";
+		String twitchResponse = "";
+		if (twitchGameID == null || twitchGameID.isEmpty()) {
+
+			twitchResponse = "<img id=\"missingtwitch\" src=\"resources/images/static.gif\"></img>";
+		} else {
+
+			try {
+				HttpClient http = HttpClientBuilder.create().build();
+				HttpHost host = new HttpHost("api.twitch.tv", 443, "https");
+				HttpGet getPage = new HttpGet("/helix/streams?game_id=" + twitchGameID);
+				getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
+
+				// TODO Handle response exceptions
+				HttpResponse resp = http.execute(host, getPage);
+
+				String jsonString = EntityUtils.toString(resp.getEntity());
+				JSONObject json = new JSONObject(jsonString);
+				System.out.println(json.toString());
+				try {
+					JSONArray allStreams = json.getJSONArray("data");
+					JSONObject firstStream = allStreams.getJSONObject(0);
+
+					String thumbnailUrl = firstStream.getString("thumbnail_url");
+
+					Pattern channelPattern = Pattern.compile("(?<=.+_user_).+(?=-.+)");
+					Matcher m = channelPattern.matcher(thumbnailUrl.trim());
+					m.find();
+
+					channelName = m.group(0);
+
+					twitchResponse = "<div id=\"twitch-embed\"></div>" + "		<script type=\"text/javascript\">"
+							+ "      var embed = new Twitch.Embed(\"twitch-embed\", {" + "        width: 750,"
+							+ "        height: 440," + "        channel: \"" + channelName + "\","
+							+ "        layout: \"video\"," + "        autoplay: false" + "      });"
+							+ "      embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {"
+							+ "        var player = embed.getPlayer();" + "        player.play();" + "      });"
+							+ "    </script>";
+
+				} catch (JSONException e) {
+					twitchResponse = "<img id=\"missingtwitch\" src=\"resources/images/static.gif\"></img>";
+					return twitchResponse;
+				}
+				// Gets the first stream in the array (most views)
+				
+				// TODO Parse channel name from thumbnail URL
+
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
 
 		// Gets all live streams for the game ID, then selects the first stream in the
 		// array (most views)
-		try {
-			HttpClient http = HttpClientBuilder.create().build();
-			HttpHost host = new HttpHost("api.twitch.tv", 443, "https");
-			HttpGet getPage = new HttpGet("/helix/streams?game_id=" + twitchGameID);
-			getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
 
-			// TODO Handle response exceptions
-			HttpResponse resp = http.execute(host, getPage);
+		return twitchResponse;
 
-			String jsonString = EntityUtils.toString(resp.getEntity());
-			JSONObject json = new JSONObject(jsonString);
-			JSONArray allStreams = json.getJSONArray("data");
-
-			// Gets the first stream in the array (most views)
-			JSONObject firstStream = allStreams.getJSONObject(0);
-
-			String thumbnailUrl = firstStream.getString("thumbnail_url");
-
-			Pattern channelPattern = Pattern.compile("(?<=.+_user_).+(?=-.+)");
-			Matcher m = channelPattern.matcher(thumbnailUrl.trim());
-			m.find();
-			channelName = m.group(0);
-
-			// TODO Parse channel name from thumbnail URL
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return channelName;
 	}
 }

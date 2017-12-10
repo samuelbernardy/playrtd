@@ -18,7 +18,7 @@
 	<nav> <a href="login_page"><img
 		src="resources/images/loginbutton.png"></img></a> </nav> </header>
 	<main>
-	<div class="info_column">
+	<div id="home_info" class="info_column">
 		<h1>Welcome to PlayRTD!</h1>
 		<p>We're taking the hassle out of the search for your next video
 			game. Yeah yeah, you got options, but what you don't have is
@@ -29,6 +29,9 @@
 			not the best match making service since $1 Valentines.</p>
 	</div>
 	</main>
-	<footer> </footer>
+	<footer class="footer">
+	<div></div>
+	<div></div>
+	</footer>
 </body>
 </html>

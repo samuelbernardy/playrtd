@@ -29,33 +29,13 @@
 			<p>${gameDesc}</p>
 		</div>
 
-		<a id="discordlink" href=""><img class="discord_strip"
-			src="resources/images/discord_strip.png"></img></a>
+		<a id="discordlink" href="${discord}"><img class="discord_strip"
+			src="resources/images/discord_strip.png"></img></a> ${twitchWidget}
 
-
-		<div id="twitch-embed"></div>
-
-		<!-- Load the Twitch embed script -->
-		<!--
-      Create a Twitch.Embed object that will render
-      within the "twitch-embed" root element.
-    -->
-		<script type="text/javascript">
-      var embed = new Twitch.Embed("twitch-embed", {
-        width: 750,
-        height: 440,
-        channel: "${twitchChan}",
-        layout: "video",
-        autoplay: false
-      });
-
-      embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
-        var player = embed.getPlayer();
-        player.play();
-      });
-    </script>
 	</div>
 	</main>
-	<footer> </footer>
-</body>
+	<footer>
+	<div></div>
+	<nav><a href="home">Home</a><a href="about">About Us</a><a href="documentation">How it Works</a></nav>
+	</footer>
 </html>

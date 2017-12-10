@@ -65,6 +65,10 @@ main {
 	display: flex;
 }
 
+#home_info p {
+	font-size: 2rem;
+}
+
 .info_header {
 	display: flex;
 	flex-direction: row;
@@ -72,7 +76,7 @@ main {
 
 .info_column h1 {
 	font-size: 3rem;
-	margin: 40px 0px 0px 0px;
+	margin: 30px 0px 0px 0px;
 	text-align: center;
 }
 
@@ -117,7 +121,7 @@ to {
 }
 
 #discordlink {
-	margin: 40px 0px;	
+	margin: 40px 0px;
 }
 
 label {
@@ -138,8 +142,17 @@ label:hover {
 	cursor: pointer;
 }
 
-footer {backgroundcolor
-	
+#missingtwitch {
+	width: 750px;
+	height: 440px;
+}
+
+.footer {
+	display: flex;
+	flex-direction: column;
+	background-color: rgba(64, 73, 91, 1):;
+	height: 200px;
+	width: 100%;
 }
 
 /* Return page style */
