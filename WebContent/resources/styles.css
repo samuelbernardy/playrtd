@@ -6,7 +6,9 @@
 	color: white;
 	text-decoration: none;
 }
-
+.fadeIn {
+	opacity: 0;
+}
 html {
 	background-image: url("./images/playrtdbg.jpg");
 	background-size: cover;
@@ -32,6 +34,7 @@ header {
 	box-shadow: 0px 7px 68px -2px rgba(0, 0, 0, 0.75);
 	border-radius: 0px 0px 5px 5px;
 	position: fixed;
+	display: flex;
 }
 
 header img {
@@ -55,6 +58,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	display: flex;
 }
 
 .info_column {

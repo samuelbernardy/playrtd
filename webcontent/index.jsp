@@ -8,16 +8,27 @@
 <link href="resources/styles.css" type="text/css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://embed.twitch.tv/embed/v1.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <title>PlayRTD</title>
 </head>
 <body>
-	<header>
+	<script>
+		$(window).on("load", function() {
+			console.log('Starting Anim')
+			$(".fadeIn").animate({
+				opacity : 1
+			}, 1000);
+			console.log('Ending Anim')
+		});
+	</script>
+
+	<header class="fadeIn">
 	<div id="headlogo">
 		<img src="resources/images/playrtdlogo.png"></img>
 	</div>
 	<nav> <a href="login_page"><img
 		src="resources/images/loginbutton.png"></img></a> </nav> </header>
-	<main>
+	<main class="fadeIn">
 	<div id="home_info" class="info_column">
 		<h1>Welcome to PlayRTD!</h1>
 		<p>We're taking the hassle out of the search for your next video
@@ -29,8 +40,9 @@
 			not the best match making service since $1 Valentines.</p>
 	</div>
 	</main>
-	<footer>
+	<footer class="fadeIn">
 	<div></div>
-	<nav> <a href="">Home</a><a href="about">About Us</a></nav> </footer>
+	<nav> <a href="">Home</a>
+	<a href="about">About Us</a></nav> </footer>
 </body>
 </html>
