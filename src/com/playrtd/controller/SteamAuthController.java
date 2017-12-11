@@ -40,6 +40,7 @@ import org.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,7 +63,8 @@ public class SteamAuthController {
 	// This mapping handles Steam Authentication and returns use data including
 	// STEAMID, RECENTGAMES, and OWNEDGAMES
 	@RequestMapping(value = "/return", method = { RequestMethod.GET })
-	public String postLoginPage(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String postLoginPage(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 
 		// declare variables
 		String userId = this.steamOpenID.verify(request.getRequestURL().toString(), request.getParameterMap());
@@ -243,16 +245,18 @@ public class SteamAuthController {
 	}
 
 	@RequestMapping(value = "/gameon", method = RequestMethod.GET)
-	public String getgame(Model model, @RequestParam(value = "opt1", required = false) String tag1,
+	public String getgame(@CookieValue("steamID") Long steam_ID, @CookieValue("avatar") String avatar,
+			@CookieValue("persona") String persona, Model model,
+			@RequestParam(value = "opt1", required = false) String tag1,
 			@RequestParam(value = "opt2", required = false) String tag2,
 			@RequestParam(value = "opt3", required = false) String tag3, HttpSession jSession) {
 		System.out.println("1" + tag1 + "2" + tag2 + "3" + tag3);
+		System.out.println(steam_ID + avatar + persona);
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
 		SessionFactory sf = cfg.buildSessionFactory();
 		Session s = sf.openSession();
 		Transaction tx = s.beginTransaction();
-		jSession.getAttribute("sessionId");
 
 		// System.out.println(tag);
 		String id = "";
@@ -300,6 +304,8 @@ public class SteamAuthController {
 
 		s.flush();
 		s.close();
+		model.addAttribute("avatar", avatar);
+		model.addAttribute("persona", persona);
 		model.addAttribute("gameID", id);
 		model.addAttribute("gameImg", img);
 		model.addAttribute("gameDesc", desc);
