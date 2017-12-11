@@ -17,7 +17,7 @@ import com.gc.dto.ProductDto;
 
 public class AppID {
 	
-	// regex to eliminate emojis😱 ™® foreign characters  ポイントサービス用シリアルナンバー" and other special characters so mysql will be happy
+	// regex to eliminate emojisðŸ˜± â„¢Â® foreign characters  ãƒ�ã‚¤ãƒ³ãƒˆã‚µãƒ¼ãƒ“ã‚¹ç”¨ã‚·ãƒªã‚¢ãƒ«ãƒŠãƒ³ãƒ�ãƒ¼" and other special characters so mysql will be happy
 	public static String regexChecker(String str2Check) {
 		Pattern checkRegex = Pattern.compile("[a-zA-Z0-9\\t\\n ./<>?;:\"'`!@#$%^&*()\\[\\]{}_+=|\\\\-]");
 		Matcher regexMatcher = checkRegex.matcher(str2Check);
@@ -32,7 +32,7 @@ public class AppID {
 		return str2Check;
 	}
 	public static void main(String[] args) {
-		String test = "KILL THE EMOJI 😱";
+		String test = "KILL THE EMOJI ðŸ˜±";
 		// hibernate and SQL connections
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
@@ -135,7 +135,7 @@ public class AppID {
 							games[i].indexOf("\" data-ds")));
 					System.out.println(descURL);
 					///////////////// Images are gathered here ///////////////////
-					images[i] = "<img src=\"http://cdn.edgecast.steamstatic.com/steam/apps/" + AppID[i] + "/header.jpg\">";
+					images[i] = "http://cdn.edgecast.steamstatic.com/steam/apps/" + AppID[i] + "/header.jpg";
 
 					//String gameURL = "http://store.steampowered.com/app/" + AppID[i];
 					doc = Jsoup.connect(descURL).get();
