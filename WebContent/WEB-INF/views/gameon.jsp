@@ -15,27 +15,34 @@
 	<div id="headlogo">
 		<img src="resources/images/playrtdlogo.png"></img>
 	</div>
-	<nav> <a href="https://www.steamcommunity.com/openid/login/"><img
-		src="resources/images/loginbutton.png"></img></a> </nav> </header>
+	<div id="logged_head">
+		<p>Rolling as ${persona}</p>
+		<img class="avatar" src="${avatar}"></img>
+	</div>
+	</header>
 	<main>
+	<div id="logoptions">
+		<nav><a href="">My Likes</a> <a href="">Log Out</a></nav>
+	</div>
 
 
 	<div class="info_column">
-
+		<div id="optionbar">
+			<a href=""><img id="reroll" src="resources/images/reroll.png"></img></a>
+			<a href=""><img id="like" src="resources/images/likebutton.png"></img></a>
+		</div>
 		<h1>You rolled ${gameName}!</h1>
-		<a href=""><img id="reroll" src="resources/images/reroll.png"></img></a>
 		<div class="info_header">
 			<div>${gameImg}</div>
 			<p>${gameDesc}</p>
 		</div>
 
-		<a id="discordlink" href="${discord}"><img class="discord_strip"
+		<a id="discordlink" href="${discord}" target="_blank"><img class="discord_strip"
 			src="resources/images/discord_strip.png"></img></a> ${twitchWidget}
 
 	</div>
 	</main>
 	<footer>
 	<div></div>
-	<nav><a href="home">Home</a><a href="about">About Us</a><a href="documentation">How it Works</a></nav>
-	</footer>
+	<nav> <a href="">Home</a><a href="">My Likes</a><a href="about">About Us</a></nav> </footer>
 </html>

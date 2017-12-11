@@ -4,6 +4,7 @@
 	margin: 0px;
 	font-family: 'Kanit', sans-serif;
 	color: white;
+	text-decoration: none;
 }
 
 html {
@@ -13,13 +14,17 @@ html {
 	background-repeat: no-repeat;
 }
 
+a:hover {
+	opacity: .5;
+}
+
 header {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	background-color: rgba(64, 73, 91, 1);
-	height: 70px;
+	height: 80px;
 	width: 100%;
 	position: fixed;
 	-webkit-box-shadow: 0px 7px 68px -2px rgba(0, 0, 0, 0.75);
@@ -36,7 +41,7 @@ header img {
 }
 
 header p {
-	margin: 50px 0px 0px 0px;
+	margin: 30px 0px 0px 0px;
 	font-size: .75rem;
 }
 
@@ -66,7 +71,7 @@ main {
 }
 
 #home_info p {
-	font-size: 2rem;
+	font-size: 1rem;
 }
 
 .info_header {
@@ -80,10 +85,39 @@ main {
 	text-align: center;
 }
 
+#logoptions {
+	display: flex;
+	height: 0px;
+	width: 100%;
+	margin: 80px 10px 0px 0px;
+	position: fixed;
+	justify-content: flex-end;
+}
+
+#logoptions nav {
+	display: block;
+	background-color: rgba(64, 73, 91, 0.7);
+}
+
+#optionbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+}
+
 #reroll {
 	height: 40px;
 	width: auto;
-	margin: 0px 0px 30px 0px;
+	margin: 20px 0px 20px 0px;
+	border: 1px solid white;
+}
+
+#like {
+	height: 40px;
+	width: auto;
+	margin: 20px 0px 20px 0px;
+	border: 1px solid white;
 }
 
 .info_header p {
@@ -147,14 +181,22 @@ label:hover {
 	height: 440px;
 }
 
-.footer {
+footer {
 	display: flex;
 	flex-direction: column;
-	background-color: rgba(64, 73, 91, 1):;
-	height: 200px;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(64, 73, 91, 1);
+	height: 100px;
 	width: 100%;
+	background-color: rgba(64, 73, 91, 1);
+	bottom: 0;
 }
 
+footer a {
+	display: inline-block;
+	margin: 10px 20px 10px 20px;
+}
 /* Return page style */
 .avatar {
 	margin: 10px;

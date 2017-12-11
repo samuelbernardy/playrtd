@@ -57,15 +57,22 @@ public class SteamAuthController {
 	private SteamOpenID steamOpenID = new SteamOpenID();
 	String defaultTag = "";
 
+	// This mapping handles Steam Authentication and returns use data including
+	// STEAMID, RECENTGAMES, and OWNEDGAMES
 	@RequestMapping(value = "/return", method = { RequestMethod.GET })
 	public String postLoginPage(HttpSession jSession, Model model, HttpServletRequest request) throws IOException {
 
+		// declare variables
 		String userId = this.steamOpenID.verify(request.getRequestURL().toString(), request.getParameterMap());
-		ModelAndView mav = new ModelAndView("post_login");
-		mav.addObject("steamId", userId);
+		// ModelAndView mav = new ModelAndView("post_login");
+		// mav.addObject("steamId", userId);
 		System.out.println(userId);
 		long steam_ID = Long.parseLong(userId);
 		UserInfoDto userProfile = new UserInfoDto();
+
+		// establish session to keep user logged in for subsequent actions.
+		String sessionId = jSession.getId();
+		jSession.setAttribute("sessionId", sessionId);
 
 		// request urls and readers to parse json on repsonse.
 		URL playerSummaryURL = new URL("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="
@@ -86,7 +93,6 @@ public class SteamAuthController {
 		String playerLine = playerReader.readLine();
 		String ownedLine = ownedReader.readLine();
 		String recentLine = recentReader.readLine();
-
 		while (playerLine != null) {
 			playerJsonStr += playerLine;
 			playerLine = playerReader.readLine();
@@ -105,15 +111,14 @@ public class SteamAuthController {
 		JSONObject ownedJson = new JSONObject(ownedJsonStr);
 		JSONObject recentJson = new JSONObject(recentJsonStr);
 
+		// check owned and recent game count. Offer random apptags if empty.
 		int ownedCountCheck = ownedJson.getJSONObject("response").getInt("game_count");
 		int recentCountCheck = recentJson.getJSONObject("response").getInt("total_count");
-
 		if (ownedCountCheck >= 1 && recentCountCheck >= 1) {
-
 			JSONArray ownedJSONArray = ownedJson.getJSONObject("response").getJSONArray("games");
 			JSONArray recentJSONArray = recentJson.getJSONObject("response").getJSONArray("games");
 
-			// find user data
+			// find user data and populate owned and recent games array
 			String playerAvatar = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
 					.getString("avatarfull"));
 			String playerPersona = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
@@ -122,9 +127,6 @@ public class SteamAuthController {
 			ArrayList<Integer> ownedGamesArray = new ArrayList<Integer>();
 			ArrayList<Integer> recentGamesArray = new ArrayList<Integer>();
 			for (int i = 0; i < ownedJSONArray.length(); i++) {
-				System.out.println(ownedJSONArray);
-				// for (int i = 0; i <
-				// ownedJson.getJSONObject("response").getJSONArray("games").length(); i++) {
 				Integer ownedInt = ownedJSONArray.getJSONObject(i).getInt("appid");
 				ownedGamesArray.add(ownedInt);
 			}
@@ -134,6 +136,7 @@ public class SteamAuthController {
 				recentGamesArray.add(recentInt);
 			}
 
+			// populate user Object
 			userProfile.setSteam_ID(steam_ID);
 			userProfile.setPersonaName(playerPersona);
 			userProfile.setAvatar(playerAvatar);
@@ -216,7 +219,7 @@ public class SteamAuthController {
 			return "return";
 		} else {
 
-			String nogamesnotif = "It looks like you haven't played for a little bit...";
+			String nogamesnotif = "It looks like you haven't played for a little bit. Let us help!...";
 			model.addAttribute("nogames", nogamesnotif);
 
 			return "return";
@@ -239,13 +242,14 @@ public class SteamAuthController {
 	@RequestMapping(value = "/gameon", method = RequestMethod.GET)
 	public String getgame(Model model, @RequestParam(value = "opt1", required = false) String tag1,
 			@RequestParam(value = "opt2", required = false) String tag2,
-			@RequestParam(value = "opt3", required = false) String tag3) {
+			@RequestParam(value = "opt3", required = false) String tag3, HttpSession jSession) {
 		System.out.println("1" + tag1 + "2" + tag2 + "3" + tag3);
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
 		SessionFactory sf = cfg.buildSessionFactory();
 		Session s = sf.openSession();
 		Transaction tx = s.beginTransaction();
+		jSession.getAttribute("sessionId");
 
 		// System.out.println(tag);
 		String id = "";
@@ -356,7 +360,7 @@ public class SteamAuthController {
 					return twitchResponse;
 				}
 				// Gets the first stream in the array (most views)
-				
+
 				// TODO Parse channel name from thumbnail URL
 
 			} catch (ClientProtocolException e) {

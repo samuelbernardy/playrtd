@@ -34,22 +34,11 @@
 			</form>
 		</div>
 	</div>
-	<div>
-		<div>Container1</div>
-		<div>Container2</div>
-		<div>Container3</div>
-		<div>Container4</div>
-	</div>
 	</main>
 	<footer>
-	<div class="recents_container">
-		<div class="recent">
-			<h1></h1>
-		</div>
-		<div class="recent"></div>
-		<div class="recent"></div>
-		<div class="recent"></div>
-	</div>
-	</footer>
+	<div></div>
+	<nav> <a href="">Home</a>
+	<a href="">My Likes</a>
+	<a href="about">About Us</a></nav> </footer>
 </body>
 </html>
