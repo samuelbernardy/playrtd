@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import com.gc.dto.GameIdMappingDto;
 import com.gc.dto.ProductDto;
 import com.playrtd.util.HibernateUtility;
 

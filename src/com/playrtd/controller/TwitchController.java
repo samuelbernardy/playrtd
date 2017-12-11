@@ -30,7 +30,7 @@ public class TwitchController {
 
 	@RequestMapping("/twitch")
 	public String getTwitchPage() {
-		return "twitch";
+		return "admintwitch";
 	}
 
 	@RequestMapping("/getstream")
@@ -42,7 +42,7 @@ public class TwitchController {
 		if (gameId == null || gameId.isEmpty()) {
 			errorMessage = "Sorry, twitch game ID can't be blank or null.";
 			model.addAttribute("errormessage", errorMessage);
-			return "twitch";
+			return "admintwitch";
 		}
 		
 		// Gets all live streams for the game ID, then selects the first stream in the
@@ -63,7 +63,7 @@ public class TwitchController {
 			if (allStreams.length() == 0) {
 				errorMessage = "Sorry, this game does not have a live stream or the twitch game id is incorrect.";
 				model.addAttribute("errormessage", errorMessage);
-				return "twitch";
+				return "admintwitch";
 			}
 			
 			// Gets the first stream in the array (most views)
@@ -83,7 +83,7 @@ public class TwitchController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "twitch";
+		return "admintwitch";
 	}
 
 	@RequestMapping("/getgamename")
@@ -114,7 +114,7 @@ public class TwitchController {
 			if (dataArr.length() == 0) {
 				errorMessage = "Sorry, this twitch game id is incorrect.";
 				model.addAttribute("errormessage", errorMessage);
-				return "twitch";
+				return "admintwitch";
 			}
 
 			JSONObject game = dataArr.getJSONObject(0);
@@ -127,7 +127,7 @@ public class TwitchController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "twitch";
+		return "admintwitch";
 	}
 
 	@RequestMapping("/getgameid")
@@ -139,7 +139,7 @@ public class TwitchController {
 				if (gameName == null || gameName.isEmpty()) {
 					errorMessage = "Sorry, game name can't be blank or null.";
 					model.addAttribute("errormessage", errorMessage);
-					return "twitch";
+					return "admintwitch";
 				}
 
 		try {
@@ -159,7 +159,7 @@ public class TwitchController {
 			if (dataArr.length() == 0) {
 				errorMessage = "Sorry, this game name does not have a Twitch Game ID.";
 				model.addAttribute("errormessage", errorMessage);
-				return "twitch";
+				return "admintwitch";
 			}
 			
 			JSONObject game = dataArr.getJSONObject(0);
@@ -172,7 +172,7 @@ public class TwitchController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "twitch";
+		return "admintwitch";
 	}
 
 	@RequestMapping("/uploadtwitchgameids")
@@ -241,7 +241,7 @@ public class TwitchController {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return "twitch";
+		return "admintwitch";
 	}
 
 }
