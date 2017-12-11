@@ -16,7 +16,9 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpHost;
@@ -60,19 +62,17 @@ public class SteamAuthController {
 	// This mapping handles Steam Authentication and returns use data including
 	// STEAMID, RECENTGAMES, and OWNEDGAMES
 	@RequestMapping(value = "/return", method = { RequestMethod.GET })
-	public String postLoginPage(HttpSession jSession, Model model, HttpServletRequest request) throws IOException {
+	public String postLoginPage(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		// declare variables
 		String userId = this.steamOpenID.verify(request.getRequestURL().toString(), request.getParameterMap());
 		// ModelAndView mav = new ModelAndView("post_login");
 		// mav.addObject("steamId", userId);
 		System.out.println(userId);
-		long steam_ID = Long.parseLong(userId);
+		Long steam_ID = Long.parseLong(userId);
 		UserInfoDto userProfile = new UserInfoDto();
 
 		// establish session to keep user logged in for subsequent actions.
-		String sessionId = jSession.getId();
-		jSession.setAttribute("sessionId", sessionId);
 
 		// request urls and readers to parse json on repsonse.
 		URL playerSummaryURL = new URL("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="
@@ -216,6 +216,9 @@ public class SteamAuthController {
 			model.addAttribute("hasGames", "It seems that you like " + selectTags.get(0).toString() + ", "
 					+ selectTags.get(1).toString() + ", and " + selectTags.get(2).toString() + " games.");
 
+			response.addCookie(new Cookie("steamID", steam_ID.toString()));
+			response.addCookie(new Cookie("avatar", playerAvatar));
+			response.addCookie(new Cookie("persona", playerPersona));
 			return "return";
 		} else {
 
