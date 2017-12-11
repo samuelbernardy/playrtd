@@ -1,0 +1,163 @@
+/* Global style */
+* {
+	padding: 0px;
+	margin: 0px;
+	font-family: 'Kanit', sans-serif;
+	color: white;
+}
+
+html {
+	background-image: url("./images/playrtdbg.jpg");
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}
+
+header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	background-color: rgba(64, 73, 91, 1);
+	height: 70px;
+	width: 100%;
+	position: fixed;
+	-webkit-box-shadow: 0px 7px 68px -2px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 7px 68px -2px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 7px 68px -2px rgba(0, 0, 0, 0.75);
+	border-radius: 0px 0px 5px 5px;
+	position: fixed;
+}
+
+header img {
+	margin: 0px 40px;
+	height: 68px;
+	width: auto;
+}
+
+header p {
+	margin: 50px 0px 0px 0px;
+	font-size: .75rem;
+}
+
+#logged_head {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.info_column {
+	margin: 0px 0px 0px 0px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 120px;
+	height: 100%;
+	width: 1000px;
+	background-color: rgba(64, 73, 91, 0.7);
+	display: flex;
+}
+
+#home_info p {
+	font-size: 2rem;
+}
+
+.info_header {
+	display: flex;
+	flex-direction: row;
+}
+
+.info_column h1 {
+	font-size: 3rem;
+	margin: 30px 0px 0px 0px;
+	text-align: center;
+}
+
+#reroll {
+	height: 40px;
+	width: auto;
+	margin: 0px 0px 30px 0px;
+}
+
+.info_header p {
+	margin: 0px 20px 0px 20px;
+	padding: 5px;
+	height: 220px;
+	overflow: scroll;
+}
+
+#dice {
+	background-image: url("resources/images/dieroll.png");
+	backgroun-size: contain;
+	height: 100px;
+	width: 100px;
+	height: 100px;
+}
+
+#dice:hover {
+	-webkit-animation: rotation 1s infinite;
+}
+
+@
+-webkit-keyframes rotation {from { -webkit-transform:rotate(0deg);
+	
+}
+
+to {
+	-webkit-transform: rotate(359deg);
+}
+
+}
+.discord_strip {
+	height: 128px;
+	width: 600px;
+}
+
+#discordlink {
+	margin: 40px 0px;
+}
+
+label {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 0 0 10px;
+	display: block;
+}
+
+#getrolling_form {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+label:hover {
+	opacity: .5;
+	cursor: pointer;
+}
+
+#missingtwitch {
+	width: 750px;
+	height: 440px;
+}
+
+.footer {
+	display: flex;
+	flex-direction: column;
+	background-color: rgba(64, 73, 91, 1):;
+	height: 200px;
+	width: 100%;
+}
+
+/* Return page style */
+.avatar {
+	margin: 10px;
+	border-radius: 50%;
+	border: 1px solid white;
+}
