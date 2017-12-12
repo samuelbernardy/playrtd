@@ -261,7 +261,7 @@ public class SteamAuthController {
 		return new ModelAndView("redirect:" + openIdRedirectUrl);
 	}
 
-	@RequestMapping(value = "/gameon", method = RequestMethod.GET)
+	@RequestMapping(value = "/gameon", method = RequestMethod.POST)
 	public String getgame(@CookieValue("steamID") Long steam_ID, @CookieValue("avatar") String avatar,
 			@CookieValue("persona") String persona, Model model,
 			@RequestParam(value = "opt1", required = false) String tag1,

@@ -35,12 +35,14 @@
 			<div>${gameImg}</div>
 			<p>${gameDesc}</p>
 		</div>
-			<form method="GET" onsubmit="event.preventDefault(); return loadDoc(this);">
-			<input type="hidden" id ="gameName" name ="gameName" value="${gameName}"/>
-			<input type="hidden" id ="gameImg" name ="gameImg" value="${gameImg}"/>
-			<input type="hidden" id ="persona" name ="persona" value="${persona}"/>
-	<input  type="submit" value="like"/>
-</form>
+		<form method="GET"
+			onsubmit="event.preventDefault(); return loadDoc(this);">
+			<input type="hidden" id="gameName" name="gameName"
+				value="${gameName}" /> <input type="hidden" id="gameImg"
+				name="gameImg" value="${gameImg}" /> <input type="hidden"
+				id="persona" name="persona" value="${persona}" /> <input
+				type="submit" value="like" />
+		</form>
 
 		<a id="discordlink" href="${discord}" target="_blank"><img class="discord_strip"
 			src="resources/images/discord_strip.png"></img></a> ${twitchWidget}
