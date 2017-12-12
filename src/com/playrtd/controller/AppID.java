@@ -135,7 +135,7 @@ public class AppID {
 							games[i].indexOf("\" data-ds")));
 					System.out.println(descURL);
 					///////////////// Images are gathered here ///////////////////
-					images[i] = "http://cdn.edgecast.steamstatic.com/steam/apps/" + AppID[i] + "/header.jpg";
+					images[i] = "<img src=\"http://cdn.edgecast.steamstatic.com/steam/apps/" + AppID[i] + "/header.jpg\">";
 
 					//String gameURL = "http://store.steampowered.com/app/" + AppID[i];
 					doc = Jsoup.connect(descURL).get();
