@@ -10,24 +10,43 @@ public class RecentLikesDto implements Serializable {
 	String recentLikeIMG;
 	String recentLikeName;
 	String storeURL;
-	
-	public RecentLikesDto(){
-		
+	String appID;
+
+	public RecentLikesDto() {
+
 	}
-public RecentLikesDto(String recentLikeIMG, String recentLikeName){
-	super();
-	this.recentLikeIMG = recentLikeIMG;
-	this.recentLikeName = recentLikeName;
-		
+
+	public String getAppID() {
+		return appID;
 	}
-public RecentLikesDto(String userID, String persona, String recentLikeIMG, String recentLikeName, String storeURL){
-	super();
-	this.userID = userID;
-	this.persona = persona;
-	this.recentLikeIMG = recentLikeIMG;
-	this.recentLikeName = recentLikeName;
-	this.storeURL = storeURL;
-	
+
+	public void setAppID(String appID) {
+		this.appID = appID;
+	}
+
+	public RecentLikesDto(String recentLikeIMG, String recentLikeName, String appID) {
+		super();
+		this.recentLikeIMG = recentLikeIMG;
+		this.recentLikeName = recentLikeName;
+		this.appID = appID;
+
+	}
+
+	public RecentLikesDto(String recentLikeIMG, String recentLikeName) {
+		super();
+		this.recentLikeIMG = recentLikeIMG;
+		this.recentLikeName = recentLikeName;
+
+	}
+
+	public RecentLikesDto(String userID, String persona, String recentLikeIMG, String recentLikeName, String storeURL) {
+		super();
+		this.userID = userID;
+		this.persona = persona;
+		this.recentLikeIMG = recentLikeIMG;
+		this.recentLikeName = recentLikeName;
+		this.storeURL = storeURL;
+
 	}
 
 	public RecentLikesDto(int iD, String userID, String recentLikeIMG, String recentLikeName) {
@@ -69,18 +88,21 @@ public RecentLikesDto(String userID, String persona, String recentLikeIMG, Strin
 	public void setRecentLikeName(String recentLikeName) {
 		this.recentLikeName = recentLikeName;
 	}
+
 	public String getPersona() {
 		return persona;
 	}
+
 	public void setPersona(String persona) {
 		this.persona = persona;
 	}
+
 	public String getStoreURL() {
 		return storeURL;
 	}
+
 	public void setStoreURL(String storeURL) {
 		this.storeURL = storeURL;
 	}
 
-	
 }
