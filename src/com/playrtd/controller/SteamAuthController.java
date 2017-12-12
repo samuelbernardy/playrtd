@@ -353,7 +353,8 @@ public class SteamAuthController {
 		String desc = "";
 		String dscURL = "";
 		String twitchID = "";
-		Object[] obj = new Object[7];
+		String storeURL = "";
+		Object[] obj = new Object[8];
 
 		// String quer = "select g.appID,g.gameName,g.tag,g.image,g.description from
 		// ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
@@ -382,7 +383,8 @@ public class SteamAuthController {
 			desc = (String) obj[4];
 			dscURL = (String) obj[5];
 			twitchID = (String) obj[6];
-			list.add(new ProductDto(id, name, img, desc, dscURL, twitchID));
+			storeURL = (String)	obj[7];
+			list.add(new ProductDto(id, name, img, desc, dscURL, twitchID, storeURL));
 		}
 
 		String discordResult = "https://www.google.com/search?q=discord server AND " + name;
@@ -406,6 +408,7 @@ public class SteamAuthController {
 		model.addAttribute("gameName", name);
 		model.addAttribute("discord", discordResult);
 		model.addAttribute("twitchWidget", twitchResponse);
+		model.addAttribute("storeURL", storeURL);
 		model.addAttribute("steamID", steam_ID);
 		model.addAttribute("tag1", tag1);
 		model.addAttribute("tag2", tag2);
@@ -414,7 +417,7 @@ public class SteamAuthController {
 	}
 
 	public static String Q1(String query, String query2, String query3) {
-		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID from ProductDto g WHERE g.tagName = '"
+		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID,g.storeURL from ProductDto g WHERE g.tagName = '"
 				+ query + "' or g.tagName = '" + query2 + "' or g.tagName = '" + query3 + "' ORDER BY RAND()";
 		return temp;
 

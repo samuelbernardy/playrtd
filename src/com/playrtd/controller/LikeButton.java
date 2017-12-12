@@ -19,6 +19,7 @@ public class LikeButton {
 	
 	
 	@RequestMapping(value = "/like")
+
 	public String likeButton	(@RequestParam(value = "gameImg") String img, @RequestParam(value = "gameName") String gameName, 
 			@CookieValue("steamID") String steamID, @CookieValue("persona") String persona,@RequestParam("gameID") String appID,@RequestParam(value = "storeURL") String storeURL) {
 	
@@ -48,6 +49,7 @@ public class LikeButton {
 	
 	if(result == null) {
 		session.persist(likes);
+
 	}
 	
 	
