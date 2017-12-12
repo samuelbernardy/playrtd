@@ -78,7 +78,7 @@ public class AppID {
 					//System.out.println(games[i-1]);
 				}
 				
-				//games[i-1] = div.split("</div>");
+				
 				
 				// This code first splits the text to the number of values we need in the array.
 				// Then further splices it with substrings to grab the APPID
@@ -102,7 +102,7 @@ public class AppID {
 					i++;
 					// span is where the titles are held
 					gameNames[i-1] = regexChecker(gameList.getElementsByTag("span").first().text());
-					//gameNames[i - 1] = new String (gameList.getElementsByTag("span").first().text().getBytes(), "ISO-8859-1");
+					
 				}
 				
 
@@ -161,7 +161,7 @@ public class AppID {
 					
 					ProductDto Action = new ProductDto();
 
-					
+					Action.setStoreURL(descURL);
 					Action.setTag(gameTag[j]);
 					Action.setTagName(gameTagName[j]);
 					if (gameNames[i].contains("PAYDAY 2: Ultimate")) {

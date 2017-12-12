@@ -174,7 +174,10 @@ public class SteamAuthController {
 			selectTags = new ArrayList<String>();
 			try {
 				ArrayList<String> recentTagsArray = new ArrayList<String>();
-
+				
+				//ma game with tags 578080  238960
+				//ma game without tags 359550
+				//reg game 268910
 				// Check if the game has age check and grab app tags based on page layout
 				for (int i = 0; i < recentGamesArray.size(); i++) {
 					Document doc = Jsoup
@@ -182,30 +185,59 @@ public class SteamAuthController {
 							.get();
 					Elements tempTag;
 					String holder = "";
-					String[] games;
-
+					String[] gameTags = new String[3];
+					
+					
+					//Non MA Game
 					if (doc.toString().contains("glance_tags popular_tags")) {
 						tempTag = doc.select("div.glance_tags.popular_tags");
-					} else {
+						for(Element tagHolder: tempTag) {
+							holder = tagHolder.toString();
+						}
+						gameTags = holder.split("a>");
+						
+					
+						
+					}
+					//MA game that shows tags
+					else if(doc.toString().contains("glance_tags_ctn popular_tags_ctn")) {
 						tempTag = doc.select("div.glance_tags_ctn.popular_tags_ctn");
+						for(Element tagHolder: tempTag) {
+							holder = tagHolder.toString();
+						}
+						gameTags = holder.split("a>");
+						
 					}
-					for (Element tagHolder : tempTag) {
-						// System.out.println(i + " " + tagHolder.toString());
-						holder = tagHolder.toString();
-					}
-					games = holder.split("a>");
+					
+					//MA Game that doesnt display tags
+					else {
+						
+					} 
+					
 
 					// This code first splits the text to the number of values we need in the array.
 					// Then further splices it with substrings to grab the APPID
 					for (int j = 0; j < 3; j++) {
+						
+						//Non MA Game
 						if (doc.toString().contains("glance_tags popular_tags")) {
 
 							recentTagsArray
-									.add(games[j].substring(games[j].indexOf("none;\">") + 8, games[j].indexOf(" </")));
-						} else {
+									.add(gameTags[j].substring(gameTags[j].indexOf("none;\">") + 8, gameTags[j].indexOf(" </")));
+						} 
+						
+						
+						//MA game that shows tags
+						else if(doc.toString().contains("glance_tags_ctn popular_tags_ctn")) {
 
 							recentTagsArray.add(
-									games[j].substring(games[j].indexOf("\"app_tag\">") + 11, games[j].indexOf(" </")));
+									gameTags[j].substring(gameTags[j].indexOf("\"app_tag\">") + 11, gameTags[j].indexOf(" </")));
+						}
+						
+						
+						//MA Game that doesnt display tags
+						else {
+							
 						}
 					}
 					// recentTagsArray
