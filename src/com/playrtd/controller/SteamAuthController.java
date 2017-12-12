@@ -66,8 +66,44 @@ public class SteamAuthController {
 	ArrayList<String> selectTags = new ArrayList<String>();
 
 	@RequestMapping("/")
-	public String index() {
+	public String index(Model model) {
+
 		Configuration cfg = new Configuration();
+		cfg.configure("hibernate.cfg.xml");
+		SessionFactory sf = cfg.buildSessionFactory();
+		Session s = sf.openSession();
+		Transaction tx = s.beginTransaction();
+
+		Object[] obj = new Object[2];
+
+		String persona = "";
+		String appID = "";
+		String recentLikeIMG = "";
+		
+
+
+		
+		Query q2 = s.createQuery("select recentLikeIMG,g.persona,g.appID, from RecentLikesDto g ORDER BY g.ID DESC");
+
+		q2.setFirstResult(0);
+		q2.setMaxResults(5);
+		List results = q2.list();
+		Iterator i = results.iterator();
+		List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
+		while (i.hasNext()) {
+
+			obj = (Object[]) i.next();
+			recentLikeIMG = (String) obj[0];
+			persona = (String) obj[1];
+			appID = (String) obj[2];
+
+			list.add(new RecentLikesDto(recentLikeIMG, persona, appID));
+		}
+
+		s.flush();
+		s.close();
+		model.addAttribute("list", list);
+
 		return "index";
 	}
 
@@ -174,10 +210,10 @@ public class SteamAuthController {
 			selectTags = new ArrayList<String>();
 			try {
 				ArrayList<String> recentTagsArray = new ArrayList<String>();
-				
-				//ma game with tags 578080  238960
-				//ma game without tags 359550
-				//reg game 268910
+
+				// ma game with tags 578080 238960
+				// ma game without tags 359550
+				// reg game 268910
 				// Check if the game has age check and grab app tags based on page layout
 				for (int i = 0; i < recentGamesArray.size(); i++) {
 					Document doc = Jsoup
@@ -186,58 +222,52 @@ public class SteamAuthController {
 					Elements tempTag;
 					String holder = "";
 					String[] gameTags = new String[3];
-					
-					
-					//Non MA Game
+
+					// Non MA Game
 					if (doc.toString().contains("glance_tags popular_tags")) {
 						tempTag = doc.select("div.glance_tags.popular_tags");
-						for(Element tagHolder: tempTag) {
+						for (Element tagHolder : tempTag) {
 							holder = tagHolder.toString();
 						}
 						gameTags = holder.split("a>");
-						
-					
-						
+
 					}
-					//MA game that shows tags
-					else if(doc.toString().contains("glance_tags_ctn popular_tags_ctn")) {
+					// MA game that shows tags
+					else if (doc.toString().contains("glance_tags_ctn popular_tags_ctn")) {
 						tempTag = doc.select("div.glance_tags_ctn.popular_tags_ctn");
-						for(Element tagHolder: tempTag) {
+						for (Element tagHolder : tempTag) {
 							holder = tagHolder.toString();
 						}
 						gameTags = holder.split("a>");
-						
+
 					}
-					
-					//MA Game that doesnt display tags
+
+					// MA Game that doesnt display tags
 					else {
-						
-					} 
-					
+
+					}
 
 					// This code first splits the text to the number of values we need in the array.
 					// Then further splices it with substrings to grab the APPID
 					for (int j = 0; j < 3; j++) {
-						
-						//Non MA Game
+
+						// Non MA Game
 						if (doc.toString().contains("glance_tags popular_tags")) {
 
-							recentTagsArray
-									.add(gameTags[j].substring(gameTags[j].indexOf("none;\">") + 8, gameTags[j].indexOf(" </")));
-						} 
-						
-						
-						//MA game that shows tags
-						else if(doc.toString().contains("glance_tags_ctn popular_tags_ctn")) {
-
-							recentTagsArray.add(
-									gameTags[j].substring(gameTags[j].indexOf("\"app_tag\">") + 11, gameTags[j].indexOf(" </")));
+							recentTagsArray.add(gameTags[j].substring(gameTags[j].indexOf("none;\">") + 8,
+									gameTags[j].indexOf(" </")));
 						}
-						
-						
-						//MA Game that doesnt display tags
+
+						// MA game that shows tags
+						else if (doc.toString().contains("glance_tags_ctn popular_tags_ctn")) {
+
+							recentTagsArray.add(gameTags[j].substring(gameTags[j].indexOf("\"app_tag\">") + 11,
+									gameTags[j].indexOf(" </")));
+						}
+
+						// MA Game that doesnt display tags
 						else {
-							
+
 						}
 					}
 					// recentTagsArray

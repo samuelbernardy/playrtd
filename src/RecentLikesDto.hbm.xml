@@ -26,5 +26,8 @@
 		<property name="storeURL">
 			<column name="storeURL" sql-type="varchar(255)" length="255"></column>
 		</property>
+		<property name="appID">
+			<column name="appID" sql-type="varchar(255)" length="255"></column>
+		</property>
 	</class>
 </hibernate-mapping>	
