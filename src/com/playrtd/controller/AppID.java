@@ -310,7 +310,7 @@ public class AppID {
 					Action.setAppID(AppID[i]);
 					Action.setImage(images[i]);
 					}
-					Action.setGameName(gameNames[i].substring(gameDesc[i].indexOf("About This Game ")+16));
+					Action.setGameName(gameNames[i]);
 					
 					
 
