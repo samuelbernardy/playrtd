@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.playrtd.resource.SteamOpenID;
 import com.playrtd.util.Credentials;
@@ -62,16 +63,15 @@ public class SteamAuthController {
 
 	// This mapping handles Steam Authentication and returns use data including
 	// STEAMID, RECENTGAMES, and OWNEDGAMES
-	@RequestMapping(value = "/return", method = { RequestMethod.GET })
-	public String postLoginPage(Model model, HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = "/return", method = RequestMethod.GET)
+	public RedirectView postLoginPage(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-
-		// declare variables
+		Long steam_ID = 0l;
 		String userId = this.steamOpenID.verify(request.getRequestURL().toString(), request.getParameterMap());
 		// ModelAndView mav = new ModelAndView("post_login");
 		// mav.addObject("steamId", userId);
 		System.out.println(userId);
-		Long steam_ID = Long.parseLong(userId);
+		steam_ID = Long.parseLong(userId);
 		UserInfoDto userProfile = new UserInfoDto();
 
 		// establish session to keep user logged in for subsequent actions.
@@ -209,27 +209,44 @@ public class SteamAuthController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			defaultTag = selectTags.get(0).toString();
-			model.addAttribute("avatar", playerAvatar);
-			model.addAttribute("persona", playerPersona);
-			model.addAttribute("opt1", selectTags.get(0).toString());
-			model.addAttribute("opt2", selectTags.get(1).toString());
-			model.addAttribute("opt3", selectTags.get(2).toString());
-			model.addAttribute("hasGames", "It seems that you like " + selectTags.get(0).toString() + ", "
-					+ selectTags.get(1).toString() + ", and " + selectTags.get(2).toString() + " games.");
-
 			response.addCookie(new Cookie("steamID", steam_ID.toString()));
 			response.addCookie(new Cookie("avatar", playerAvatar));
 			response.addCookie(new Cookie("persona", playerPersona));
-			return "return";
+			response.addCookie(new Cookie("opt1", selectTags.get(0).toString()));
+			response.addCookie(new Cookie("opt2", selectTags.get(1).toString()));
+			response.addCookie(new Cookie("opt3", selectTags.get(2).toString()));
+
+			defaultTag = selectTags.get(0).toString();
+
+			return new RedirectView("choices");
 		} else {
 
 			String nogamesnotif = "It looks like you haven't played for a little bit. Let us help!...";
-			model.addAttribute("nogames", nogamesnotif);
+			response.addCookie(new Cookie("nogames", nogamesnotif));
 
-			return "return";
+			return new RedirectView("choices");
 		}
 
+	}
+
+	@RequestMapping(value = "/choices", method = RequestMethod.GET)
+	public String choices(Model model, @CookieValue(value = "steamID", required = false) Long steamid,
+			@CookieValue(value = "avatar", required = false) String avatar,
+			@CookieValue(value = "persona", required = false) String persona,
+			@CookieValue(value = "opt1", required = false) String opt1,
+			@CookieValue(value = "opt2", required = false) String opt2,
+			@CookieValue(value = "opt3", required = false) String opt3,
+			@CookieValue(value = "nogames", required = false) String nogames) {
+
+		model.addAttribute("avatar", avatar);
+		model.addAttribute("persona", persona);
+		model.addAttribute("opt1", opt1);
+		model.addAttribute("opt2", opt2);
+		model.addAttribute("opt3", opt3);
+		model.addAttribute("hasGames", "It seems that you like " + opt1 + ", " + opt2 + ", and " + opt3 + " games.");
+		model.addAttribute("nogames", nogames);
+
+		return "choices";
 	}
 
 	@RequestMapping(value = "/login_page", method = RequestMethod.GET)
