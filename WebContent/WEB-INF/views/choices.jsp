@@ -26,9 +26,9 @@
 
 		<div>
 			<form id="getrolling_form" action="gameon" method="POST">
-				<label><input type="checkbox" name="opt1" value="${opt1}" />${opt1}</label>
-				<label><input type="checkbox" name="opt2" value="${opt2}" />${opt2}</label>
-				<label><input type="checkbox" name="opt3" value="${opt3}" />${opt3}</label>
+				<label><input type="checkbox" name="tag1" value="${tag1}" />${tag1}</label>
+				<label><input type="checkbox" name="tag2" value="${tag2}" />${tag2}</label>
+				<label><input type="checkbox" name="tag3" value="${tag3}" />${tag3}</label>
 				<br> <input id="dice" type="image"
 					src="resources/images/dieroll.png" alt="submit">
 			</form>

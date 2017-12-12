@@ -21,24 +21,28 @@
 			<img class="avatar" src="${avatar}"></img>
 		</div>
 	</header>
-
+<main>
 	<div id="logoptions">
 		<nav>
-			<a href="">My Likes</a> <a href="">Log Out</a>
+			<a href="favorites">My Likes</a> <a href="">Log Out</a>
 		</nav>
 	</div>
 
 	<div class="info_column">
 		<div id="optionbar">
-			<a href=""><img id="reroll" src="resources/images/reroll.png"></img></a>
+			<a href="gameon?tag1=${tag1}&tag2=${tag2}&tag3=${tag3}"><img id="reroll" src="resources/images/reroll.png"></img></a>
 			<!--  <a href=""><img id="like" src="resources/images/likebutton.png"></img></a>-->
-			<form id="like" method="GET"
+			<form  method="GET"
 				onsubmit="event.preventDefault(); return loadDoc(this);">
 				<input type="hidden" id="gameName" name="gameName"
 					value="${gameName}"> <input type="hidden" id="gameImg"
 					name="gameImg" value="${passthroughImg}"> <input
 					type="hidden" id="persona" name="persona" value="${persona}">
-				<input type="image" src="resources/images/likebutton.png"
+					<input
+					type="hidden" id="steamID" name="steamID" value="${steamID}">
+					<input
+					type="hidden" id="avatar" name="avatar" value="${avatar}">
+				<input id="like" type="image" src="resources/images/likebutton.png"
 					alt="submit" value="like">
 			</form>
 		</div>
@@ -52,15 +56,14 @@
 			<input type="hidden" id="gameName" name="gameName"
 				value="${gameName}" /> <input type="hidden" id="gameImg"
 				name="gameImg" value="${gameImg}" /> <input type="hidden"
-				id="persona" name="persona" value="${persona}" /> <input
-				type="submit" value="like" />
+				id="persona" name="persona" value="${persona}" />
 		</form>
 		<a id="discordlink" href="${discord}" target="_blank"><img
 			class="discord_strip" src="resources/images/discord_strip.png"></img></a>
 		${twitchWidget}
 
 	</div>
-
+</main>
 	<footer>
 		<div></div>
 		<nav>

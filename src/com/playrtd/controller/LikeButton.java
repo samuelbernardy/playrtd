@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ public class LikeButton {
 	
 	@RequestMapping(value = "/like", method = RequestMethod.GET)
 		public String likeButton	(@RequestParam(value = "gameImg") String img, @RequestParam(value = "gameName") String gameName, 
-				@RequestParam(value ="persona") String persona, Model model) {
+				@CookieValue("steamID") String steamID, @CookieValue("persona") String persona,@RequestParam(value = "storeURL") String storeURL) {
 		
 		
 		
@@ -30,7 +31,9 @@ public class LikeButton {
 		RecentLikesDto likes = new RecentLikesDto();
 		likes.setRecentLikeIMG(img);
 		likes.setRecentLikeName(gameName);
-		likes.setUserID(persona);
+		likes.setUserID(steamID);
+		likes.setPersona(persona);
+		likes.setStoreURL(storeURL);
 		System.out.println(likes.getRecentLikeIMG());
 		System.out.println(likes.getUserID());
 		
@@ -49,7 +52,7 @@ public class LikeButton {
 		
 		t.commit();
 		session.close();
-		model.addAttribute("gameName", gameName);
+		
 		return "gameon";
 		
 	}
