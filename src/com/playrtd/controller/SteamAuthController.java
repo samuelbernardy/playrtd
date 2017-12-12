@@ -59,7 +59,24 @@ import org.jsoup.select.Elements;
 public class SteamAuthController {
 
 	private SteamOpenID steamOpenID = new SteamOpenID();
-	String defaultTag = "";
+	String tag1 = "";
+	String tag2 = "";
+	String tag3 = "";
+	String dTag1 = "";
+	String dTag2 = "";
+	String dTag3 = "";
+
+	@RequestMapping(value = "/login_page", method = RequestMethod.GET)
+	public ModelAndView loginPage(HttpServletRequest request) {
+
+		// log.debug("Trying to call Steam OpenID...");
+
+		String openIdRedirectUrl = steamOpenID.login("http://localhost:8080/PlayRTD/return");
+
+		// log.debug("Redirect URL : " + openIdRedirectUrl);
+
+		return new ModelAndView("redirect:" + openIdRedirectUrl);
+	}
 
 	// This mapping handles Steam Authentication and returns use data including
 	// STEAMID, RECENTGAMES, and OWNEDGAMES
@@ -68,8 +85,6 @@ public class SteamAuthController {
 			throws IOException {
 		Long steam_ID = 0l;
 		String userId = this.steamOpenID.verify(request.getRequestURL().toString(), request.getParameterMap());
-		// ModelAndView mav = new ModelAndView("post_login");
-		// mav.addObject("steamId", userId);
 		System.out.println(userId);
 		steam_ID = Long.parseLong(userId);
 		UserInfoDto userProfile = new UserInfoDto();
@@ -125,7 +140,6 @@ public class SteamAuthController {
 					.getString("avatarfull"));
 			String playerPersona = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
 					.getString("personaname"));
-			System.out.println(ownedJSONArray + "test1");
 			ArrayList<Integer> ownedGamesArray = new ArrayList<Integer>();
 			ArrayList<Integer> recentGamesArray = new ArrayList<Integer>();
 			for (int i = 0; i < ownedJSONArray.length(); i++) {
@@ -150,12 +164,13 @@ public class SteamAuthController {
 			session.save(userProfile);
 			t.commit();
 			session.close();
-			System.out.println(recentGamesArray.size());
+			// System.out.println(recentGamesArray.size());
 
 			ArrayList<String> selectTags = new ArrayList<String>();
 			try {
 				ArrayList<String> recentTagsArray = new ArrayList<String>();
 
+				// Check if the game has age check and grab app tags based on page layout
 				for (int i = 0; i < recentGamesArray.size(); i++) {
 					Document doc = Jsoup
 							.connect("http://store.steampowered.com/app/" + recentGamesArray.get(i) + "/agecheck")
@@ -212,11 +227,9 @@ public class SteamAuthController {
 			response.addCookie(new Cookie("steamID", steam_ID.toString()));
 			response.addCookie(new Cookie("avatar", playerAvatar));
 			response.addCookie(new Cookie("persona", playerPersona));
-			response.addCookie(new Cookie("opt1", selectTags.get(0).toString()));
-			response.addCookie(new Cookie("opt2", selectTags.get(1).toString()));
-			response.addCookie(new Cookie("opt3", selectTags.get(2).toString()));
-
-			defaultTag = selectTags.get(0).toString();
+			tag1 = selectTags.get(0).toString();
+			tag2 = selectTags.get(1).toString();
+			tag3 = selectTags.get(2).toString();
 
 			return new RedirectView("choices");
 		} else {
@@ -233,32 +246,18 @@ public class SteamAuthController {
 	public String choices(Model model, @CookieValue(value = "steamID", required = false) Long steamid,
 			@CookieValue(value = "avatar", required = false) String avatar,
 			@CookieValue(value = "persona", required = false) String persona,
-			@CookieValue(value = "opt1", required = false) String opt1,
-			@CookieValue(value = "opt2", required = false) String opt2,
-			@CookieValue(value = "opt3", required = false) String opt3,
+			String tag1, String tag2, String tag3,
 			@CookieValue(value = "nogames", required = false) String nogames) {
 
 		model.addAttribute("avatar", avatar);
 		model.addAttribute("persona", persona);
-		model.addAttribute("opt1", opt1);
-		model.addAttribute("opt2", opt2);
-		model.addAttribute("opt3", opt3);
+		model.addAttribute("opt1", tag1);
+		model.addAttribute("opt2", tag2);
+		model.addAttribute("opt3", tag3);
 		model.addAttribute("hasGames", "It seems that you like " + opt1 + ", " + opt2 + ", and " + opt3 + " games.");
 		model.addAttribute("nogames", nogames);
 
 		return "choices";
-	}
-
-	@RequestMapping(value = "/login_page", method = RequestMethod.GET)
-	public ModelAndView loginPage(HttpServletRequest request) {
-
-		// log.debug("Trying to call Steam OpenID...");
-
-		String openIdRedirectUrl = steamOpenID.login("http://localhost:8080/PlayRTD/return");
-
-		// log.debug("Redirect URL : " + openIdRedirectUrl);
-
-		return new ModelAndView("redirect:" + openIdRedirectUrl);
 	}
 
 	@RequestMapping(value = "/gameon", method = RequestMethod.POST)
@@ -289,6 +288,7 @@ public class SteamAuthController {
 		// ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
 		if (tag1 == null && tag2 == null && tag3 == null) {
 			tag1 = defaultTag;
+			//no selection recommendation
 		}
 		String quer = Q1(tag1, tag2, tag3);
 
@@ -325,7 +325,7 @@ public class SteamAuthController {
 		model.addAttribute("persona", persona);
 		model.addAttribute("gameID", id);
 		try {
-			//temp image to go through to favorites/recents
+			// temp image to go through to favorites/recents
 			model.addAttribute("passthroughImg", URLEncoder.encode(img, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -362,13 +362,14 @@ public class SteamAuthController {
 				HttpGet getPage = new HttpGet("/helix/streams?game_id=" + twitchGameID);
 				getPage.setHeader("Client-ID", Credentials.TWITCH_CLIENT_ID);
 
-				// TODO Handle response exceptions
 				HttpResponse resp = http.execute(host, getPage);
 
 				String jsonString = EntityUtils.toString(resp.getEntity());
 				JSONObject json = new JSONObject(jsonString);
 				System.out.println(json.toString());
 				try {
+					
+					// Gets the first stream in the array (most views)
 					JSONArray allStreams = json.getJSONArray("data");
 					JSONObject firstStream = allStreams.getJSONObject(0);
 
@@ -383,7 +384,7 @@ public class SteamAuthController {
 					twitchResponse = "<div id=\"twitch-embed\"></div>" + "		<script type=\"text/javascript\">"
 							+ "      var embed = new Twitch.Embed(\"twitch-embed\", {" + "        width: 750,"
 							+ "        height: 440," + "        channel: \"" + channelName + "\","
-							+ "        layout: \"video\"," + "        autoplay: false" + "      });"
+							+ "        layout: \"video\"," + "        muted: true" + "      });"
 							+ "      embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {"
 							+ "        var player = embed.getPlayer();" + "        player.play();" + "      });"
 							+ "    </script>";
@@ -392,9 +393,6 @@ public class SteamAuthController {
 					twitchResponse = "<img id=\"missingtwitch\" src=\"resources/images/static.gif\"></img>";
 					return twitchResponse;
 				}
-				// Gets the first stream in the array (most views)
-
-				// TODO Parse channel name from thumbnail URL
 
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
