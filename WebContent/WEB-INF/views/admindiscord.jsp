@@ -15,6 +15,27 @@ Enter Game Name:
 <input type=submit value="Search Discords">
 </form>
 
+<p>Top Result: </p>
+<table border="1">
+<tr>
+<td><a href="${topdiscord.link}">${topdiscord.title}</a></td>
+				<td>${topdiscord.description}</td>
+</tr>
+</table>
+
+<p>Results from First Page: </p>
+<table border="1">
+		<c:forEach var="discord" items="${discords}">
+			<tr>
+				<td><a href="${discord.link}">${discord.title}</a></td>
+				<td>${discord.description}</td>
+				
+			</tr>
+
+		</c:forEach>
+
+	</table>
+
 <p>${errormessage}</p>
 </body>
 </html>

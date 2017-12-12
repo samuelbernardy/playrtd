@@ -42,10 +42,18 @@ public class DiscordController {
 
 		// Call the Custom Search Engine API
 		String jsonString = callCustomSearchEngineApi(gameName);
-
+		System.out.println("JSON response: " + jsonString);
+		
 		// Call method to parse JSON
 		ArrayList<DiscordDto> discords = parseDiscords(jsonString);
+		System.out.println("ArrayList: " + discords);
+		if (discords == null) {
+			String errorMessage = "No results found.";
+			model.addAttribute("errormessage", errorMessage);
+			return "admindiscord";
+		}
 		
+		model.addAttribute("topdiscord", discords.get(0));	
 		model.addAttribute("discords", discords);
 
 		return "admindiscord";
