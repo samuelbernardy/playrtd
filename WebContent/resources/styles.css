@@ -119,7 +119,7 @@ main {
 	border: 1px solid white;
 }
 
-#like {
+#like input{
 	height: 40px;
 	width: auto;
 	margin: 20px 0px 20px 0px;

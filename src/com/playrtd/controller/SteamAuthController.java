@@ -16,6 +16,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,9 +42,11 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -54,17 +57,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
+@SessionAttributes("selectTags")
 @Controller
 public class SteamAuthController {
 
 	private SteamOpenID steamOpenID = new SteamOpenID();
-	String tag1 = "";
-	String tag2 = "";
-	String tag3 = "";
-	String dTag1 = "";
-	String dTag2 = "";
-	String dTag3 = "";
+	ArrayList<String> selectTags = new ArrayList<String>();
+	
 
 	@RequestMapping(value = "/login_page", method = RequestMethod.GET)
 	public ModelAndView loginPage(HttpServletRequest request) {
@@ -166,7 +165,7 @@ public class SteamAuthController {
 			session.close();
 			// System.out.println(recentGamesArray.size());
 
-			ArrayList<String> selectTags = new ArrayList<String>();
+			selectTags = new ArrayList<String>();
 			try {
 				ArrayList<String> recentTagsArray = new ArrayList<String>();
 
@@ -228,9 +227,12 @@ System.out.println(selectTags.get(2).toString());
 			response.addCookie(new Cookie("steamID", steam_ID.toString()));
 			response.addCookie(new Cookie("avatar", playerAvatar));
 			response.addCookie(new Cookie("persona", playerPersona));
-			tag1 = selectTags.get(0).toString();
-			tag2 = selectTags.get(1).toString();
-			tag3 = selectTags.get(2).toString();
+			model.addAttribute("tag1", selectTags.get(0).toString());
+			model.addAttribute("tag2", selectTags.get(1).toString());
+			model.addAttribute("tag3", selectTags.get(2).toString());
+			model.addAttribute("dTag1", selectTags.get(0).toString());
+			model.addAttribute("dTag2", selectTags.get(1).toString());
+			model.addAttribute("dTag3", selectTags.get(2).toString());
 
 			return new RedirectView("choices");
 		} else {
@@ -247,26 +249,26 @@ System.out.println(selectTags.get(2).toString());
 	public String choices(Model model, @CookieValue(value = "steamID", required = false) Long steamid,
 			@CookieValue(value = "avatar", required = false) String avatar,
 			@CookieValue(value = "persona", required = false) String persona,
-			String tag1, String tag2, String tag3,
+			@ModelAttribute("tag1") String tag1,@ModelAttribute("tag2") String tag2, @ModelAttribute("tag3") String tag3,
 			@CookieValue(value = "nogames", required = false) String nogames) {
 
 		model.addAttribute("avatar", avatar);
 		model.addAttribute("persona", persona);
-		model.addAttribute("opt1", tag1);
-		model.addAttribute("opt2", tag2);
-		model.addAttribute("opt3", tag3);
-		model.addAttribute("hasGames", "It seems that you like " + opt1 + ", " + opt2 + ", and " + opt3 + " games.");
+//		model.addAttribute("opt1", tag1);
+//		model.addAttribute("opt2", tag2);
+//		model.addAttribute("opt3", tag3);
+		model.addAttribute("hasGames", "It seems that you like " + tag1 + ", " + tag2 + ", and " + tag3 + " games.");
 		model.addAttribute("nogames", nogames);
 
 		return "choices";
 	}
 
-	@RequestMapping(value = "/gameon", method = RequestMethod.POST)
+	@RequestMapping(value = "/gameon")
 	public String getgame(@CookieValue("steamID") Long steam_ID, @CookieValue("avatar") String avatar,
 			@CookieValue("persona") String persona, Model model,
-			@RequestParam(value = "opt1", required = false) String tag1,
-			@RequestParam(value = "opt2", required = false) String tag2,
-			@RequestParam(value = "opt3", required = false) String tag3, HttpSession jSession) {
+			@RequestParam(value = "tag1", required = false) String tag1,
+			@RequestParam(value = "tag2", required = false) String tag2,
+			@RequestParam(value = "tag3", required = false) String tag3, HttpSession jSession) {
 		System.out.println("1" + tag1 + "2" + tag2 + "3" + tag3);
 		System.out.println(steam_ID + avatar + persona);
 		Configuration cfg = new Configuration();
@@ -288,7 +290,6 @@ System.out.println(selectTags.get(2).toString());
 		// String quer = "select g.appID,g.gameName,g.tag,g.image,g.description from
 		// ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
 		if (tag1 == null && tag2 == null && tag3 == null) {
-			tag1 = defaultTag;
 			//no selection recommendation
 		}
 		String quer = Q1(tag1, tag2, tag3);
@@ -338,6 +339,9 @@ System.out.println(selectTags.get(2).toString());
 		model.addAttribute("discord", discordResult);
 		model.addAttribute("twitchWidget", twitchResponse);
 		model.addAttribute("steamID",  steam_ID);
+		model.addAttribute("tag1", tag1);
+		model.addAttribute("tag2", tag2);
+		model.addAttribute("tag3", tag3);
 		return "gameon";
 	}
 
