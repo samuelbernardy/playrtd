@@ -310,7 +310,7 @@ public class AppID {
 					Action.setAppID(AppID[i]);
 					Action.setImage(images[i]);
 					}
-					Action.setGameName(gameNames[i]);
+					Action.setGameName(gameNames[i].substring(gameDesc[i].indexOf("About This Game ")+16));
 					
 					
 
@@ -327,7 +327,7 @@ public class AppID {
 					Session session = factory.openSession();
 					Transaction t = (Transaction) session.beginTransaction();
 
-					session.persist(Action);// problem child
+					session.persist(Action);
 					t.commit();
 					session.close();
 
