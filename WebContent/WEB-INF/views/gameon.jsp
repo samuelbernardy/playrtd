@@ -80,9 +80,12 @@
 
 			var gameName = document.getElementById("gameName").value;
 			var gameImg = document.getElementById("gameImg").value;
-
+			var steamID = document.getElementById("steamID").value;
 			var persona = document.getElementById("persona").value;
-
+			var gameID = document.getElementById("gameID").value;
+			var storeURL = document.getElementById("storeURL").value;
+			
+			
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
@@ -93,7 +96,7 @@
 				}
 			};
 			xhttp.open("GET", "like?gameName=" + gameName + "&gameImg="
-					+ gameImg + "&persona=" + persona, true);
+					+ gameImg + "&persona=" + persona +"&steamID=" + steamID + "&gameID=" + gameID +"&storeURL=" +storeURL, true);
 			xhttp.send();
 		}
 	</script>
