@@ -39,7 +39,7 @@ public class ProductDto implements Serializable {
 		this.discord = discord;
 	}
 
-	public ProductDto(String gameName, String appID, String image, String description, String discord, String twitchGameID) {
+	public ProductDto(String gameName, String appID, String image, String description, String discord, String twitchGameID, String storeURL) {
 		super();
 
 		this.gameName = gameName;
@@ -48,6 +48,7 @@ public class ProductDto implements Serializable {
 		this.description = description;
 		this.discord = discord;
 		this.twitchGameID = twitchGameID;
+		this.storeURL = storeURL;
 
 	}
 

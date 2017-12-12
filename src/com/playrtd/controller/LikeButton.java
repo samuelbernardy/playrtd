@@ -18,18 +18,19 @@ public class LikeButton {
 
 	
 	
-	@RequestMapping(value = "/like", method = RequestMethod.GET)
+	@RequestMapping(value = "/like")
 		public String likeButton	(@RequestParam(value = "gameImg") String img, @RequestParam(value = "gameName") String gameName, 
-				@CookieValue("steamID") String steamID, @CookieValue("persona") String persona,@RequestParam(value = "storeURL") String storeURL) {
+				@CookieValue("steamID") String steamID, @CookieValue("persona") String persona,@RequestParam("gameID") String appID,@RequestParam(value = "storeURL") String storeURL) {
 		
 		
-		
+		System.out.println("hello");
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
 		SessionFactory factory = cfg.buildSessionFactory();
 		System.out.println(img);
 		RecentLikesDto likes = new RecentLikesDto();
 		likes.setRecentLikeIMG(img);
+		likes.setAppID(appID);
 		likes.setRecentLikeName(gameName);
 		likes.setUserID(steamID);
 		likes.setPersona(persona);

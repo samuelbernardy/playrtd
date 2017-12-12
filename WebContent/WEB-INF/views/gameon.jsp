@@ -42,6 +42,10 @@
 					type="hidden" id="steamID" name="steamID" value="${steamID}">
 					<input
 					type="hidden" id="avatar" name="avatar" value="${avatar}">
+					<input
+					type="hidden" id="gameID" name="gameID" value="${gameID}">
+										<input
+					type="hidden" id="storeURL" name="storeURL" value="${storeURL}">
 				<input id="like" type="image" src="resources/images/likebutton.png"
 					alt="submit" value="like">
 			</form>
