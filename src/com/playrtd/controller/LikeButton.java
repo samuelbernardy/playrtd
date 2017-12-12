@@ -20,7 +20,7 @@ public class LikeButton {
 	
 	@RequestMapping(value = "/like", method = RequestMethod.GET)
 		public String likeButton	(@RequestParam(value = "gameImg") String img, @RequestParam(value = "gameName") String gameName, 
-				@CookieValue("steamID") String steamID, Model model) {
+				@CookieValue("steamID") String steamID, @CookieValue("persona") String persona,@RequestParam(value = "storeURL") String storeURL) {
 		
 		
 		
@@ -32,6 +32,8 @@ public class LikeButton {
 		likes.setRecentLikeIMG(img);
 		likes.setRecentLikeName(gameName);
 		likes.setUserID(steamID);
+		likes.setPersona(persona);
+		likes.setStoreURL(storeURL);
 		System.out.println(likes.getRecentLikeIMG());
 		System.out.println(likes.getUserID());
 		
@@ -50,7 +52,7 @@ public class LikeButton {
 		
 		t.commit();
 		session.close();
-		model.addAttribute("gameName", gameName);
+		
 		return "gameon";
 		
 	}

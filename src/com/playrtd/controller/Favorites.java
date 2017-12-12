@@ -40,7 +40,7 @@ public class Favorites {
 	Query q2 = s.createQuery(query);
 
 	q2.setFirstResult(0);
-	q2.setMaxResults(30);
+	q2.setMaxResults(999);
 	List results = q2.list();
 	Iterator i = results.iterator();
 	List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
