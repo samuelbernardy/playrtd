@@ -38,6 +38,10 @@
 					value="${gameName}"> <input type="hidden" id="gameImg"
 					name="gameImg" value="${passthroughImg}"> <input
 					type="hidden" id="persona" name="persona" value="${persona}">
+					<input
+					type="hidden" id="steamID" name="steamID" value="${steamID}">
+					<input
+					type="hidden" id="avatar" name="avatar" value="${avatar}">
 				<input type="image" src="resources/images/likebutton.png"
 					alt="submit" value="like">
 			</form>
