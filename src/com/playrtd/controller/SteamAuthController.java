@@ -325,6 +325,7 @@ public class SteamAuthController {
 		model.addAttribute("persona", persona);
 		model.addAttribute("gameID", id);
 		try {
+			//temp image to go through to favorites/recents
 			model.addAttribute("passthroughImg", URLEncoder.encode(img, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
