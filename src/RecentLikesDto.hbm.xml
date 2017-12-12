@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.gc.dto.RecentLikesDto" table="recentlikes"
+		schema="gametest">
+
+
+		<id name="ID">
+			<column name="ID" sql-type="int(255)"></column>
+		</id>
+		<property name="userID">
+			<column name="userID" sql-type="varchar(255)" length="10"></column>
+		</property>
+		<property name="recentLikeIMG">
+			<column name="recentLikeIMG" sql-type="varchar(255)" length="255"></column>
+		</property>
+		<property name="recentLikeName">
+			<column name="recentLikeName" sql-type="varchar(255)" length="255"></column>
+		</property>
+	</class>
+</hibernate-mapping>	

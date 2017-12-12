@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.gc.dto.GameIdMappingDto" table="gameidmapping"
+		schema="gametest">
+
+		<id name="appId">
+			<column name="appid" sql-type="int(45)"></column>
+		</id>
+
+		<property name="gameName">
+			<column name="gamename" sql-type="varchar(255)" length="255"></column>
+		</property>
+		<property name="twitchGameID">
+			<column name="twitchgameid" sql-type="varchar(45)" length="45"></column>
+		</property>
+	</class>
+</hibernate-mapping>

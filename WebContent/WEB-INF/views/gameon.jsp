@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <link href="https://fonts.googleapis.com/css?family=Kanit"
@@ -20,11 +20,10 @@
 		<img class="avatar" src="${avatar}"></img>
 	</div>
 	</header>
-	<main>
+	
 	<div id="logoptions">
 		<nav><a href="">My Likes</a> <a href="">Log Out</a></nav>
 	</div>
-
 
 	<div class="info_column">
 		<div id="optionbar">
@@ -36,13 +35,42 @@
 			<div>${gameImg}</div>
 			<p>${gameDesc}</p>
 		</div>
+			<form method="GET" onsubmit="event.preventDefault(); return loadDoc(this);">
+			<input type="hidden" id ="gameName" name ="gameName" value="${gameName}"/>
+			<input type="hidden" id ="gameImg" name ="gameImg" value="${gameImg}"/>
+			<input type="hidden" id ="persona" name ="persona" value="${persona}"/>
+	<input  type="submit" value="like"/>
+</form>
 
 		<a id="discordlink" href="${discord}" target="_blank"><img class="discord_strip"
 			src="resources/images/discord_strip.png"></img></a> ${twitchWidget}
 
 	</div>
-	</main>
+	
 	<footer>
 	<div></div>
 	<nav> <a href="">Home</a><a href="">My Likes</a><a href="about">About Us</a></nav> </footer>
+	<script>
+function loadDoc(form) {
+	
+	var gameName = document.getElementById("gameName").value;
+	var gameImg = document.getElementById("gameImg").value;
+
+	var persona = document.getElementById("persona").value;
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      
+      console.log(this.responseText);
+    }else{
+    	console.log("error:" + this.responseText);
+    }
+  };
+  xhttp.open("GET", "like?gameName="+gameName+ "&gameImg="+gameImg + "&persona="+persona, true);
+  xhttp.send();
+}
+</script>
+	
+	</body>
 </html>

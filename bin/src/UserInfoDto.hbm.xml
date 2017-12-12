@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.gc.dto.UserInfoDto" table="userinfo" schema="gametest">
+		<id name="userno">
+			<column name="userno" sql-type="int(50)"></column>
+		</id>
+		<property name="steam_ID">
+			<column name="steam_id" sql-type="BIGINT(50)" length="50"></column>
+		</property>
+		<property name="avatar">
+			<column name="avatar" sql-type="VARCHAR(255)" length="255"></column>
+		</property>
+		<property name="personaName">
+			<column name="personaName" sql-type="VARCHAR(45)" length="45"></column>
+		</property>
+	</class>
+</hibernate-mapping>	
