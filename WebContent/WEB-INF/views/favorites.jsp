@@ -12,12 +12,16 @@
 <title>${persona}'s Favorites</title>
 </head>
 <body>
-	<header>
-	<div id="headlogo">
-		<img src="resources/images/playrtdlogo.png"></img>
-	</div>
-	<nav> <a href="login_page"><img
-		src="resources/images/loginbutton.png"></img></a> </nav> </header>
+
+<header>
+		<div id="headlogo">
+			<img src="resources/images/playrtdlogo.png"></img>
+		</div>
+		<div id="logged_head">
+			<p>Rolling as ${persona}</p>
+			<img class="avatar" src="${avatar}"></img>
+		</div>
+	</header>	
 	<main>
 	<div id="home_info" class="info_column">
 		<div></div>

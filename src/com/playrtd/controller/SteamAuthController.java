@@ -219,6 +219,7 @@ public class SteamAuthController {
 						selectTags.add(tempTag);
 					}
 				}
+System.out.println(selectTags.get(2).toString());
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -336,6 +337,7 @@ public class SteamAuthController {
 		model.addAttribute("gameName", name);
 		model.addAttribute("discord", discordResult);
 		model.addAttribute("twitchWidget", twitchResponse);
+		model.addAttribute("steamID",  steam_ID);
 		return "gameon";
 	}
 
