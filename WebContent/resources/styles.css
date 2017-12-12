@@ -119,11 +119,14 @@ main {
 	border: 1px solid white;
 }
 
-#like input{
+#like {
 	height: 40px;
 	width: auto;
 	margin: 20px 0px 20px 0px;
 	border: 1px solid white;
+}
+#like:hover{
+	opacity: 0.5;
 }
 
 .info_header p {

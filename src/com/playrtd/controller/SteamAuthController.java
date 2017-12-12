@@ -57,13 +57,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 @SessionAttributes("selectTags")
 @Controller
 public class SteamAuthController {
 
 	private SteamOpenID steamOpenID = new SteamOpenID();
 	ArrayList<String> selectTags = new ArrayList<String>();
-	
+
+	@RequestMapping("/")
+	public String index() {
+		Configuration cfg = new Configuration();
+		return "index";
+	}
 
 	@RequestMapping(value = "/login_page", method = RequestMethod.GET)
 	public ModelAndView loginPage(HttpServletRequest request) {
@@ -218,7 +224,7 @@ public class SteamAuthController {
 						selectTags.add(tempTag);
 					}
 				}
-System.out.println(selectTags.get(2).toString());
+				System.out.println(selectTags.get(2).toString());
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -248,15 +254,15 @@ System.out.println(selectTags.get(2).toString());
 	@RequestMapping(value = "/choices", method = RequestMethod.GET)
 	public String choices(Model model, @CookieValue(value = "steamID", required = false) Long steamid,
 			@CookieValue(value = "avatar", required = false) String avatar,
-			@CookieValue(value = "persona", required = false) String persona,
-			@ModelAttribute("tag1") String tag1,@ModelAttribute("tag2") String tag2, @ModelAttribute("tag3") String tag3,
+			@CookieValue(value = "persona", required = false) String persona, @ModelAttribute("tag1") String tag1,
+			@ModelAttribute("tag2") String tag2, @ModelAttribute("tag3") String tag3,
 			@CookieValue(value = "nogames", required = false) String nogames) {
 
 		model.addAttribute("avatar", avatar);
 		model.addAttribute("persona", persona);
-//		model.addAttribute("opt1", tag1);
-//		model.addAttribute("opt2", tag2);
-//		model.addAttribute("opt3", tag3);
+		model.addAttribute("opt1", tag1);
+		model.addAttribute("opt2", tag2);
+		model.addAttribute("opt3", tag3);
 		model.addAttribute("hasGames", "It seems that you like " + tag1 + ", " + tag2 + ", and " + tag3 + " games.");
 		model.addAttribute("nogames", nogames);
 
@@ -290,7 +296,7 @@ System.out.println(selectTags.get(2).toString());
 		// String quer = "select g.appID,g.gameName,g.tag,g.image,g.description from
 		// ProductDto g WHERE g.tag = "+tag+" ORDER BY RAND()";
 		if (tag1 == null && tag2 == null && tag3 == null) {
-			//no selection recommendation
+			// no selection recommendation
 		}
 		String quer = Q1(tag1, tag2, tag3);
 
@@ -338,7 +344,7 @@ System.out.println(selectTags.get(2).toString());
 		model.addAttribute("gameName", name);
 		model.addAttribute("discord", discordResult);
 		model.addAttribute("twitchWidget", twitchResponse);
-		model.addAttribute("steamID",  steam_ID);
+		model.addAttribute("steamID", steam_ID);
 		model.addAttribute("tag1", tag1);
 		model.addAttribute("tag2", tag2);
 		model.addAttribute("tag3", tag3);
@@ -374,7 +380,7 @@ System.out.println(selectTags.get(2).toString());
 				JSONObject json = new JSONObject(jsonString);
 				System.out.println(json.toString());
 				try {
-					
+
 					// Gets the first stream in the array (most views)
 					JSONArray allStreams = json.getJSONArray("data");
 					JSONObject firstStream = allStreams.getJSONObject(0);
