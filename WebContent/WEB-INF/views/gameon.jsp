@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,19 +29,20 @@
 	<div class="info_column">
 		<div id="optionbar">
 			<a href=""><img id="reroll" src="resources/images/reroll.png"></img></a>
-			<a href=""><img id="like" src="resources/images/likebutton.png"></img></a>
+			<!--  <a href=""><img id="like" src="resources/images/likebutton.png"></img></a>-->
+						<form id="like" method="GET" onsubmit="event.preventDefault(); return loadDoc(this);">
+			<input type="hidden" id ="gameName" name ="gameName" value="${gameName}">
+			<input type="hidden" id ="gameImg" name ="gameImg" value="${passthroughImg}">
+			<input type="hidden" id ="persona" name ="persona" value="${persona}">
+	<input  type="image"src="resources/images/likebutton.png" alt="submit" value="like">
+</form>
 		</div>
 		<h1>You rolled ${gameName}!</h1>
 		<div class="info_header">
-			<div>${gameImg}</div>
+			<div>${displayImage}</div>
 			<p>${gameDesc}</p>
 		</div>
-			<form method="GET" onsubmit="event.preventDefault(); return loadDoc(this);">
-			<input type="hidden" id ="gameName" name ="gameName" value="${gameName}"/>
-			<input type="hidden" id ="gameImg" name ="gameImg" value="${gameImg}"/>
-			<input type="hidden" id ="persona" name ="persona" value="${persona}"/>
-	<input  type="submit" value="like"/>
-</form>
+
 
 		<a id="discordlink" href="${discord}" target="_blank"><img class="discord_strip"
 			src="resources/images/discord_strip.png"></img></a> ${twitchWidget}

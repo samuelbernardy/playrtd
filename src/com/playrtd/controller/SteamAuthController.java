@@ -6,9 +6,9 @@ import com.gc.dto.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
-
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -307,7 +307,13 @@ public class SteamAuthController {
 		model.addAttribute("avatar", avatar);
 		model.addAttribute("persona", persona);
 		model.addAttribute("gameID", id);
-		model.addAttribute("gameImg", img);
+		try {
+			model.addAttribute("passthroughImg", URLEncoder.encode(img, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute("displayImage", img);
 		model.addAttribute("gameDesc", desc);
 		model.addAttribute("gameName", name);
 		model.addAttribute("discord", discordResult);
