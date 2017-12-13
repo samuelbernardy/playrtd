@@ -44,7 +44,7 @@ public class LikeButton {
 	Session session = factory.openSession();
 	Transaction t = (Transaction) session.beginTransaction();
 	
-	Query query = session.createQuery("FROM RecentLikesDto WHERE recentLikeName='" + gameName + "'");
+	Query query = session.createQuery("FROM RecentLikesDto WHERE recentLikeName='" + gameName + "' and userID='" + steamID +"'");
 	RecentLikesDto result=(RecentLikesDto) query.uniqueResult();
 	
 	if(result == null) {
