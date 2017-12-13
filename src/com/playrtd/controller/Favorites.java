@@ -66,7 +66,7 @@ public class Favorites {
 	}
 
 	public static String QueryLikes(Long persona) {
-		String temp = "select recentLikeIMG,g.recentLikeName from RecentLikesDto g WHERE g.userID = '" + persona + "'"
+		String temp = "select userID,g.persona,g.recentLikeIMG,g.recentLikeName,g.storeURL from RecentLikesDto g WHERE g.userID = '" + persona + "'"
 				+ " ORDER BY g.ID DESC";
 		return temp;
 
