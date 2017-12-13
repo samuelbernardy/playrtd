@@ -30,10 +30,10 @@
 						${tag1}</label> <label><input type="checkbox" name="tag2"
 						value="${tag2}" /> ${tag2}</label> <label><input type="checkbox"
 						name="tag3" value="${tag3}" /> ${tag3}</label> <br />
+						<input id="dice" type="image" src="resources/images/dieroll.png"
+				alt="submit">
 				</form>
 			</div>
-			<input id="dice" type="image" src="resources/images/dieroll.png"
-				alt="submit">
 	</div>
 	</main>
 	<footer>
