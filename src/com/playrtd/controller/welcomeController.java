@@ -311,6 +311,25 @@ public class welcomeController {
 			return new RedirectView("choices");
 		} else {
 			
+			
+			playerAvatar = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
+					.getString("avatarfull"));
+			playerPersona = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
+					.getString("personaname"));
+			userProfile.setSteam_ID(steam_ID);
+			userProfile.setPersonaName(playerPersona);
+			userProfile.setAvatar(playerAvatar);
+			
+			
+			Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+			SessionFactory factory = cfg.buildSessionFactory();
+			Session session = factory.openSession();
+			Transaction t = session.beginTransaction();
+			session.save(userProfile);
+			t.commit();
+			session.close();
+			
+			
 				recentTagsArray.add("Action");
 				recentTagsArray.add("Adventure");
 				recentTagsArray.add("Casual");
