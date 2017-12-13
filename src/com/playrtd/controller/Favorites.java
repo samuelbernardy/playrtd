@@ -22,6 +22,43 @@ import com.gc.dto.RecentLikesDto;
 @Controller
 public class Favorites {
 
+	@RequestMapping("/")
+	public String index(Model model) {
+
+		Configuration cfg = new Configuration();
+		cfg.configure("hibernate.cfg.xml");
+		SessionFactory sf = cfg.buildSessionFactory();
+		Session s = sf.openSession();
+		Transaction tx = s.beginTransaction();
+
+		Object[] obj = new Object[2];
+		String query = QueryLikes();
+		String recentLikeIMG = "";
+		String recentLikeName = "";
+		Query q2 = s.createQuery(query);
+
+		q2.setFirstResult(0);
+		q2.setMaxResults(999);
+		List results = q2.list();
+		Iterator i = results.iterator();
+		List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
+		while (i.hasNext()) {
+
+			obj = (Object[]) i.next();
+			recentLikeIMG = (String) obj[0];
+			recentLikeName = (String) obj[1];
+
+			list.add(new RecentLikesDto(recentLikeIMG, recentLikeName));
+		}
+
+		s.flush();
+		s.close();
+
+		model.addAttribute("list", list);
+
+		return "index";
+	}
+
 	// TODO ADD @requestparam for persona to be passed rather than hardcoding
 	// through.
 	@RequestMapping(value = "/favorites", method = RequestMethod.GET)
@@ -65,9 +102,14 @@ public class Favorites {
 		return "favorites";
 	}
 
+	public static String QuesryLikes() {
+		String temp = "select userID,g.persona,g.recentLikeIMG,g.recentLikeName,g.storeURL from RecentLikesDto g ORDER BY g.ID DESC";
+		return temp;
+	}
+
 	public static String QueryLikes(Long persona) {
-		String temp = "select userID,g.persona,g.recentLikeIMG,g.recentLikeName,g.storeURL from RecentLikesDto g WHERE g.userID = '" + persona + "'"
-				+ " ORDER BY g.ID DESC";
+		String temp = "select userID,g.persona,g.recentLikeIMG,g.recentLikeName,g.storeURL from RecentLikesDto g WHERE g.userID = '"
+				+ persona + "'" + " ORDER BY g.ID DESC";
 		return temp;
 
 	}
