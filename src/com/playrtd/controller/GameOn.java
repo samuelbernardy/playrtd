@@ -207,6 +207,10 @@ public class GameOn {
 	}
 
 	private ArrayList<DiscordDto> parseDiscords(String jsonString) {
+		if (jsonString == null) {
+			return null;
+		}
+		
 		JSONObject json = new JSONObject(jsonString);
 		int totalResults = json.getJSONObject("searchInformation").getInt("totalResults");
 
@@ -243,6 +247,12 @@ public class GameOn {
 					+ Credentials.GOOGLE_CUSTOM_SEARCH_ENGINE_ID + "&key=" + Credentials.GOOGLE_SEARCH_API_KEY);
 			HttpResponse resp = http.execute(host, getPage);
 			response = EntityUtils.toString(resp.getEntity());
+			
+			int statusCode = resp.getStatusLine().getStatusCode();
+			if (statusCode != 200) {
+				return null;
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace(); // remove
 		}
