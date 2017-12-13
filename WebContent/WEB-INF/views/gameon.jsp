@@ -52,7 +52,7 @@
 		</div>
 		<h1>You rolled ${gameName}!</h1>
 		<div class="info_header">
-			<div><a href="${storeURL}">${displayImage}</a></div>
+			<div><a href="${storeURL}" target="_blank">${displayImage}</a></div>
 			<p>${gameDesc}</p>
 		</div>
 		<form method="GET"
