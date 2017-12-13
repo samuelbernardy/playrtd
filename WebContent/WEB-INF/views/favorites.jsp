@@ -30,7 +30,7 @@
 		<c:forEach var="myFavs" items="${list}">
 			<tr>
 				<td>${myFavs.recentLikeName}</td>
-				<td>${myFavs.recentLikeIMG}</td>
+				<td><a href="${myFavs.storeURL}">${myFavs.recentLikeIMG}</a></td>
 				
 			</tr>
 

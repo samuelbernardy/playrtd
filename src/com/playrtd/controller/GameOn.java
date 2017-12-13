@@ -219,17 +219,13 @@ public class GameOn {
 		JSONArray searchResults = json.getJSONArray("items");
 		ArrayList<DiscordDto> discordsList = new ArrayList<>();
 
-		// Grabs the title, link, and description for each result, creates a discord
+		// Grabs the link for each result, creates a discord
 		// object, and stores it in an array
 		for (int i = 0; i < searchResults.length(); i++) {
 			JSONObject result = searchResults.getJSONObject(i);
-
-			String title = result.getString("title");
 			String link = result.getString("link");
-			String description = result.getString("snippet");
-
-			DiscordDto discord = new DiscordDto(title, link, description);
-
+			DiscordDto discord = new DiscordDto();
+			discord.setLink(link);
 			discordsList.add(discord);
 		}
 
