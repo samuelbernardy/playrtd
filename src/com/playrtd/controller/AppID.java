@@ -317,8 +317,8 @@ public class AppID {
 					// created if statement to find games with no description due to age
 					// confirmations
 					if (gameDesc[i].length() < 5) {
-						Action.setDescription(gameDesc[i] + "This game is for mature audiences only. Please: "
-								+ "<a href=\"" + descURL + "\">click here</a>" + " for a detailed description.");
+						Action.setDescription(gameDesc[i] + "This game is either a bundle or for mature audiences only. Please: "
+								+ "<a href=\"" + descURL + "\" target=\"_blank\">click here</a>" + " for a detailed description.");
 					} else {
 						Action.setDescription(gameDesc[i].substring(gameDesc[i].indexOf("About This Game ")+16));
 					}
