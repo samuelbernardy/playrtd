@@ -58,7 +58,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-@SessionAttributes("selectTags")
+@SessionAttributes({"selectTags", "choicemsg"})
 @Controller
 public class welcomeController {
 
@@ -121,6 +121,11 @@ public class welcomeController {
 	@RequestMapping(value = "/return", method = RequestMethod.GET)
 	public RedirectView postLoginPage(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		Random rand = new Random();
+		ArrayList<String> recentTagsArray = new ArrayList<String>();
+		String playerAvatar="";
+		String playerPersona="";
+		
 		Long steam_ID = 0l;
 		String userId = this.steamOpenID.verify(request.getRequestURL().toString(), request.getParameterMap());
 		System.out.println(userId);
@@ -176,9 +181,9 @@ public class welcomeController {
 			JSONArray recentJSONArray = recentJson.getJSONObject("response").getJSONArray("games");
 
 			// find user data and populate owned and recent games array
-			String playerAvatar = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
+			playerAvatar = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
 					.getString("avatarfull"));
-			String playerPersona = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
+			playerPersona = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
 					.getString("personaname"));
 			ArrayList<Integer> ownedGamesArray = new ArrayList<Integer>();
 			ArrayList<Integer> recentGamesArray = new ArrayList<Integer>();
@@ -208,8 +213,7 @@ public class welcomeController {
 
 			selectTags = new ArrayList<String>();
 			try {
-				ArrayList<String> recentTagsArray = new ArrayList<String>();
-
+				
 				// ma game with tags 578080 238960
 				// ma game without tags 359550
 				// reg game 268910
@@ -274,10 +278,11 @@ public class welcomeController {
 					// </")));
 					// }
 				}
+				
 
 				// create user's random options
 
-				Random rand = new Random();
+				
 				String tempTag = "";
 				while (selectTags.size() < 3) {
 					tempTag = recentTagsArray.get(rand.nextInt(recentTagsArray.size())).toString();
@@ -291,9 +296,11 @@ public class welcomeController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			response.addCookie(new Cookie("steamID", steam_ID.toString()));
 			response.addCookie(new Cookie("avatar", playerAvatar));
 			response.addCookie(new Cookie("persona", playerPersona));
+			model.addAttribute("choicemsg", "It seems that you like " + selectTags.get(0).toString() + ", " + selectTags.get(1).toString() + ", " + selectTags.get(2).toString() + " games.");
 			model.addAttribute("tag1", selectTags.get(0).toString());
 			model.addAttribute("tag2", selectTags.get(1).toString());
 			model.addAttribute("tag3", selectTags.get(2).toString());
@@ -303,10 +310,40 @@ public class welcomeController {
 
 			return new RedirectView("choices");
 		} else {
-
-			String nogamesnotif = "It looks like you haven't played for a little bit. Let us help!...";
-			response.addCookie(new Cookie("nogames", nogamesnotif));
-
+			
+				recentTagsArray.add("Action");
+				recentTagsArray.add("Adventure");
+				recentTagsArray.add("Casual");
+				recentTagsArray.add("Indie");
+				recentTagsArray.add("Massively Multiplayer");
+				recentTagsArray.add("Racing");
+				recentTagsArray.add("RPG");
+				recentTagsArray.add("Simulation");
+				recentTagsArray.add("Sports");
+				recentTagsArray.add("Strategy");
+				String tempTag = "";
+				while (selectTags.size() < 3) {
+					tempTag = recentTagsArray.get(rand.nextInt(recentTagsArray.size())).toString();
+					while (!(selectTags.contains(tempTag))) {
+						selectTags.add(tempTag);
+					}
+				}
+				System.out.println(selectTags.get(2).toString());
+			
+			String nogamesnotif = "It looks like you haven't played for a little bit, let us recommend a couple categories!";
+			model.addAttribute("choicemsg", nogamesnotif);
+			
+			
+			response.addCookie(new Cookie("steamID", steam_ID.toString()));
+			response.addCookie(new Cookie("avatar", playerAvatar));
+			response.addCookie(new Cookie("persona", playerPersona));
+			model.addAttribute("tag1", selectTags.get(0).toString());
+			model.addAttribute("tag2", selectTags.get(1).toString());
+			model.addAttribute("tag3", selectTags.get(2).toString());
+			model.addAttribute("dTag1", selectTags.get(0).toString());
+			model.addAttribute("dTag2", selectTags.get(1).toString());
+			model.addAttribute("dTag3", selectTags.get(2).toString());
+			
 			return new RedirectView("choices");
 		}
 

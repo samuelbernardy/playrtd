@@ -37,6 +37,10 @@ public class Favorites {
 		String query = QueryLikes(steam_ID);
 		String recentLikeIMG = "";
 		String recentLikeName = "";
+		String userID = "";
+		String uPersona = persona;
+		String storeURL = "";
+		
 		Query q2 = s.createQuery(query);
 
 		q2.setFirstResult(0);
@@ -47,10 +51,13 @@ public class Favorites {
 		while (i.hasNext()) {
 
 			obj = (Object[]) i.next();
-			recentLikeIMG = (String) obj[0];
-			recentLikeName = (String) obj[1];
+			userID= (String) obj[0];
+//			uPersona = (String) obj[1];
+			recentLikeIMG = (String) obj[2];
+			recentLikeName = (String) obj[3];
+			storeURL = (String) obj[4];
 
-			list.add(new RecentLikesDto(recentLikeIMG, recentLikeName));
+			list.add(new RecentLikesDto(userID, uPersona, recentLikeIMG, recentLikeName, storeURL));
 		}
 
 		s.flush();
@@ -60,7 +67,7 @@ public class Favorites {
 		model.addAttribute("persona", persona);
 
 		model.addAttribute("list", list);
-		// model.addAttribute("persona", persona);
+		//model.addAttribute("persona", persona);
 
 		return "favorites";
 	}

@@ -21,7 +21,7 @@
 	</header>
 	<main>
 	<div class="info_column">
-		<h1>${nogames}${hasGames}</h1>
+		<h1>${choicemsg}</h1>
 		<h4>Select the ones you want to roll for!</h4>
 
 			<div>
