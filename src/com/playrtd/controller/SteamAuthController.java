@@ -65,47 +65,44 @@ public class SteamAuthController {
 	private SteamOpenID steamOpenID = new SteamOpenID();
 	ArrayList<String> selectTags = new ArrayList<String>();
 
-	@RequestMapping("/")
-	public String index(Model model) {
-
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		SessionFactory sf = cfg.buildSessionFactory();
-		Session s = sf.openSession();
-		Transaction tx = s.beginTransaction();
-
-		Object[] obj = new Object[2];
-
-		String persona = "";
-		String appID = "";
-		String recentLikeIMG = "";
-		
-
-
-		
-		Query q2 = s.createQuery("select recentLikeIMG,g.persona,g.appID, from RecentLikesDto g ORDER BY g.ID DESC");
-
-		q2.setFirstResult(0);
-		q2.setMaxResults(5);
-		List results = q2.list();
-		Iterator i = results.iterator();
-		List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
-		while (i.hasNext()) {
-
-			obj = (Object[]) i.next();
-			recentLikeIMG = (String) obj[0];
-			persona = (String) obj[1];
-			appID = (String) obj[2];
-
-			list.add(new RecentLikesDto(recentLikeIMG, persona, appID));
-		}
-
-		s.flush();
-		s.close();
-		model.addAttribute("list", list);
-
-		return "index";
-	}
+//	@RequestMapping("/")
+//	public String index(Model model) {
+//
+//		Configuration cfg = new Configuration();
+//		cfg.configure("hibernate.cfg.xml");
+//		SessionFactory sf = cfg.buildSessionFactory();
+//		Session s = sf.openSession();
+//		Transaction tx = s.beginTransaction();
+//
+//		Object[] obj = new Object[2];
+//
+//		String persona = "";
+//		String appID = "";
+//		String recentLikeIMG = "";
+//
+//		Query q2 = s.createQuery("select recentLikeIMG,g.persona,g.appID, from RecentLikesDto g ORDER BY g.ID DESC");
+//
+//		q2.setFirstResult(0);
+//		q2.setMaxResults(5);
+//		List results = q2.list();
+//		Iterator i = results.iterator();
+//		List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
+//		while (i.hasNext()) {
+//
+//			obj = (Object[]) i.next();
+//			recentLikeIMG = (String) obj[0];
+//			persona = (String) obj[1];
+//			appID = (String) obj[2];
+//
+//			list.add(new RecentLikesDto(recentLikeIMG, persona, appID));
+//		}
+//
+//		s.flush();
+//		s.close();
+//		model.addAttribute("list", list);
+//
+//		return "index";
+//	}
 
 	@RequestMapping(value = "/login_page", method = RequestMethod.GET)
 	public ModelAndView loginPage(HttpServletRequest request) {
@@ -168,6 +165,8 @@ public class SteamAuthController {
 		JSONObject playerJson = new JSONObject(playerJsonStr);
 		JSONObject ownedJson = new JSONObject(ownedJsonStr);
 		JSONObject recentJson = new JSONObject(recentJsonStr);
+
+		// TODO check if private account
 
 		// check owned and recent game count. Offer random apptags if empty.
 		int ownedCountCheck = ownedJson.getJSONObject("response").getInt("game_count");
@@ -383,13 +382,23 @@ public class SteamAuthController {
 			desc = (String) obj[4];
 			dscURL = (String) obj[5];
 			twitchID = (String) obj[6];
-			storeURL = (String)	obj[7];
+			storeURL = (String) obj[7];
 			list.add(new ProductDto(id, name, img, desc, dscURL, twitchID, storeURL));
 		}
 
-		String discordResult = "https://www.google.com/search?q=discord server AND " + name;
-
+		// get TwitchTV stream
 		String twitchResponse = getTwitchFeed(twitchID);
+
+		// get discord server page
+		String discordJsonString = callCustomSearchEngineApi(name);
+
+		// Call method to parse JSON
+		ArrayList<DiscordDto> discords = parseDiscords(discordJsonString);
+		if (discords == null) {
+			model.addAttribute("topdiscord", "https://www.google.com/search?q=discord server AND " + name);
+		} else {
+			model.addAttribute("topdiscord", discords.get(0).getLink());
+		}
 
 		s.flush();
 		s.close();
@@ -403,10 +412,10 @@ public class SteamAuthController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		model.addAttribute("displayImage", img);
 		model.addAttribute("gameDesc", desc);
 		model.addAttribute("gameName", name);
-		model.addAttribute("discord", discordResult);
 		model.addAttribute("twitchWidget", twitchResponse);
 		model.addAttribute("storeURL", storeURL);
 		model.addAttribute("steamID", steam_ID);
@@ -484,5 +493,52 @@ public class SteamAuthController {
 
 		return twitchResponse;
 
+	}
+
+	private ArrayList<DiscordDto> parseDiscords(String jsonString) {
+		JSONObject json = new JSONObject(jsonString);
+		int totalResults = json.getJSONObject("searchInformation").getInt("totalResults");
+
+		// Return null if there are no search results
+		if (totalResults == 0) {
+			return null;
+		}
+
+		// Search results from first page (up to 10 results)
+		JSONArray searchResults = json.getJSONArray("items");
+		ArrayList<DiscordDto> discordsList = new ArrayList<>();
+
+		// Grabs the title, link, and description for each result, creates a discord
+		// object, and stores it in an array
+		for (int i = 0; i < searchResults.length(); i++) {
+			JSONObject result = searchResults.getJSONObject(i);
+
+			String title = result.getString("title");
+			String link = result.getString("link");
+			String description = result.getString("snippet");
+
+			DiscordDto discord = new DiscordDto(title, link, description);
+
+			discordsList.add(discord);
+		}
+
+		return discordsList;
+	}
+
+	private String callCustomSearchEngineApi(String gameName) {
+		String response = "";
+
+		HttpClient http = HttpClientBuilder.create().build();
+		HttpHost host = new HttpHost("www.googleapis.com", 443, "https");
+
+		try {
+			HttpGet getPage = new HttpGet("/customsearch/v1?q=" + URLEncoder.encode(gameName, "UTF-8") + "&cx="
+					+ Credentials.GOOGLE_CUSTOM_SEARCH_ENGINE_ID + "&key=" + Credentials.GOOGLE_SEARCH_API_KEY);
+			HttpResponse resp = http.execute(host, getPage);
+			response = EntityUtils.toString(resp.getEntity());
+		} catch (IOException e) {
+			e.printStackTrace(); // remove
+		}
+		return response;
 	}
 }

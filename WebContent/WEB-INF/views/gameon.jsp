@@ -52,7 +52,7 @@
 		</div>
 		<h1>You rolled ${gameName}!</h1>
 		<div class="info_header">
-			<div>${displayImage}</div>
+			<div><a href="${storeURL}">${displayImage}</a></div>
 			<p>${gameDesc}</p>
 		</div>
 		<form method="GET"
@@ -62,7 +62,7 @@
 				name="gameImg" value="${gameImg}" /> <input type="hidden"
 				id="persona" name="persona" value="${persona}" />
 		</form>
-		<a id="discordlink" href="${discord}" target="_blank"><img
+		<a id="discordlink" href="${topdiscord}" target="_blank"><img
 			class="discord_strip" src="resources/images/discord_strip.png"></img></a>
 		${twitchWidget}
 
@@ -71,7 +71,7 @@
 	<footer>
 		<div></div>
 		<nav>
-			<a href="">Home</a><a href="">My Likes</a><a href="about">About
+			<a href="">Home</a><a href="favorites">My Likes</a><a href="about">About
 				Us</a>
 		</nav>
 	</footer>

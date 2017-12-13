@@ -43,7 +43,7 @@ public class DiscordController {
 		// Call the Custom Search Engine API
 		String jsonString = callCustomSearchEngineApi(gameName);
 		System.out.println("JSON response: " + jsonString);
-		
+
 		// Call method to parse JSON
 		ArrayList<DiscordDto> discords = parseDiscords(jsonString);
 		System.out.println("ArrayList: " + discords);
@@ -52,8 +52,8 @@ public class DiscordController {
 			model.addAttribute("errormessage", errorMessage);
 			return "admindiscord";
 		}
-		
-		model.addAttribute("topdiscord", discords.get(0));	
+
+		model.addAttribute("topdiscord", discords.get(0));
 		model.addAttribute("discords", discords);
 
 		return "admindiscord";
@@ -62,31 +62,32 @@ public class DiscordController {
 	private ArrayList<DiscordDto> parseDiscords(String jsonString) {
 		JSONObject json = new JSONObject(jsonString);
 		int totalResults = json.getJSONObject("searchInformation").getInt("totalResults");
-		
-		//Return null if there are no search results
+
+		// Return null if there are no search results
 		if (totalResults == 0) {
 			return null;
 		}
-		
-		//Search results from first page (up to 10 results)
+
+		// Search results from first page (up to 10 results)
 		JSONArray searchResults = json.getJSONArray("items");
 		ArrayList<DiscordDto> discordsList = new ArrayList<>();
-		
-		//Grabs the title, link, and description for each result, creates a discord object, and stores it in an array
+
+		// Grabs the title, link, and description for each result, creates a discord
+		// object, and stores it in an array
 		for (int i = 0; i < searchResults.length(); i++) {
 			JSONObject result = searchResults.getJSONObject(i);
-			
+
 			String title = result.getString("title");
 			String link = result.getString("link");
 			String description = result.getString("snippet");
-			
+
 			DiscordDto discord = new DiscordDto(title, link, description);
-			
+
 			discordsList.add(discord);
 		}
-			
+
 		return discordsList;
-		}
+	}
 
 	private String callCustomSearchEngineApi(String gameName) {
 		String response = "";

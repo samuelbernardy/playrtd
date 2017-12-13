@@ -24,21 +24,21 @@
 		<h1>${nogames}${hasGames}</h1>
 		<h4>Select the ones you want to roll for!</h4>
 
-		<div>
-			<form id="getrolling_form" action="gameon" method="POST">
-				<label><input type="checkbox" name="tag1" value="${tag1}" />${tag1}</label>
-				<label><input type="checkbox" name="tag2" value="${tag2}" />${tag2}</label>
-				<label><input type="checkbox" name="tag3" value="${tag3}" />${tag3}</label>
-				<br> <input id="dice" type="image"
-					src="resources/images/dieroll.png" alt="submit">
-			</form>
-		</div>
+			<div>
+				<form id="getrolling_form" action="gameon" method="POST">
+					<label><input type="checkbox" name="tag1" value="${tag1}" />
+						${tag1}</label> <label><input type="checkbox" name="tag2"
+						value="${tag2}" /> ${tag2}</label> <label><input type="checkbox"
+						name="tag3" value="${tag3}" /> ${tag3}</label> <br />
+				</form>
+			</div>
+			<input id="dice" type="image" src="resources/images/dieroll.png"
+				alt="submit">
 	</div>
 	</main>
 	<footer>
 	<div></div>
-	<nav> <a href="">Home</a>
-	<a href="">My Likes</a>
-	<a href="about">About Us</a></nav> </footer>
+	<nav> <a href="">Home</a> <a href="">My Likes</a> <a href="about">About
+		Us</a></nav> </footer>
 </body>
 </html>
