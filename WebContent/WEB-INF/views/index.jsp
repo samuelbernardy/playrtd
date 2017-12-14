@@ -45,7 +45,8 @@
 	<div id="recent_container">
 		<c:forEach var="recLikes" items="${list}">
 			<div class="recent_like">${recLikes.persona} liked ${recLikes.recentLikeName}
-				${recLikes.recentLikeIMG}
+			
+				<a href="likedgame?gameName=${recLikes.recentLikeName}" target="_blank" onClick="">${recLikes.recentLikeIMG}</a>
 			</div>
 
 		</c:forEach>
