@@ -119,7 +119,7 @@ public class OtherLikes {
 		model.addAttribute("gameName", name);
 		model.addAttribute("twitchWidget", twitchResponse);
 		model.addAttribute("storeURL", storeURL);
-		return "index";
+		return "likedgame";
 	}
 	
 	public static String Q1(String gameName) {
