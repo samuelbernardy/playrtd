@@ -31,18 +31,30 @@
 	</header>
 	<main class="fadeIn">
 	<div class="info_column">
-		<h1>About Us<br><br></h1>
-		
+		<h1>
+			About Us<br>
+			<br>
+		</h1>
+
 		<h2>Joseph Garza</h2>
 		<div class="bio">
 			<img src="resources/images/joebio.jpg"></img>
-			<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-				do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-				enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-				ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-				reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-				pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-				culpa qui officia deserunt mollit anim id est laborum."</p>
+			<p>"The best way to describe the reason for my choice to become a
+				Software Developer is best summed up through a story from my past.
+				When I was a child, about the age of 5. I sat on the porch one day
+				and I felt the wind blow and I seen the trees moving in the wind. It
+				really got me thinking "What makes the wind?". I pondered maybe the
+				trees are making it? But then I realized they were merely being
+				moved by the wind. So I thought more and came to the only conclusion
+				that could make sense at that time (I still think it's a good
+				theory!). Maybe the wind is made by everyone on the earth breathing
+				at the same time!!! 
+				
+				Okay, so how does that story sum up why this is
+				was my career choice? Well, this has always been my
+				thought process. I have always been extremely curious how things
+				work and have always dove deep into thought to figure out solutions.
+				Which is exactly what is needed as a Software Developer!"</p>
 		</div>
 		<h2>Yasmin Rodriguez</h2>
 		<div class="bio">
