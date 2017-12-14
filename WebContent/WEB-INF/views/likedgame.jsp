@@ -24,7 +24,7 @@
 	</script>
 	<header class="fadeIn">
 		<div id="headlogo">
-			<a href="test"><img src="resources/images/playrtdlogo.png"></img></a>
+			<a href="index"><img src="resources/images/playrtdlogo.png"></img></a>
 		</div>
 	</header>
 	<main class="fadeIn">
@@ -51,10 +51,10 @@
 
 	</div>
 	</main>
-	<foote class="fadeIn"r>
+	<footer class="fadeIn">
 		<div></div>
 		<nav>
-			<a href="index">Home</a><a href="favorites">My Likes</a><a
+			<a href="index">Home</a><a
 				href="about">About Us</a>
 		</nav>
 	</footer>
