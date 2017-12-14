@@ -52,12 +52,8 @@
 	<footer class="fadeIn">
 		<div></div>
 		<nav>
-			<<<<<<< HEAD <a href="index">Home</a> <a href="favorites">My
-				Likes</a> <a =======
-			<a href="index">Home</a>
-				<a
->>>>>>> 0eba1997ebde36eaa21bd0efac92b3538402fd4d
-				href="about">About Us</a>
+
+			<a href="index">Home</a> <a href="about">About Us</a>
 		</nav>
 	</footer>
 
