@@ -52,41 +52,50 @@
 				was my career choice? Well, this has always been my thought process.
 				I have always been extremely curious how things work and have always
 				dove deep into thought to figure out solutions. Which is exactly
-				what is needed as a Software Developer!"<br /> <em><strong><a href="https://github.com/JosephDGarza" target="_blank">Github</a><br />
-				<a href="https://www.linkedin.com/in/joseph-garza/" target="_blank">LinkedIn</a></strong></em>
+				what is needed as a Software Developer!"<br /> <em><strong><a
+						href="https://github.com/JosephDGarza" target="_blank">Github</a><br />
+						<a href="https://www.linkedin.com/in/joseph-garza/"
+						target="_blank">LinkedIn</a></strong></em>
 			</p>
 
 		</div>
 		<h2>Yasmin Rodriguez</h2>
 		<div class="bio">
-			<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-				do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-				enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-				ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+			<p>
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+				eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+				ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+				aliquip ex ea commodo consequat. Duis aute irure dolor in
 				reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
 				pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-				culpa qui officia deserunt mollit anim id est laborum."
-				<br /> <em><strong><a href="https://github.com/yasrodriguez" target="_blank">Github</a><br />
-				<a href="https://www.linkedin.com/in/yasrodriguez/" target="_blank">LinkedIn</a></strong></em></p>
+				culpa qui officia deserunt mollit anim id est laborum." <br /> <em><strong><a
+						href="https://github.com/yasrodriguez" target="_blank">Github</a><br />
+						<a href="https://www.linkedin.com/in/yasrodriguez/"
+						target="_blank">LinkedIn</a></strong></em>
+			</p>
 			<img src="resources/images/yasminbio.jpg"></img>
 		</div>
 		<h2>Samuel Bernardy</h2>
 		<div class="bio">
 			<img src="resources/images/sambio.jpg"></img>
-			<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-				do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-				enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-				ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-				reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-				pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-				culpa qui officia deserunt mollit anim id est laborum." <br /> <em><strong><a href="https://github.com/samuelbernardy" target="_blank">Github</a><br />
-				<a href="https://www.linkedin.com/in/samuelbernardy/" target="_blank">LinkedIn</a></strong></em></p>
+			<p>
+				"I've been fascinated by the inner workings of tech from an early
+				age. Building computers and designing websites have been my passions
+				for years. Now, with the ability to add interactive elements and
+				java logic, the experiences I create can be that much better. Play
+				RTD has been a great opportunity to stretch my front end skills and
+				to employ powerful APIs, bringing a wealth of content to the user."
+				<br /> <em><strong><a
+						href="https://github.com/samuelbernardy" target="_blank">Github</a><br />
+						<a href="https://www.linkedin.com/in/samuelbernardy/"
+						target="_blank">LinkedIn</a></strong></em>
+			</p>
 		</div>
 	</div>
 	</main>
 	<footer class="fadeIn">
 	<div></div>
-	<nav> <a href="index">Home</a> <a href="favorites">My Likes</a> <a href="about">About
-		Us</a></nav> </footer>
+	<nav> <a href="index">Home</a> <a href="favorites">My Likes</a> <a
+		href="about">About Us</a></nav> </footer>
 </body>
 </html>

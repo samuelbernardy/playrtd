@@ -77,7 +77,7 @@
 
 	</div>
 	</main>
-	<foote class="fadeIn"r>
+	<footer class="fadeIn"r>
 		<div></div>
 		<nav>
 			<a href="index">Home</a><a href="favorites">My Likes</a><a
