@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class Options {
-	@RequestMapping(value = "/choices", method = RequestMethod.GET)
+	@RequestMapping(value = {"/choices", "/test"}, method = RequestMethod.GET)
 	public String choices(Model model, @CookieValue(value = "steamID", required = false) Long steamid,
 			@CookieValue(value = "avatar", required = false) String avatar,
 			@CookieValue(value = "persona", required = false) String persona, @ModelAttribute("tag1") String tag1,

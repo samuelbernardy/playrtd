@@ -12,7 +12,7 @@
 <body>
 	<header>
 	<div id="headlogo">
-		<img src="resources/images/playrtdlogo.png"></img>
+		<a href="test"><img src="resources/images/playrtdlogo.png"></img></a>
 	</div>
 	<div id="logged_head">
 		<p>Rolling as ${persona}</p>
@@ -24,16 +24,30 @@
 		<h1>${choicemsg}</h1>
 		<h4>Select the ones you want to roll for!</h4>
 
-			<div>
-				<form id="getrolling_form" action="gameon" method="POST">
-					<label><input type="checkbox" name="tag1" value="${tag1}" />
-						${tag1}</label> <label><input type="checkbox" name="tag2"
-						value="${tag2}" /> ${tag2}</label> <label><input type="checkbox"
-						name="tag3" value="${tag3}" /> ${tag3}</label> <br />
-						<input id="dice" type="image" src="resources/images/dieroll.png"
-				alt="submit">
-				</form>
-			</div>
+		<div>
+			<form id="getrolling_form" action="gameon" method="POST">
+				<div id="checkbox1" class="checkbox">
+					<label id="label1"> ${tag1} <input id="check1"
+						type="checkbox" class="check" name="tag1" value="${tag1}" />
+					</label>
+				</div>
+				<div id="checkbox2" class="checkbox">
+					<label id="label1"> ${tag2} <input id="check2"
+						type="checkbox" class="check" name="tag2" value="${tag2}" />
+					</label>
+
+				</div>
+				<div id="checkbox3" class="checkbox">
+					<label id="label1"> ${tag3} <input id="check3"
+						type="checkbox" class="check" name="tag3" value="${tag3}" />
+					</label>
+
+
+				</div>
+				<br /> <input id="dice" type="image"
+					src="resources/images/dieroll.png" alt="submit">
+			</form>
+		</div>
 	</div>
 	</main>
 	<footer>

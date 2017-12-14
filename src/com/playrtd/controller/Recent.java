@@ -39,7 +39,7 @@ public class Recent {
 	Query q2 = s.createQuery("select recentLikeIMG, recentLikeName, persona from RecentLikesDto ORDER BY ID DESC");
 
 	q2.setFirstResult(0);
-	q2.setMaxResults(5);
+	q2.setMaxResults(20);
 	List results = q2.list();
 	Iterator i = results.iterator();
 	List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();

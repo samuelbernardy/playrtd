@@ -14,7 +14,7 @@
 <body>
 	<header>
 		<div id="headlogo">
-			<img src="resources/images/playrtdlogo.png"></img>
+			<a href ="test"><img src="resources/images/playrtdlogo.png"></img></a>
 		</div>
 		<div id="logged_head">
 			<p>Rolling as ${persona}</p>
