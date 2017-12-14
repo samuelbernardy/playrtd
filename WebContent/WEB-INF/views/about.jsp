@@ -32,14 +32,14 @@
 	<main class="fadeIn">
 	<div class="info_column">
 		<h1>
-			About Us<br>
-			<br>
+			About Us<br> <br>
 		</h1>
 
 		<h2>Joseph Garza</h2>
 		<div class="bio">
 			<img src="resources/images/joebio.jpg"></img>
-			<p>"The best way to describe the reason for my choice to become a
+			<p>
+				"The best way to describe the reason for my choice to become a
 				Software Developer is best summed up through a story from my past.
 				When I was a child, about the age of 5. I sat on the porch one day
 				and I felt the wind blow and I seen the trees moving in the wind. It
@@ -48,13 +48,14 @@
 				moved by the wind. So I thought more and came to the only conclusion
 				that could make sense at that time (I still think it's a good
 				theory!). Maybe the wind is made by everyone on the earth breathing
-				at the same time!!! 
-				
-				Okay, so how does that story sum up why this is
-				was my career choice? Well, this has always been my
-				thought process. I have always been extremely curious how things
-				work and have always dove deep into thought to figure out solutions.
-				Which is exactly what is needed as a Software Developer!"</p>
+				at the same time!!! Okay, so how does that story sum up why this is
+				was my career choice? Well, this has always been my thought process.
+				I have always been extremely curious how things work and have always
+				dove deep into thought to figure out solutions. Which is exactly
+				what is needed as a Software Developer!"<br /> <em><strong><a href="https://github.com/JosephDGarza" target="_blank">Github</a><br />
+				<a href="https://www.linkedin.com/in/joseph-garza/" target="_blank">LinkedIn</a></strong></em>
+			</p>
+
 		</div>
 		<h2>Yasmin Rodriguez</h2>
 		<div class="bio">
@@ -64,7 +65,9 @@
 				ut aliquip ex ea commodo consequat. Duis aute irure dolor in
 				reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
 				pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-				culpa qui officia deserunt mollit anim id est laborum."</p>
+				culpa qui officia deserunt mollit anim id est laborum."
+				<br /> <em><strong><a href="https://github.com/yasrodriguez" target="_blank">Github</a><br />
+				<a href="https://www.linkedin.com/in/yasrodriguez/" target="_blank">LinkedIn</a></strong></em></p>
 			<img src="resources/images/yasminbio.jpg"></img>
 		</div>
 		<h2>Samuel Bernardy</h2>
@@ -76,13 +79,14 @@
 				ut aliquip ex ea commodo consequat. Duis aute irure dolor in
 				reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
 				pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-				culpa qui officia deserunt mollit anim id est laborum."</p>
+				culpa qui officia deserunt mollit anim id est laborum." <br /> <em><strong><a href="https://github.com/samuelbernardy" target="_blank">Github</a><br />
+				<a href="https://www.linkedin.com/in/samuelbernardy/" target="_blank">LinkedIn</a></strong></em></p>
 		</div>
 	</div>
 	</main>
 	<footer class="fadeIn">
 	<div></div>
-	<nav> <a href="">Home</a> <a href="">My Likes</a> <a href="about">About
+	<nav> <a href="index">Home</a> <a href="favorites">My Likes</a> <a href="about">About
 		Us</a></nav> </footer>
 </body>
 </html>
