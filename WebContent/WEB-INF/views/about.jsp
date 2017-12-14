@@ -62,13 +62,15 @@
 		<h2>Yasmin Rodriguez</h2>
 		<div class="bio">
 			<p>
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-				eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-				ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-				aliquip ex ea commodo consequat. Duis aute irure dolor in
-				reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-				pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-				culpa qui officia deserunt mollit anim id est laborum." <br /> <em><strong><a
+				"I first discovered coding through my father who was a programmer 
+				and always talked about his projects.  When I went to college I did
+				 a Bachelor’s in Management Information Systems and for the past 8 years
+				  I’ve been working in the software industry.  I’m passionate about 
+				  software development because it allows me to apply my creative and 
+				  analytical skills to solve problems. I also like that there’s always 
+				  something new to learn.  When I’m not coding, I like to spend time with my dogs, 
+				  go to the movies, and try out new restaurants." <br /> <em><strong>
+				<a
 						href="https://github.com/yasrodriguez" target="_blank">Github</a><br />
 						<a href="https://www.linkedin.com/in/yasrodriguez/"
 						target="_blank">LinkedIn</a></strong></em>
