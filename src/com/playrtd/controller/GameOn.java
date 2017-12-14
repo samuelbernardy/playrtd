@@ -137,8 +137,8 @@ public class GameOn {
 	}
 
 	public static String Q1(String query, String query2, String query3) {
-		String temp = "select g.appID,g.gameName,g.tagName,g.image,g.description,g.discord,g.twitchGameID,g.storeURL from ProductDto g WHERE g.tagName = '"
-				+ query + "' or g.tagName = '" + query2 + "' or g.tagName = '" + query3 + "' ORDER BY RAND()";
+		String temp = "select appID,gameName,tagName,image,description,discord,twitchGameID,storeURL from ProductDto WHERE tagName = '"
+				+ query + "' or tagName = '" + query2 + "' or tagName = '" + query3 + "' ORDER BY RAND()";
 		return temp;
 
 	}

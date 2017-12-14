@@ -24,18 +24,25 @@ public class RecentLikesDto implements Serializable {
 		this.appID = appID;
 	}
 
-	public RecentLikesDto(String recentLikeIMG, String recentLikeName, String appID) {
-		super();
-		this.recentLikeIMG = recentLikeIMG;
-		this.recentLikeName = recentLikeName;
-		this.appID = appID;
-
-	}
+//	public RecentLikesDto(String recentLikeIMG, String recentLikeName, String appID) {
+//		super();
+//		this.recentLikeIMG = recentLikeIMG;
+//		this.recentLikeName = recentLikeName;
+//		this.appID = appID;
+//
+//	}
 
 	public RecentLikesDto(String recentLikeIMG, String recentLikeName) {
 		super();
 		this.recentLikeIMG = recentLikeIMG;
 		this.recentLikeName = recentLikeName;
+
+	}
+	public RecentLikesDto(String recentLikeIMG, String recentLikeName, String persona) {
+		super();
+		this.recentLikeIMG = recentLikeIMG;
+		this.recentLikeName = recentLikeName;
+		this.persona = persona;
 
 	}
 

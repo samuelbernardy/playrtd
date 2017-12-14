@@ -74,13 +74,13 @@ public class Favorites {
 	}
 
 	public static String QuesryLikes() {
-		String temp = "select userID,g.persona,g.recentLikeIMG,g.recentLikeName,g.storeURL from RecentLikesDto g ORDER BY g.ID DESC";
+		String temp = "select userID,persona,recentLikeIMG,recentLikeName,storeURL from RecentLikesDto ORDER BY ID DESC";
 		return temp;
 	}
 
 	public static String QueryLikes(Long persona) {
-		String temp = "select userID,g.persona,g.recentLikeIMG,g.recentLikeName,g.storeURL from RecentLikesDto g WHERE g.userID = '"
-				+ persona + "'" + " ORDER BY g.ID DESC";
+		String temp = "select userID,persona,recentLikeIMG,recentLikeName,storeURL from RecentLikesDto WHERE userID = '"
+				+ persona + "'" + " ORDER BY ID DESC";
 		return temp;
 
 	}

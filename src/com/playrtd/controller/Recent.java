@@ -22,7 +22,7 @@ import com.gc.dto.RecentLikesDto;
 public class Recent {
 	
 	
-	@RequestMapping(value = "/seerecent", method = RequestMethod.GET)
+	@RequestMapping({"/", "index"})
 	public String favorites(Model model) {
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
@@ -35,10 +35,11 @@ public class Recent {
 	
 	String recentLikeIMG ="";
 	String recentLikeName = "";
-	Query q2 = s.createQuery("select recentLikeIMG,g.recentLikeName from RecentLikesDto g ORDER BY g.ID DESC");
+	String persona = "";
+	Query q2 = s.createQuery("select recentLikeIMG, recentLikeName, persona from RecentLikesDto ORDER BY ID DESC");
 
 	q2.setFirstResult(0);
-	q2.setMaxResults(4);
+	q2.setMaxResults(5);
 	List results = q2.list();
 	Iterator i = results.iterator();
 	List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
@@ -48,10 +49,10 @@ public class Recent {
 		obj = (Object[]) i.next();
 		recentLikeIMG = (String) obj[0];
 		recentLikeName = (String) obj[1];
-		
-		list.add(new RecentLikesDto(recentLikeIMG, recentLikeName));
-	}
+		persona = (String) obj[2];
 
+		list.add(new RecentLikesDto(recentLikeIMG, recentLikeName, persona));
+	}
 
 
 
@@ -59,12 +60,13 @@ public class Recent {
 	s.flush();
 	s.close();
 	model.addAttribute("list", list);
+
 	//model.addAttribute("persona", persona);
 	
 	
 		
 		
-		return "seerecent";
+	return "index";
 	}
 
 
