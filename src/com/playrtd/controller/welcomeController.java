@@ -175,7 +175,7 @@ public class welcomeController {
 		// TODO check if private account
 
 		if (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
-				.getString("communityvisibilitystate").contains("1")) {
+				.getInt("communityvisibilitystate") == 1) {
 			return new RedirectView("privateprofileerror");
 		}
 
