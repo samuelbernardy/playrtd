@@ -20,54 +20,44 @@ import com.gc.dto.RecentLikesDto;
 
 @Controller
 public class Recent {
-	
-	
-	@RequestMapping({"/", "index"})
+
+	@RequestMapping({ "/", "index" })
 	public String favorites(Model model) {
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
 		SessionFactory sf = cfg.buildSessionFactory();
 		Session s = sf.openSession();
 		Transaction tx = s.beginTransaction();
-		
-		
-	Object[] obj = new Object[2];
-	
-	String recentLikeIMG ="";
-	String recentLikeName = "";
-	String persona = "";
-	Query q2 = s.createQuery("select recentLikeIMG, recentLikeName, persona from RecentLikesDto ORDER BY ID DESC");
 
-	q2.setFirstResult(0);
-	q2.setMaxResults(20);
-	List results = q2.list();
-	Iterator i = results.iterator();
-	List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
-	while (i.hasNext()) {
+		Object[] obj = new Object[2];
 
-		
-		obj = (Object[]) i.next();
-		recentLikeIMG = (String) obj[0];
-		recentLikeName = (String) obj[1];
-		persona = (String) obj[2];
+		String recentLikeIMG = "";
+		String recentLikeName = "";
+		String persona = "";
+		Query q2 = s.createQuery("select recentLikeIMG, recentLikeName, persona from RecentLikesDto ORDER BY ID DESC");
 
-		list.add(new RecentLikesDto(recentLikeIMG, recentLikeName, persona));
+		q2.setFirstResult(0);
+		q2.setMaxResults(20);
+		List results = q2.list();
+		Iterator i = results.iterator();
+		List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
+		while (i.hasNext()) {
+
+			obj = (Object[]) i.next();
+			recentLikeIMG = (String) obj[0];
+			recentLikeName = (String) obj[1];
+			persona = (String) obj[2];
+
+			list.add(new RecentLikesDto(recentLikeIMG, recentLikeName, persona));
+		}
+
+		s.flush();
+		s.close();
+		model.addAttribute("list", list);
+
+		// model.addAttribute("persona", persona);
+
+		return "index";
 	}
-
-
-
-
-	s.flush();
-	s.close();
-	model.addAttribute("list", list);
-
-	//model.addAttribute("persona", persona);
-	
-	
-		
-		
-	return "index";
-	}
-
 
 }

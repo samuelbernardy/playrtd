@@ -24,7 +24,6 @@
 			console.log('Ending Anim')
 		});
 	</script>
-
 	<header class="fadeIn">
 	<div id="headlogo">
 		<img src="resources/images/playrtdlogo.png"></img>
@@ -54,6 +53,6 @@
 	</main>
 	<footer class="fadeIn">
 	<div></div>
-	<nav> <a href="">Home</a> <a href="about">About Us</a></nav> </footer>
+	<nav> <a href="index">Home</a> <a href="about">About Us</a></nav> </footer>
 </body>
 </html>

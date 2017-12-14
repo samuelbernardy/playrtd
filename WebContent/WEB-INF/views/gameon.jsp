@@ -9,50 +9,59 @@
 <link href="resources/styles.css" type="text/css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://embed.twitch.tv/embed/v1.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <title>You rolled ${gameName}!</title>
 </head>
 <body>
-	<header>
+	<script>
+		$(window).on("load", function() {
+			console.log('Starting Anim')
+			$(".fadeIn").animate({
+				opacity : 1
+			}, 1000);
+			console.log('Ending Anim')
+		});
+	</script>
+	<header class="fadeIn">
 		<div id="headlogo">
-			<a href ="test"><img src="resources/images/playrtdlogo.png"></img></a>
+			<a href="test"><img src="resources/images/playrtdlogo.png"></img></a>
 		</div>
 		<div id="logged_head">
 			<p>Rolling as ${persona}</p>
 			<img class="avatar" src="${avatar}"></img>
 		</div>
 	</header>
-<main>
+	<main class="fadeIn">
 	<div id="logoptions">
 		<nav>
-			<a href="favorites">My Likes</a> <a href="">Log Out</a>
+			<a href="favorites">My Likes</a> <a href="index">Log Out</a>
 		</nav>
 	</div>
 
 	<div class="info_column">
 		<div id="optionbar">
-			<a href="gameon?tag1=${tag1}&tag2=${tag2}&tag3=${tag3}"><img id="reroll" src="resources/images/reroll.png"></img></a>
+			<a href="gameon?tag1=${tag1}&tag2=${tag2}&tag3=${tag3}"><img
+				id="reroll" src="resources/images/reroll.png"></img></a>
 			<!--  <a href=""><img id="like" src="resources/images/likebutton.png"></img></a>-->
-			<form  method="GET"
+			<form method="GET"
 				onsubmit="event.preventDefault(); return loadDoc(this);">
 				<input type="hidden" id="gameName" name="gameName"
 					value="${gameName}"> <input type="hidden" id="gameImg"
 					name="gameImg" value="${passthroughImg}"> <input
 					type="hidden" id="persona" name="persona" value="${persona}">
-					<input
-					type="hidden" id="steamID" name="steamID" value="${steamID}">
-					<input
-					type="hidden" id="avatar" name="avatar" value="${avatar}">
-					<input
-					type="hidden" id="gameID" name="gameID" value="${gameID}">
-										<input
-					type="hidden" id="storeURL" name="storeURL" value="${storeURL}">
-				<input id="like" type="image" src="resources/images/likebutton.png"
-					alt="submit" value="like">
+				<input type="hidden" id="steamID" name="steamID" value="${steamID}">
+				<input type="hidden" id="avatar" name="avatar" value="${avatar}">
+				<input type="hidden" id="gameID" name="gameID" value="${gameID}">
+				<input type="hidden" id="storeURL" name="storeURL"
+					value="${storeURL}"> <input id="like" type="image"
+					src="resources/images/likebutton.png" alt="submit" value="like">
 			</form>
 		</div>
 		<h1>You rolled ${gameName}!</h1>
 		<div class="info_header">
-			<div><a href="${storeURL}" target="_blank">${displayImage}</a></div>
+			<div>
+				<a href="${storeURL}" target="_blank">${displayImage}</a>
+			</div>
 			<p>${gameDesc}</p>
 		</div>
 		<form method="GET"
@@ -67,12 +76,12 @@
 		${twitchWidget}
 
 	</div>
-</main>
-	<footer>
+	</main>
+	<foote class="fadeIn"r>
 		<div></div>
 		<nav>
-			<a href="">Home</a><a href="favorites">My Likes</a><a href="about">About
-				Us</a>
+			<a href="index">Home</a><a href="favorites">My Likes</a><a
+				href="about">About Us</a>
 		</nav>
 	</footer>
 	<script>
@@ -84,8 +93,7 @@
 			var persona = document.getElementById("persona").value;
 			var gameID = document.getElementById("gameID").value;
 			var storeURL = document.getElementById("storeURL").value;
-			
-			
+
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
@@ -96,7 +104,8 @@
 				}
 			};
 			xhttp.open("GET", "like?gameName=" + gameName + "&gameImg="
-					+ gameImg + "&persona=" + persona +"&steamID=" + steamID + "&gameID=" + gameID +"&storeURL=" +storeURL, true);
+					+ gameImg + "&persona=" + persona + "&steamID=" + steamID
+					+ "&gameID=" + gameID + "&storeURL=" + storeURL, true);
 			xhttp.send();
 		}
 	</script>
