@@ -58,51 +58,52 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-@SessionAttributes({"selectTags", "choicemsg"})
+@SessionAttributes({ "selectTags", "choicemsg" })
 @Controller
 public class welcomeController {
 
 	private SteamOpenID steamOpenID = new SteamOpenID();
 	ArrayList<String> selectTags = new ArrayList<String>();
 
-//	@RequestMapping("/")
-//	public String index(Model model) {
-//
-//		Configuration cfg = new Configuration();
-//		cfg.configure("hibernate.cfg.xml");
-//		SessionFactory sf = cfg.buildSessionFactory();
-//		Session s = sf.openSession();
-//		Transaction tx = s.beginTransaction();
-//
-//		Object[] obj = new Object[2];
-//
-//		String persona = "";
-//		String appID = "";
-//		String recentLikeIMG = "";
-//
-//		Query q2 = s.createQuery("select recentLikeIMG,g.persona,g.appID, from RecentLikesDto g ORDER BY g.ID DESC");
-//
-//		q2.setFirstResult(0);
-//		q2.setMaxResults(5);
-//		List results = q2.list();
-//		Iterator i = results.iterator();
-//		List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
-//		while (i.hasNext()) {
-//
-//			obj = (Object[]) i.next();
-//			recentLikeIMG = (String) obj[0];
-//			persona = (String) obj[1];
-//			appID = (String) obj[2];
-//
-//			list.add(new RecentLikesDto(recentLikeIMG, persona, appID));
-//		}
-//
-//		s.flush();
-//		s.close();
-//		model.addAttribute("list", list);
-//
-//		return "index";
-//	}
+	// @RequestMapping("/")
+	// public String index(Model model) {
+	//
+	// Configuration cfg = new Configuration();
+	// cfg.configure("hibernate.cfg.xml");
+	// SessionFactory sf = cfg.buildSessionFactory();
+	// Session s = sf.openSession();
+	// Transaction tx = s.beginTransaction();
+	//
+	// Object[] obj = new Object[2];
+	//
+	// String persona = "";
+	// String appID = "";
+	// String recentLikeIMG = "";
+	//
+	// Query q2 = s.createQuery("select recentLikeIMG,g.persona,g.appID, from
+	// RecentLikesDto g ORDER BY g.ID DESC");
+	//
+	// q2.setFirstResult(0);
+	// q2.setMaxResults(5);
+	// List results = q2.list();
+	// Iterator i = results.iterator();
+	// List<RecentLikesDto> list = new ArrayList<RecentLikesDto>();
+	// while (i.hasNext()) {
+	//
+	// obj = (Object[]) i.next();
+	// recentLikeIMG = (String) obj[0];
+	// persona = (String) obj[1];
+	// appID = (String) obj[2];
+	//
+	// list.add(new RecentLikesDto(recentLikeIMG, persona, appID));
+	// }
+	//
+	// s.flush();
+	// s.close();
+	// model.addAttribute("list", list);
+	//
+	// return "index";
+	// }
 
 	@RequestMapping(value = "/login_page", method = RequestMethod.GET)
 	public ModelAndView loginPage(HttpServletRequest request) {
@@ -123,9 +124,9 @@ public class welcomeController {
 			throws IOException {
 		Random rand = new Random();
 		ArrayList<String> recentTagsArray = new ArrayList<String>();
-		String playerAvatar="";
-		String playerPersona="";
-		
+		String playerAvatar = "";
+		String playerPersona = "";
+
 		Long steam_ID = 0l;
 		String userId = this.steamOpenID.verify(request.getRequestURL().toString(), request.getParameterMap());
 		System.out.println(userId);
@@ -173,6 +174,11 @@ public class welcomeController {
 
 		// TODO check if private account
 
+		if (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
+				.getString("communityvisibilitystate").contains("1")) {
+			return new RedirectView("privateprofileerror");
+		}
+
 		// check owned and recent game count. Offer random apptags if empty.
 		int ownedCountCheck = ownedJson.getJSONObject("response").getInt("game_count");
 		int recentCountCheck = recentJson.getJSONObject("response").getInt("total_count");
@@ -213,7 +219,7 @@ public class welcomeController {
 
 			selectTags = new ArrayList<String>();
 			try {
-				
+
 				// ma game with tags 578080 238960
 				// ma game without tags 359550
 				// reg game 268910
@@ -278,11 +284,9 @@ public class welcomeController {
 					// </")));
 					// }
 				}
-				
 
 				// create user's random options
 
-				
 				String tempTag = "";
 				while (selectTags.size() < 3) {
 					tempTag = recentTagsArray.get(rand.nextInt(recentTagsArray.size())).toString();
@@ -296,11 +300,12 @@ public class welcomeController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			response.addCookie(new Cookie("steamID", steam_ID.toString()));
 			response.addCookie(new Cookie("avatar", playerAvatar));
 			response.addCookie(new Cookie("persona", playerPersona));
-			model.addAttribute("choicemsg", "It seems that you like " + selectTags.get(0).toString() + ", " + selectTags.get(1).toString() + ", " + selectTags.get(2).toString() + " games.");
+			model.addAttribute("choicemsg", "It seems that you like " + selectTags.get(0).toString() + ", "
+					+ selectTags.get(1).toString() + ", " + selectTags.get(2).toString() + " games.");
 			model.addAttribute("tag1", selectTags.get(0).toString());
 			model.addAttribute("tag2", selectTags.get(1).toString());
 			model.addAttribute("tag3", selectTags.get(2).toString());
@@ -310,8 +315,7 @@ public class welcomeController {
 
 			return new RedirectView("choices");
 		} else {
-			
-			
+
 			playerAvatar = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
 					.getString("avatarfull"));
 			playerPersona = (playerJson.getJSONObject("response").getJSONArray("players").getJSONObject(0)
@@ -319,8 +323,7 @@ public class welcomeController {
 			userProfile.setSteam_ID(steam_ID);
 			userProfile.setPersonaName(playerPersona);
 			userProfile.setAvatar(playerAvatar);
-			
-			
+
 			Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
 			SessionFactory factory = cfg.buildSessionFactory();
 			Session session = factory.openSession();
@@ -328,31 +331,29 @@ public class welcomeController {
 			session.save(userProfile);
 			t.commit();
 			session.close();
-			
-			
-				recentTagsArray.add("Action");
-				recentTagsArray.add("Adventure");
-				recentTagsArray.add("Casual");
-				recentTagsArray.add("Indie");
-				recentTagsArray.add("Massively Multiplayer");
-				recentTagsArray.add("Racing");
-				recentTagsArray.add("RPG");
-				recentTagsArray.add("Simulation");
-				recentTagsArray.add("Sports");
-				recentTagsArray.add("Strategy");
-				String tempTag = "";
-				while (selectTags.size() < 3) {
-					tempTag = recentTagsArray.get(rand.nextInt(recentTagsArray.size())).toString();
-					while (!(selectTags.contains(tempTag))) {
-						selectTags.add(tempTag);
-					}
+
+			recentTagsArray.add("Action");
+			recentTagsArray.add("Adventure");
+			recentTagsArray.add("Casual");
+			recentTagsArray.add("Indie");
+			recentTagsArray.add("Massively Multiplayer");
+			recentTagsArray.add("Racing");
+			recentTagsArray.add("RPG");
+			recentTagsArray.add("Simulation");
+			recentTagsArray.add("Sports");
+			recentTagsArray.add("Strategy");
+			String tempTag = "";
+			while (selectTags.size() < 3) {
+				tempTag = recentTagsArray.get(rand.nextInt(recentTagsArray.size())).toString();
+				while (!(selectTags.contains(tempTag))) {
+					selectTags.add(tempTag);
 				}
-				System.out.println(selectTags.get(2).toString());
-			
+			}
+			System.out.println(selectTags.get(2).toString());
+
 			String nogamesnotif = "It looks like you haven't played for a little bit, let us recommend a couple categories!";
 			model.addAttribute("choicemsg", nogamesnotif);
-			
-			
+
 			response.addCookie(new Cookie("steamID", steam_ID.toString()));
 			response.addCookie(new Cookie("avatar", playerAvatar));
 			response.addCookie(new Cookie("persona", playerPersona));
@@ -362,13 +363,16 @@ public class welcomeController {
 			model.addAttribute("dTag1", selectTags.get(0).toString());
 			model.addAttribute("dTag2", selectTags.get(1).toString());
 			model.addAttribute("dTag3", selectTags.get(2).toString());
-			
+
 			return new RedirectView("choices");
 		}
+		
 
 	}
-
-
-
+	@RequestMapping("/privateprofileerror")
+	public String privateProfile() {
+		return "private"	;
+	}
 	
+
 }

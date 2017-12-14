@@ -24,7 +24,7 @@
 	</script>
 	<header class="fadeIn">
 		<div id="headlogo">
-			<a href="test"><img src="resources/images/playrtdlogo.png"></img></a>
+			<img src="resources/images/playrtdlogo.png"></img>
 		</div>
 		<div id="logged_head">
 			<p>Rolling as ${persona}</p>
@@ -77,10 +77,10 @@
 
 	</div>
 	</main>
-	<footer class="fadeIn"r>
+	<footer class="fadeIn">
 		<div></div>
 		<nav>
-			<a href="index">Home</a><a href="favorites">My Likes</a><a
+			<a href="index">Home</a> <a href="favorites">My Likes</a> <a
 				href="about">About Us</a>
 		</nav>
 	</footer>

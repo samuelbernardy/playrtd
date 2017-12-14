@@ -7,7 +7,8 @@
 	rel="stylesheet">
 <link href="resources/styles.css" type="text/css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Welcome to PlayRTD, ${persona}</title>
 </head>
@@ -34,7 +35,7 @@
 	</script>
 	<header class="fadeIn">
 	<div id="headlogo">
-		<a href="test"><img src="resources/images/playrtdlogo.png"></img></a>
+		<img src="resources/images/playrtdlogo.png"></img>
 	</div>
 	<div id="logged_head">
 		<p>Rolling as ${persona}</p>
@@ -71,7 +72,7 @@
 	</main>
 	<footer class="fadeIn">
 	<div></div>
-	<nav> <a href="">Home</a> <a href="">My Likes</a> <a href="about">About
-		Us</a></nav> </footer>
+	<nav> <a href="index">Home</a> <a href="favorites">My Likes</a> <a
+		href="about">About Us</a></nav> </footer>
 </body>
 </html>

@@ -12,7 +12,7 @@
 <body>
 	<header>
 	<div id="headlogo">
-		<a href="test"><img src="resources/images/playrtdlogo.png"></img></a>
+		<img src="resources/images/playrtdlogo.png"></img>
 	</div>
 	<div id="logged_head">
 		<p>Rolling as ${persona}</p>
@@ -35,10 +35,9 @@
 		</div>
 	</div>
 	</main>
-	<footer>
+	<footer class="fadeIn">
 	<div></div>
-	<nav> <a href="">Home</a>
-	<a href="">My Likes</a>
-	<a href="about">About Us</a></nav> </footer>
+	<nav> <a href="index">Home</a> <a href="favorites">My Likes</a> <a
+		href="about">About Us</a></nav> </footer>
 </body>
 </html>

@@ -9,11 +9,21 @@
 <link href="resources/styles.css" type="text/css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://embed.twitch.tv/embed/v1.js"></script>
-<title>${persona}'s Favorites</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<title>${persona}'sFavorites</title>
 </head>
 <body>
-
-<header>
+	<script>
+		$(window).on("load", function() {
+			console.log('Starting Anim')
+			$(".fadeIn").animate({
+				opacity : 1
+			}, 1000);
+			console.log('Ending Anim')
+		});
+	</script>
+	<header CLASS="fadeIn">
 		<div id="headlogo">
 			<img src="resources/images/playrtdlogo.png"></img>
 		</div>
@@ -21,25 +31,28 @@
 			<p>Rolling as ${persona}</p>
 			<img class="avatar" src="${avatar}"></img>
 		</div>
-	</header>	
-	<main>
+	</header>
+	<main class="fadeIn">
 	<div id="home_info" class="info_column">
 		<div></div>
-		<h1>${persona}'s Favorites</h1>
-		
+		<h1>${persona}'sFavorites</h1>
+
 		<c:forEach var="myFavs" items="${list}">
 			<tr>
 				<td>${myFavs.recentLikeName}</td>
-				<td><a href="${myFavs.storeURL}">${myFavs.recentLikeIMG}</a></td>
-				
+				<td><a href="${myFavs.storeURL}" target="_blank">${myFavs.recentLikeIMG}</a></td>
+
 			</tr>
 
 		</c:forEach>
 	</div>
 	</main>
-	<footer class="footer">
-	<div></div>
-	<div></div>
+	<footer class="fadeIn">
+		<div></div>
+		<nav>
+			<a href="index">Home</a> <a href="favorites">My Likes</a> <a
+				href="about">About Us</a>
+		</nav>
 	</footer>
 </body>
 </html>
